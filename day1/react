@@ -1,0 +1,24 @@
+react: 
+- fast
+- modular
+- react native
+
+
+
+var element = React.createElement('h1', null, 
+React.createElement('em', null, 'Hello italic react'))
+
+reactDOM.render(
+	Element,
+	document.getElementById('out')
+	);
+
+
+
+	var children = [
+	"Visit our",
+	React.createElement('a', {className: 'btn btn-primary', href: '/home'}, 'Homepage')
+	];
+	var div = React.createElement('div', null, children)
+
+	
