@@ -25,3 +25,18 @@ Generate this HTML login form in React using `React.createElement()`
   `YOUR CODE HERE`.
 1. Make sure your login form is properly rendered using
    DevTools HTML inspector.
+
+
+   var children = [
+     React.createElement('h2', null, 'Items'),
+     React.createElement('ul', null,
+       React.createElement('li', null, 'Item 1'),
+       React.createElement('li', null, 'Item 2'),     React.createElement('li', null, 'Item 3'),     React.createElement('li', null, 'Item 4'))
+   ];
+
+   var div = React.createElement('div', null, children)
+
+   ReactDOM.render(
+     div,
+     document.getElementById('out')
+   );
