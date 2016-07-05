@@ -7,6 +7,17 @@ var ReactDOM = require('react-dom');
 //   Password: <input type="password" name="password">
 //   <input type="submit">
 // </form>
-var element = React.createElement('form', /* YOUR CODE HERE */);
+var element = React.createElement('form', null,
+	React.createElement('input', null, 'Username'),
+	React.createElement('input', null, 'Password'));
+
+// var children = [
+//   React.createElement('h2', null, 'Items'),
+//   React.createElement('ul', null,
+//     React.createElement('li', null, 'Item 1'),
+//     React.createElement('li', null, 'Item 2'),     React.createElement('li', null, 'Item 3'),     React.createElement('li', null, 'Item 4'))
+// ];
+
+// var div = React.createElement('div', null, children)
 
 ReactDOM.render(element, document.getElementById('root'));
