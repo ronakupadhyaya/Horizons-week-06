@@ -7,7 +7,10 @@ var MyForm = React.createClass({
     // Read values with {this.props.action}, {this.props.method} and
     // {this.props.submitLabel}
     // YOUR CODE HERE
-    return <form></form>;
+    return <form>Username: <input {action:this.props.action} />
+                 Password: <input {action:this.props.action} />
+                 <input {method:this.props.method} {submitLabel: this.props.submitLabel} />
+                 </form>;
   }
 });
 
