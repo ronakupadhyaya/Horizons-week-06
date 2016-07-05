@@ -7,5 +7,11 @@ var ReactDOM = require('react-dom');
 //   Password: <input type="password" name="password">
 //   <input type="submit">
 // </form>
-var element = <form></form>; // YOUR CODE INSIDE THE FORM
+var element = <form>
+	<p>Username:</p>
+	<input type="text" name="username" />
+	<p>Password:</p>
+	<input type="password" name="password" />
+	<input type="submit" />
+</form>; // YOUR CODE INSIDE THE FORM
 ReactDOM.render(element, document.getElementById('root'));

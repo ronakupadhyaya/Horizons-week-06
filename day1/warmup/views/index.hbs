@@ -3,51 +3,27 @@
 <table class="table table-striped table-bordered">
   <!-- YOUR CODE HERE -->
   <!-- Below this line is example data, delete it -->
+
+  {{#each data}}
+
+  {{#if @first}}
   <tr>
+    {{#each this}}
     <th>
-      Column 1 name
+      {{this}}
     </th>
-    <th>
-      Column 2 name
-    </th>
-    <th>
-      Column 3 name
-    </th>
+    {{/each}}
   </tr>
 
+  {{else}}
   <tr>
+    {{#each this}}
     <td>
-      Column 1 row 1
+      {{this}}
     </td>
-    <td>
-      Column 1 row 2
-    </td>
-    <td>
-      Column 1 row 3
-    </td>
+    {{/each}}
   </tr>
+  {{/if}}
+  {{/each}}
 
-  <tr>
-    <td>
-      Column 2 row 1
-    </td>
-    <td>
-      Column 2 row 2
-    </td>
-    <td>
-      Column 2 row 3
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-      Column 3 row 1
-    </td>
-    <td>
-      Column 3 row 2
-    </td>
-    <td>
-      Column 3 row 3
-    </td>
-  </tr>
 </table>
