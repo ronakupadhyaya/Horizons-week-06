@@ -7,8 +7,7 @@ var MyForm = React.createClass({
     // Read values with {this.props.action}, {this.props.method} and
     // {this.props.submitLabel}
     // YOUR CODE HERE
-    return 
-    <form action={this.props.action} method = {this.props.method}>
+    return <form action={this.props.action} method = {this.props.method}>
     	Username: <input type="text" name = "username"/>
     	Password: <input type="password" name = "password"/>
     	<input type="submit" value = {this.props.submitLabel}/>
