@@ -11,21 +11,17 @@
 // object.
 
 function addCounter(list) {
-  list.push(0);
-  return list;
+  return list.concat([0]);
 }
 
 function removeCounter(list, index) {
-  list.splice(index, 1);
-  return list;
+  return list.slice(0,index).concat(list.slice(index+1));
 }
 
 function incrementCounter(list, index) {
-  list[index]++;
-  return list;
+  return list.map(function(e,i) {return i===index ? e+1 : e});
 }
 
 function toggleTodo(todo) {
-  todo.completed = !todo.completed;
-  return todo;
+  return Object.assign({},todo,{completed : !todo.completed});
 }

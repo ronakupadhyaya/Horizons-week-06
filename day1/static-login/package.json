@@ -19,6 +19,7 @@
   "dependencies": {
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
+    "supports-color": "^3.1.2",
     "underscore": "^1.8.3"
   }
 }
