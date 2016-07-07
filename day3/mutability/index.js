@@ -11,21 +11,28 @@
 // object.
 
 function addCounter(list) {
-  list.push(0);
-  return list;
+	// .concat modifies in place and returns a copy, .slice modifies in place and returns a copy
+	return list.concat(0);
 }
 
 function removeCounter(list, index) {
-  list.splice(index, 1);
-  return list;
+//slice: inclusive of first argument, exclusive of the second
+	return list.slice(0,index)
+	.concat(list.slice(index+1));
 }
+//review slice and splice!!!
 
 function incrementCounter(list, index) {
-  list[index]++;
-  return list;
+	return list
+	.slice(0,index)
+	.concat(list[index]+1)
+	.concat(list.slice(index+1))
 }
 
 function toggleTodo(todo) {
-  todo.completed = !todo.completed;
-  return todo;
+  // todo.completed = !todo.completed;
+  return Object.assign({},todo,{
+  	completed: !todo.completed
+  })
+ // return todo;
 }
