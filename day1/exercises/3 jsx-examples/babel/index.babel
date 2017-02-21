@@ -1,0 +1,47 @@
+// Write the following using JSX syntax
+
+// ex1: create a heading
+// create a 'h1' element that displays 'Hello World!'
+// render the above element at id 'ex1'
+
+// YOUR CODE HERE
+
+// ex2: create a heading w/children
+// create a 'ul' element that displays a list of
+// your favorite musical artists
+// render the above element at id 'ex2'
+
+// YOUR CODE HERE
+
+// ex3: create a link
+// create a 'a' element called 'Horizons'
+// that links to 'https://www.joinhorizons.com'
+// render the above element at id 'ex3'
+
+// YOUR CODE HERE
+
+// ex4: create a heading w/id
+// create a 'h1' element that has the id 'title'
+// and text 'Horizons'
+// render the above element at id 'ex1'
+
+// if the rendered element has the correct id it
+// will be red and HUUUUUUUUUUUUGE #Trump
+
+// YOUR CODE HERE
+
+// ex5: create a div w/two child divs
+//   - Taylor w/ class 'taylor'
+//   - Beyonce w/ class 'bae'
+
+// if the rendered element has the correct class
+// you will see the baes
+
+// YOUR CODE HERE
+
+// ex6: create a BOX
+// create a div element (200px x 200px)
+// using inline styles give it a 20px solid red border
+// and a blue background
+
+// YOUR CODE HERE

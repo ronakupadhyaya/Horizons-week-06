@@ -1,0 +1,26 @@
+// getInitalState + setState 
+
+// Modify Counter so that it has an initial state of count=0
+// use getInitialState to set this as soon as the controller
+// is created. 
+
+// Declare component methods "increase" and "decrease" using
+// setState to increase/decrease the counter when the respective
+// buttons are clicked
+// Add handlers to the buttons to call the respective methods. 
+
+var Counter = React.createClass({
+  render: function() {
+    //YOUR CODE HERE
+    return <div>
+      <button>Increase Count</button>
+      <button>Deacrease Count</button>
+      <h1>Count: {this.state.count}</h1>
+    </div>
+  }
+});
+
+
+// DO NOT MODIFY
+ReactDOM.render(<Counter />, document.getElementById('blue'));
+

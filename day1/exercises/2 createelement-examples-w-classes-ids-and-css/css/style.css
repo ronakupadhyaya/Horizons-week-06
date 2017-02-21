@@ -1,0 +1,24 @@
+#title {
+  color: red;
+  font-size: 250px;
+  margin: 0;
+}
+
+#artists {
+  width: 100%;
+  height: 500px;
+  display:block;
+}
+#artists div {
+  width: 45%;
+  height: 85%;
+  display: inline-block;
+}
+
+.taylor {
+  background: url('http://cdn.playbuzz.com/cdn/2de1809a-1a3a-4040-9230-7bf4da3879cd/1cdb2f8b-e1e1-4b58-8ad6-4996e32eb846_560_420.jpg') no-repeat;
+}
+
+.bae {
+  background: url('https://s-media-cache-ak0.pinimg.com/736x/ed/93/fe/ed93fe04088ab1e94fb114ff45ced441.jpg') no-repeat;
+}
