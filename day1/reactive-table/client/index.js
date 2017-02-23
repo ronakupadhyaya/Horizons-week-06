@@ -9,22 +9,54 @@ var App = React.createClass({
       text: [[]],
       header:[],
       body:[[]],
-      beenClicked: false
+      originalBody: [[]],
+      beenClicked: false,
+      searchQuery: ''
     };
   },
-  sortIncrease: function(event) {
-    var index = this.state.header.indexOf(event.target);
-    var newBody = this.state.body.sort(function(a,b) {
-      if (a[index]>b[index]) return 1;
+  restore: function() {
+    console.log('b4', this.state.originalBody);
+    var old = this.state.originalBody;
+    this.setState({
+      body: old
     })
-    this.setState({body: newBody, beenClicked: true})
+    console.log('later', this.state.originalBody);
   },
-  sortDecrease: function(event) {
-    var index = this.state.header.indexOf(event.target);
-    var newBody = this.state.body.sort(function(a,b) {
-      if (b[index]>a[index]) return 1;
+  search: function(e) {
+    this.setState({
+      searchQuery: e.target.value
     })
-    this.setState({body: newBody, beenClicked: false})
+    var self = this;
+    var results = [];
+    self.state.body.filter(function(item) {
+      console.log('ITEM: ', item);
+      for (var i = 0; i < item.length; i++) {
+        console.log('INSUDE: ', item[i]);
+        return item[i].indexOf(e.target.value) !== -1;
+      }
+    })
+    this.setState({
+      body: results
+    })
+  },
+  sort: function(event) {
+    var index;
+    var newBody;
+    if (!this.state.beenClicked) {
+      index = this.state.header.indexOf(event.target.innerText);
+      newBody = this.state.body.sort(function(a,b) {
+        if (a[index]>b[index]) return 1;
+      })
+      this.state.header[index] = this.state.header[index]+'▲';
+      this.setState({body: newBody, beenClicked: true});
+    } else {
+      index = this.state.header.indexOf(event.target.innerText);
+      newBody = this.state.body.sort(function(a,b) {
+        if (b[index]>a[index]) return 1;
+      })
+      this.state.header[index] = this.state.header[index]+'▼';
+      this.setState({body: newBody, beenClicked: false})
+    }
   },
   onChange: function(val) {
     var self = this;
@@ -33,18 +65,15 @@ var App = React.createClass({
         console.log('error parsing', err);
       } else {
 
-        self.setState({text: data, header:data[0], body:data.slice(1)});
+        self.setState({
+          text: data,
+          header: data[0],
+          body: data.slice(1),
+          originalBody: data.slice(1)});
       }
     });
   },
   render: function() {
-    console.log('***', sort);
-    var sort;
-    if (!this.state.beenClicked) {
-      sort = this.sortIncrease;
-    } else {
-      sort = this.sortDecrease;
-    }
     return (
       <div>
       <form>
@@ -54,9 +83,16 @@ var App = React.createClass({
         </div>
       </form>
 
+      <div>
+      <button className="btn btn-default" onClick={this.restore}>Restore order</button>
+      </div>
+      <p>Search</p>
+      <input onChange={this.search} placeholder="Search for someone..."
+      className="form-control" value={this.state.searchQuery}/>
+
       <table className="table">
         <thead>
-          <tr>{this.state.header.map((item) => <th><div onClick={this.sortDecrease}>▲</div>{item}</th>)}</tr>
+          <tr>{this.state.header.map((item, i) => <th onClick={this.sort}>{item}</th>)}</tr>
         </thead>
         <tbody>
           {this.state.body.map((item, i) => <tr key={i}>{
