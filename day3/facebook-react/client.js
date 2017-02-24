@@ -1,6 +1,9 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var $ = require('jquery');
+// var ScrollBox = require('react-scroll-box').ScrollBox; // ES5
+// import {ScrollBox, ScrollAxes, FastTrack} from 'react-scroll-box'; // ES6
+
 
 var App = React.createClass({
   getInitialState: function() {
@@ -173,6 +176,7 @@ var Posts = React.createClass({
     return {
       posts: [],
       currentText: '',
+      currentCommentText: ''
     };
   },
   componentDidMount: function() {
@@ -197,7 +201,6 @@ var Posts = React.createClass({
   },
   typingPost: function(event) {
     event.preventDefault();
-    console.log(event.target.value);
     this.setState({
       currentText: event.target.value
     });
@@ -229,47 +232,95 @@ var Posts = React.createClass({
   },
   clickLike: function(event) {
     event.preventDefault();
-    console.log('events dude');
-    console.log(event);
-    console.log('eventstarget', event.target.getAttribute('id'));
-    var self = this;
+    var currentId = event.target.getAttribute('id');
+    // var self = this; currently there is no need for self because the arrow function in success binds automatically
     $.ajax({
       url: 'https://horizons-facebook.herokuapp.com/api/1.0/posts/likes/' + event.target.getAttribute('id'),
       method: 'GET',
       data: {
         'token': localStorage.getItem('token')
       },
-      success: function(data) {
-        // console.log('data', data);
-        // var currentPosts = self.state.posts;
-        // currentPosts.map(function(x){
-        //   if(data.response._id === x._id){
-        //     console.log('before', x);
-        //     x.likes.push(data.response.likes);
-        //     console.log('after', x);
-        //   }
-        // });
-        // self.setState({
-        //   posts: currentPosts
-        // });
+      success:(data) => { // assign modified array to new array
+        var newPosts = this.state.posts.map(function(item){  // iterate through each post
+          if (item._id === currentId){ // if iterated post matches clicked post
+            return data.response; // update particular element with new like
+          }
+          return item; // if not matched, don't do anything
+        });
+        this.setState({
+          posts: newPosts
+        });
       }
     });
   },
+  typingComment: function(event) {
+    event.preventDefault();
+    this.setState({
+      currentCommentText: event.target.value
+    });
+  },
   comment: function(event){
-    
+    var currentId = event.target.getAttribute('id');
+    // var self = this; currently there is no need for self because the arrow function in success binds automatically
+    event.preventDefault();
+    $.ajax({
+      url: 'https://horizons-facebook.herokuapp.com/api/1.0/posts/comments/' + event.target.getAttribute('id'),
+      method: 'POST',
+      data: {
+        'token': localStorage.getItem('token'),
+        'content': this.state.currentCommentText
+      },
+      // success: function(data) {
+        // console.log('comment', data);
+        // console.log('self state posts', self.state.posts);
+        // var thisArr = self.state.posts;
+        // thisArr.unshift(data.response.comments);
+        // self.setState({
+        //   posts: thisArr,
+        //   currentText: ''
+        // });
+
+      // }
+      success:(data) => {
+        var newPosts = this.state.posts.map(function(item){
+          if (item._id === currentId){
+            return data.response;
+          }
+          return item;
+        });
+        this.setState({
+          posts: newPosts
+        });
+      }
+    });
   },
   render: function() {
     return (
       <div>
         <h1>Newsfeed</h1>
-        <table>
-        {this.state.posts.map((x) => <tr><td>{x.content}</td><td>{x.poster.name}</td><td>{x.createdAt}</td><td>Likes: {x.likes.length}</td><button id={x._id} onClick={this.clickLike}>Like</button><button onClick={this.comment}>Comment</button></tr>)}
-        </table>
 
         <form onSubmit={this.submit}>
         <input type="text" value={this.state.currentText} onChange={this.typingPost} placeholder="Enter some great content"></input>
         <button>Submit</button>
         </form>
+
+        <div style = {{overflow: "scroll", height: "86vh"}}>
+        {this.state.posts.map((x) =>
+          <div>
+            <h4>Name: {x.poster.name}</h4>
+            <h2>{x.content}</h2>
+            <h5>{x.createdAt}</h5>
+            <button id={x._id} onClick={this.clickLike}>Likes: {x.likes.length}</button>
+
+            <form id={x._id} onSubmit={this.comment}>
+            <input type="text" onChange={this.typingComment} placeholder="Enter a comment b"></input>
+            <button>Submit</button>
+            </form>
+            <h3>Comments: </h3><div style = {{overflow: "scroll", height: "100px", border: "1px solid black"}}>{x.comments.map((y) => <h5>{y.poster.name}: {y.content} <p>{y.createdAt}</p></h5>)}</div>
+
+          </div>
+        )}
+        </div>
       </div>
     );
   }
