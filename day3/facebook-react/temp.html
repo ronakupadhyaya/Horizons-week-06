@@ -1,0 +1,14 @@
+<div id="reg-form">
+<form onSubmit={this.handleSubmit} method="POST">
+  <input id="fname-input" className="register reg-input" type="text" name="fname" placeholder="First Name" value={this.state.fname} onChange={this.firstChange} />
+  <input id="lname-input" className="register reg-input" type="text" name="lname" placeholder="Last Name" value={this.state.lname} onChange={this.lastChange} />
+  <input id="email-input" className="register reg-input" type="text" name="email" placeholder="Username" value={this.state.username} onChange={this.userChange} />
+  <input id="password-input" className="register reg-input" type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.passChange} />
+  <button className="register button" id="reg-button" type="button" name="register">Register</button>
+  </form>
+  <div className="progress" style={{height: "25px"}}>
+    <div className="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style={{width: "0%"}}>
+      <span className="sr-only">0% Complete</span>
+    </div>
+  </div>
+</div>
