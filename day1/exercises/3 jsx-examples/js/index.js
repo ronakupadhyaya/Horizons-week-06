@@ -238,7 +238,7 @@ var Counter = React.createClass({
 var Counter = React.createClass({
 	getInitialState: function() {
 		return {count: 0};
-	},
+	},s
 	increase: function() {
 		this.setState({count: this.state.count + 1});
 	},
