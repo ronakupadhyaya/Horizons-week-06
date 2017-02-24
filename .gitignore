@@ -37,4 +37,4 @@ node_modules
 # Debug log from npm
 npm-debug.log
 
-reactive-table/*
+reactive-table/
