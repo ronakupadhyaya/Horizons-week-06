@@ -148,7 +148,30 @@ handleClick(i) {
     });
   }
 ```
-## Part 6: History
+
+## Part 6: Storing and Showing History
+### Goal
+We want to implement a history feature, where we can revisit the board across different points in time. This means that we need to **store**, **show** and **restore** game states. Let's store history in an array like so:
+```javascript
+history = [
+  {
+    squares: [
+      null, null, null,
+      null, null, null,
+      null, null, null,
+    ]
+  },
+  {
+    squares: [
+      null, null, null,
+      null, 'X', null,
+      null, null, null,
+    ]
+  },
+  // ...
+]
+```
+
 ## Part 7: Moves
 ## Part 8: Keys
 ## Part 9: Time Travel
