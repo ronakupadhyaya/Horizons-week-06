@@ -46,6 +46,17 @@ We want to design a React component representing a "grid" in our game, capable o
 
   ![](./img/img2.png)
 1. Change the button so that when clicked, it'll display an alert saying "1337". Remember that for React components, the "onclick" property is actually "onClick", camel-case. Clicking the squares now should trigger a popup.
+  ```javascript
+  class Square extends React.Component {
+    render() {
+      return (
+        <button className="square" onClick={() => alert('click')}>
+          {this.props.value}
+        </button>
+      );
+    }
+  }
+  ```
 1. Since Square only uses the ```render``` method, we can turn it into a **functional component**. The general structure of a functional component looks like this, as an example:
   ```javascript
   function ComponentName(props){
@@ -172,6 +183,60 @@ history = [
 ]
 ```
 
+### Steps
+1. We want to move the state up again - from the Board component to the Game component. Initialize the game state in the constructor for Game:
+  ```javascript
+  class Game extends React.Component {
+    constructor() {
+      super();
+      this.state = {
+        history: [{
+          squares: Array(9).fill(null),
+        }],
+        xIsNext: true,
+      };
+    }
+
+    render() {
+      ...
+    }
+  }
+  ```
+1. Change the Board component so that it takes ```squares``` and ```onClick``` from the Game component, instead of having its own version.
+  1. Delete the constructor in Board:
+  1. Replace any instance of ```this.state.squares``` with ```this.props.squares``` in ```renderSquare``` for the Board
+  1. Replace any instance of ```this.handleClick``` with ```this.props.handleClick``` in ```renderSquare``` for the Board
+1. Have the Game component look at the history array and correctly calculate the game's status.
+  ```javascript
+  render() {
+    const history = this.state.history;
+    const current = history[history.length - 1];
+    const winner = calculateWinner(current.squares);
+
+    let status;
+    if (winner) {
+      status = 'Winner: ' + winner;
+    } else {
+      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    }
+
+    return (
+      <div className="game">
+        <div className="game-board">
+          <Board
+            squares={current.squares}
+            onClick={(i) => this.handleClick(i)}
+          />
+        </div>
+        <div className="game-info">
+          <div>{status}</div>
+          <ol>{/* TODO */}</ol>
+        </div>
+      </div>
+    );
+  }
+  ```
+1. Since the Game component is calculating the status, remove the ```<div className="status">``` and the lines calculating the status in the Board's ```render()```.
 ## Part 7: Moves
 ## Part 8: Keys
 ## Part 9: Time Travel
