@@ -46,7 +46,7 @@ class Square extends React.Component {
 ```
 
 At this point, your app should look like this:
-![](/img/img1.png)
+![](./img/img1.png)
 
 1. Change the button so that when clicked, it'll display an alert saying "1337". Remember that for React components, the "onclick" property is actually "onClick", camel-case. Clicking the squares now should trigger a popup.
 
