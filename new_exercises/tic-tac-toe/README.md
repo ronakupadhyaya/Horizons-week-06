@@ -20,44 +20,135 @@ We will be using [this codepen](https://codepen.io/josephch405/pen/RVdPQw) for t
 ## Part 2: The Square Component
 ### Goal
 We want to design a React component representing a "grid" in our game, capable of displaying Xs and Os and responding to events.
-
 ### Steps
 1. From the Board component, change ```renderSquare``` so that we pass a value to the Square:
-```javascript
-class Board extends React.Component {
-  renderSquare(i) {
-    return <Square value={i} />;
+  ```javascript
+  class Board extends React.Component {
+    renderSquare(i) {
+      return <Square value={i} />;
+    }
+    ...
   }
-  ...
-}
-```
-
+  ```
 1. Change the Square component so that the Square displays the passed-down prop:
-```javascript
-class Square extends React.Component {
-  render() {
-    return (
-      <button className="square">
-        {this.props.value}
-      </button>
+  ```javascript
+  class Square extends React.Component {
+    render() {
+      return (
+        <button className="square">
+          {this.props.value}
+        </button>
+      );
+    }
+  }
+  ```
+  At this point, your app should look like this:
+
+  ![](./img/img2.png)
+1. Change the button so that when clicked, it'll display an alert saying "1337". Remember that for React components, the "onclick" property is actually "onClick", camel-case. Clicking the squares now should trigger a popup.
+1. Since Square only uses the ```render``` method, we can turn it into a **functional component**. The general structure of a functional component looks like this, as an example:
+  ```javascript
+  function ComponentName(props){
+    return(
+      <div>
+        //stuff here
+      </div>
     );
   }
-}
-```
-
-At this point, your app should look like this:
-
-![](./img/img1.png)
-
-1. Change the button so that when clicked, it'll display an alert saying "1337". Remember that for React components, the "onclick" property is actually "onClick", camel-case. Clicking the squares now should trigger a popup.
+  ```
 
 ## Part 3: Lifting State Up
-## Part 4: Immutability
-## Part 5: Functional Components
-## Part 6: Taking Turns
-## Part 7: Winner Calculation
-## Part 8: Display Game Status
+## Part 4: Taking Turns
+### Goal
+Now we have a game where player x (but not y) can place pieces (and thus always win). We'll have to nerf this - we want the players to take turns.
 
-## Part 9: Moves
-## Part 10: Keys
-## Part 11: Time Travel
+### Steps
+1. Make a new boolean in the Board's state object called ```xIsNext``` - initialize it to ```true``` so that player x plays first.
+  ```javascript
+    class Board extends React.Component {
+      constructor() {
+        ...
+        this.state = {
+          ...
+          xIsNext: true,
+        };
+      }
+    }
+  ```
+1. Change the board component's ```handleClick``` so that
+  1. The ```squares``` array is updated with the correct player piece
+  1. xIsNext as a state variable is updated
+```javascript
+  handleClick(i){
+    ...
+    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    this.setState({
+      ...
+      xIsNext: !this.state.xIsNext,
+    });
+  }
+```
+1. Change the board component's ```render``` method so that the status updates correctly - ie it says "Next player: X" or "Next player: O"
+```javascript
+const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+```
+
+At this point, you should be able to play through the game as expected - but without a proper endgame. Let's fix that.
+
+## Part 5: Winner Calculation
+### Goal
+We want the game to stop when one of the players has made a line - one can have too much winning, after all. We want the status text to represent this state.
+
+### Steps
+1. Add ```calculateWinner``` to the end of your code - this is a help function that takes in an array representing a board and outputs a winner (x, o) or ```null``` if nobody has won yet.
+  ```javascript
+  function calculateWinner(squares) {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+        return squares[a];
+      }
+    }
+    return null;
+  }
+  ```
+1. Update the ```render``` code in Board so that we first use ```calculateWinner``` to check if someone has won, then update the status accordingly.
+  ```javascript
+  render() {
+    const winner = calculateWinner(this.state.squares);
+    let status;
+    if (winner) {
+      status = 'Winner: ' + winner;
+    } else {
+      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    }
+  }
+  ```
+1. Update the ```handleClick``` method so that if either someone has won *or* the target location is already occupied, then the method would return immediately and change nothing on the board.
+```javascript
+handleClick(i) {
+    const squares = this.state.squares.slice();
+    if (calculateWinner(squares) || squares[i]) {
+      return;
+    }
+    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    this.setState({
+      squares: squares,
+      xIsNext: !this.state.xIsNext,
+    });
+  }
+```
+## Part 6: History
+## Part 7: Moves
+## Part 8: Keys
+## Part 9: Time Travel
