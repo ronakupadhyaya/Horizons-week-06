@@ -128,7 +128,7 @@ We want to design a React component called Square - it represents a "grid" in ou
 
     </details>
 
-    Our new board should look like the following:
+    Our new board should look like the following, after clicking on the squares:
 
     ![](./img/img3.png)
 
