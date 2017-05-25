@@ -99,7 +99,7 @@ We want to design a React component called Square - it represents a "grid" in ou
 
 We now need to check if one player has won the game, and alternate placing X and O in the squares. To check if someone has won, we'll need to have the value of all 9 squares in one place, rather than split up across the Square components. The best solution here is to store this state in the Board component instead of in each Square.
 
-When you want to **aggregate data** from multiple children or to have two child components communicate with each other, **move the state upwards** so that it **lives in the parent component**. The parent can then pass the state back down to the children via props, so that the child components are always in sync with each other and with the parent.**
+When you want to **aggregate data** from multiple children or to have two child components communicate with each other, **move the state upwards** so that it **lives in the parent component**. The parent can then pass the state back down to the children via props, so that the child components are always in sync with each other and with the parent.
 
 ### Steps
 
