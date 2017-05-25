@@ -505,6 +505,8 @@ If you click any move link now, the board should immediately update to show what
 ## Bonus
 Try to complete the following bonus tasks:
 1. Bold the currently-selected item in History
+    
+    ![](./img/bonus1.gif)
 1. Rewrite Board to use two loops instead of hard-coding the Squares
 1. Add a toggle button that lets you choose between sorting the History in ascending/descending order
 1. When someone wins, highlight the winning squares
