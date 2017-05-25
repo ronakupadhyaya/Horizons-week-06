@@ -30,7 +30,7 @@ Before we begin our board should look like this:
 ### Goal
 We want to design a React component called Square - it represents a "grid" in our game, capable of displaying Xs and Os and responding to events.
 ### Steps
-1. From the Board component, change ```renderSquare``` so that we pass a prop called "value" to the Square with value equal to i:
+1. From the Board component, change ```renderSquare``` so that we pass a prop called "value" to the Square with value equal to ```i```:
 
     <details>
       <summary>Show Code</summary>
