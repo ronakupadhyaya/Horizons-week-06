@@ -97,8 +97,8 @@ We want to design a React component called Square - it represents a "grid" in ou
       
     ```
     class Square extends React.Component {
-        constructor() {
-            super();
+        constructor(props) {
+            super(props);
             this.state = {
                 value: null,
             };
@@ -109,7 +109,7 @@ We want to design a React component called Square - it represents a "grid" in ou
     
     </details>
     
-    Remember to call ```super()``` first in a constructor - this sets up the component correctly.
+    Remember to call ```super(props)``` first in a constructor - this sets up the component correctly.
 1. Update the Square```render``` method to display the value from its current state, and then toggle the value on click. We need to replace ```this.props.value``` with ```this.state.value```, and then replace the alert function with ```this.setState({value: 'X'})```:
 
     <details>
@@ -147,8 +147,8 @@ When you want to **aggregate data** from multiple children or to have two child 
       
     ```javascript
     class Board extends React.Component {
-        constructor() {
-            super();
+        constructor(props) {
+            super(props);
             this.state = {
                 squares: Array(9).fill(null),
             };
@@ -266,7 +266,7 @@ Now we have a game where player x (but not y) can place pieces (and thus always 
       
     ```javascript
     class Board extends React.Component {
-        constructor() {
+        constructor(props) {
             ...
             this.state = {
                 ...
@@ -424,8 +424,8 @@ history = [
       
     ```javascript
     class Game extends React.Component {
-        constructor() {
-            super();
+        constructor(props) {
+            super(props);
             this.state = {
                 history: [{
                     squares: Array(9).fill(null),
@@ -594,8 +594,8 @@ When we select one of our previous moves the board should display its state at t
       
         ```javascript
         class Game extends React.Component {
-            constructor() {
-                super();
+            constructor(props) {
+                super(props);
                 this.state = {
                     history: [{
                         squares: Array(9).fill(null),
