@@ -3,7 +3,7 @@
 Today we will be making a Tic Tac Toe game in React - the "Hello World" equivalent for real programmers (saying "Hello world!" just isn't impressive enough anymore). By the end of this exercise you will have:
 1. A clickable grid where our master strategists can place Xs and Os
 1. A status text reflecting the state of the Game
-1. A history panel that allows for (psuedo) time travel
+1. A history panel that allows for (pseudo) time travel
 
 Sections:
 1. [Install React Development Tools](#part-1-install-react-development-tools)
