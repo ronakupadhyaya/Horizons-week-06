@@ -13,7 +13,10 @@ Sections:
 1. [Winner Calculator](#part-5-winner-calculation)
 1. [Storing and Showing History](#part-6-storing-and-showing-history)
 1. [Time Travel](#part-7-time-travel)
-1. [Bonus](#bonus)
+1. [Feeling Emboldened?](#part-8-feeling-emboldened)
+1. [Maximum Loopiness](#part-9-maximum-loopiness)
+1. [A Sorting Problem](#part-10-a-sorting-problem)
+1. [Gloat in Victory](#part-11-gloat-in-victory)
 
 ## Part 1: Install React Development Tools
 Install the React Developer Tools extension for Chrome [here](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi).
