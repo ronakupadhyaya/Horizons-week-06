@@ -21,6 +21,9 @@ This extension allows you to inspect React components, states, props etc, as you
 
 We will be using [this codepen](https://codepen.io/josephch405/pen/RVdPQw) for this exercise.
 
+Before we begin our board should look like this:
+![](./img/img1.png)
+
 ## Part 2: The Square Component
 ### Goal
 We want to design a React component representing a "grid" in our game, capable of displaying Xs and Os and responding to events.
