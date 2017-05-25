@@ -13,10 +13,11 @@ Sections:
 1. [Winner Calculator](#part-5-winner-calculation)
 1. [Storing and Showing History](#part-6-storing-and-showing-history)
 1. [Time Travel](#part-7-time-travel)
-1. [Feeling Emboldened?](#part-8-feeling-emboldened)
-1. [Maximum Loopiness](#part-9-maximum-loopiness)
-1. [A Sorting Problem](#part-10-a-sorting-problem)
-1. [Gloat in Victory](#part-11-gloat-in-victory)
+1. [Functional Components](#part-8-functional-components)
+1. [Feeling Emboldened?](#part-9-feeling-emboldened)
+1. [Maximum Loopiness](#part-10-maximum-loopiness)
+1. [A Sorting Problem](#part-11-a-sorting-problem)
+1. [Gloat in Victory](#part-12-gloat-in-victory)
 
 ## Part 1: Install React Development Tools
 Install the React Developer Tools extension for Chrome [here](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi).
@@ -673,23 +674,36 @@ When we select one of our previous moves the board should display its state at t
 
 If you click any move link now, the board should immediately update to show what the game looked like at that time.
 
-## Part 8: Feeling Emboldened?
+## Part 8: Functional Components
+### Goal
+Since Square is a component that only uses the ```render``` function, we can convert it into a **functional component**. A sample functional component is shown below:
+
+```javascript
+function ComponentName(props){
+    return(
+        ... //component layout here
+    )
+}
+```
+Convert Square into a functional component.
+
+## Part 9: Feeling Emboldened?
 ### Goal
 Bold the currently-selected item in History (so that our time traveling is a little less confusing)
 
 ![](./img/bonus1.gif)
 
-## Part 9: Maximum Loopiness
+## Part 10: Maximum Loopiness
 ### Goal
 Rewrite Board to use two loops instead of hard-coding the Squares
 
-## Part 10: A Sorting Problem
+## Part 11: A Sorting Problem
 ### Goal
 Add a toggle button that lets you choose between sorting the History in ascending/descending order
 
 ![](./img/bonus3.gif)
 
-## Part 11: Gloat in Victory
+## Part 12: Gloat in Victory
 ### Goal
 When someone wins, highlight the winning squares
 
