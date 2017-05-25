@@ -502,12 +502,12 @@ When we select one of our previous moves the board should display its state at t
 
 If you click any move link now, the board should immediately update to show what the game looked like at that time.
 
-##Bonus
+## Bonus
 Try to complete the following bonus tasks:
 1. Bold the currently-selected item in History
 1. Rewrite Board to use two loops instead of hard-coding the Squares
 1. Add a toggle button that lets you choose between sorting the History in ascending/descending order
 1. When someone wins, highlight the winning squares
 
-##Credits
+## Credits
 This guide was largely based off of the official React tutorial [here](https://facebook.github.io/react/tutorial/tutorial.html)
