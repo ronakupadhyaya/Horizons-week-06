@@ -13,10 +13,7 @@ Sections:
 1. [Winner Calculator](#part-5-winner-calculation)
 1. [Storing and Showing History](#part-6-storing-and-showing-history)
 1. [Time Travel](#part-7-time-travel)
-1. [Feeling Emboldened?](#part-8-feeling-emboldened)
-1. [Maximum Loopiness](#part-9-maximum-loopiness)
-1. [A Sorting Problem](#part-10-a-sorting-problem)
-1. [Gloat in Victory](#part-11-gloat-in-victory)
+1. [Bonus](#bonus)
 
 ## Part 1: Install React Development Tools
 Install the React Developer Tools extension for Chrome [here](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi).
@@ -114,6 +111,7 @@ We want to design a React component called Square - it represents a "grid" in ou
 
     <details>
       <summary>Show Code</summary>
+      
     ```
     render() {
         return (
@@ -280,6 +278,10 @@ Now we have a game where player x (but not y) can place pieces (and thus always 
 1. Change the board component's ```handleClick``` so that
     1. The ```squares``` array is updated with the correct player piece
     1. ```xIsNext``` as a state variable is updated
+    
+    <details>
+      <summary>Show Code</summary>
+      
     ```javascript
     handleClick(i){
         ...
@@ -290,10 +292,19 @@ Now we have a game where player x (but not y) can place pieces (and thus always 
         });
     }
     ```
+    
+    </details>
+    
 1. Change the board component's ```render``` method so that the status updates correctly - ie it says "Next player: X" or "Next player: O"
+
+    <details>
+      <summary>Show Code</summary>
+      
     ```javascript
     const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     ```
+    
+    </details>
 
     At this point, you should be able to play through the game as expected - but without a proper endgame. Let's fix that.
 
@@ -305,6 +316,10 @@ We want the game to stop when one of the players has made a line - one can have 
 
 ### Steps
 1. Add ```calculateWinner``` to the end of your code - this is a help function that takes in an array representing a board and outputs a winner (x, o) or ```null``` if nobody has won yet.
+
+    <details>
+      <summary>Show Code</summary>
+      
     ```javascript
     function calculateWinner(squares) {
         const lines = [
@@ -326,7 +341,14 @@ We want the game to stop when one of the players has made a line - one can have 
         return null;
     }
     ```
+    
+    </details>
+    
 1. Update the ```render``` code in Board so that we first use ```calculateWinner``` to check if someone has won, then update the status accordingly.
+
+    <details>
+      <summary>Show Code</summary>
+      
     ```javascript
     render() {
         const winner = calculateWinner(this.state.squares);
@@ -338,7 +360,14 @@ We want the game to stop when one of the players has made a line - one can have 
         }
     }
     ```
+    
+    </details>
+    
 1. Update the ```handleClick``` method so that if either someone has won *or* the target location is already occupied, then the method would return immediately and change nothing on the board.
+
+    <details>
+      <summary>Show Code</summary>
+      
     ```javascript
     handleClick(i) {
         const squares = this.state.squares.slice();
@@ -352,6 +381,8 @@ We want the game to stop when one of the players has made a line - one can have 
         });
     }
     ```
+    
+    </details>
 
     After a game has finished our board should look something like this:
 
@@ -360,6 +391,7 @@ We want the game to stop when one of the players has made a line - one can have 
 ## Part 6: Storing and Showing History
 ### Goal
 We want to implement a history feature, where we can revisit the board across different points in time. This means that we need to **store**, **show** and **restore** game states. Let's store history in an array like so:
+      
 ```javascript
 history = [
     {
@@ -380,8 +412,13 @@ history = [
 ]
 ```
 
+
 ### Steps
 1. We want to move the state up again - from the Board component to the Game component. Initialize the game state in the constructor for Game:
+
+    <details>
+      <summary>Show Code</summary>
+      
     ```javascript
     class Game extends React.Component {
         constructor() {
@@ -399,11 +436,18 @@ history = [
         }
     }
     ```
+    
+    </details>
+    
 1. Change the Board component so that it takes ```squares``` and ```onClick``` from the Game component, instead of having its own version.
     1. Delete the constructor in Board:
     1. Replace any instance of ```this.state.squares``` with ```this.props.squares``` in ```renderSquare``` for the Board
     1. Replace any instance of ```this.handleClick``` with ```this.props.handleClick``` in ```renderSquare``` for the Board
 1. Have the Game component look at the history array and correctly calculate the game's status.
+
+    <details>
+      <summary>Show Code</summary>
+      
     ```javascript
     render() {
         const history = this.state.history;
@@ -433,7 +477,14 @@ history = [
         );
     }
     ```
+    
+    </details>
+    
 1. Since the Game component is calculating the status, remove the ```<div className="status">``` and the lines calculating the status in the Board's ```render()```. Your new ```render``` should look like this:
+
+    <details>
+      <summary>Show Code</summary>
+      
     ```javascript
     render() {
         return (
@@ -446,7 +497,14 @@ history = [
         );
     }
     ```
+    
+    </details>
+    
 1. We should also move ```handleClick``` from Board to Game. First, simply cut and paste. Then, since we want to track history-related information, we need
+
+    <details>
+      <summary>Show Code</summary>
+      
     ```javascipt
         handleClick(i) {
             const history = this.state.history;
@@ -464,7 +522,14 @@ history = [
             });
         }
     ```
+    
+    </details>
+    
 1. Show the moves as a list next to the game board. We do this by mapping a history object to a list, then placing it in our final render for the Game component. Your final ```render``` for the Game component should look like this:
+
+    <details>
+      <summary>Show Code</summary>
+      
     ```javascript
     render() {
         ...
@@ -489,6 +554,8 @@ history = [
         );
     }
     ```
+    
+    </details>
 
     Now you should be able to view all of the previous moves on our board!
 
@@ -501,6 +568,9 @@ When we select one of our previous moves the board should display its state at t
 ### Steps
 1. For our move list, we already have a unique ID for each step: the number of the move when it happened. In the Game's render method, add the key as ```<li key={move}>``` and the key warning should disappear:
 
+    <details>
+      <summary>Show Code</summary>
+
     ```javascript
     ...
     return (
@@ -510,8 +580,15 @@ When we select one of our previous moves the board should display its state at t
     );
     ...
     ```
+    
+    </details>
+    
 1. Next we need to add the ```jumpTo``` method that we referenced in part 6.
     1. First add a ```key``` to Game's state to indicate which step we're viewing.
+    
+        <details>
+          <summary>Show Code</summary>
+      
         ```javascript
         class Game extends React.Component {
             constructor() {
@@ -527,7 +604,14 @@ When we select one of our previous moves the board should display its state at t
         }
         ...
         ```
+        
+        </details>
+        
     1. Next, we'll define the ```jumpTo``` method in Game to update that state. We should also update ```xIsNext``` to ```true``` if the index of the move number is an even number.
+    
+        <details>
+          <summary>Show Code</summary>
+      
         ```javascript
         ...
         handleClick(i) {
@@ -546,7 +630,14 @@ When we select one of our previous moves the board should display its state at t
         }
         ...
         ```
+        
+        </details>
+        
 1. Then update stepNumber when a new move is made by adding ```stepNumber: history.length``` to the state update in Game's ```handleClick```:
+
+    <details>
+      <summary>Show Code</summary>
+      
     ```javascript
     handleClick(i) {
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
@@ -558,7 +649,14 @@ When we select one of our previous moves the board should display its state at t
         });
     }
     ```
+    
+    </details>
+    
 1. Now you can modify Game's render to read from that step in the history:
+
+    <details>
+      <summary>Show Code</summary>
+      
     ```javascript
     render() {
         const history = this.state.history;
@@ -567,6 +665,8 @@ When we select one of our previous moves the board should display its state at t
         ...
     }
     ```
+    
+    </details>
 
 If you click any move link now, the board should immediately update to show what the game looked like at that time.
 
