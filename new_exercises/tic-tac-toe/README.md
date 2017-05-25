@@ -18,7 +18,7 @@ Sections:
 ## Part 1: Install React Development Tools
 Install the React Developer Tools extension for Chrome [here](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi).
 
-This extension allows you to inspect React components, states, props etc, as your app is running. Use this often to check "behind the scenes"!
+This extension allows you to inspect React components, states, props, etc as your app is running. Use this often to check "behind the scenes"!
 
 We will be using [this codepen](https://codepen.io/josephch405/pen/RVdPQw) for this exercise. The result is automatically compiled on the fly as you edit.
 
