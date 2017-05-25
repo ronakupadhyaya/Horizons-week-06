@@ -249,7 +249,7 @@ When you want to **aggregate data** from multiple children or to have two child 
 
     </details>
 
-    We call ```.slice()``` to copy the ```squares``` array instead of mutating the existing array. This is done to maintain **Immutability** which we will cover in a later video.
+    We call ```.slice()``` to copy the ```squares``` array instead of **mutating** (or changing the underlying data) the existing array. By keeping our objects **immutable** (or unchanging) we can increase component and overall application performance. For more on immutability click [here](https://facebook.github.io/react/tutorial/tutorial.html#why-immutability-is-important).
 
     Now you should be able to click in squares to fill them again, but the state is stored in the Board component instead of in each Square.
 
@@ -367,7 +367,7 @@ We want the game to stop when one of the players has made a line - one can have 
 
     </details>
 
-1. Update the ```handleClick``` method so that if either someone has won *or* the target location is already occupied, then the method would return immediately and change nothing on the board.
+1. Update the ```handleClick``` method so that if either someone has won *or* the target location is already occupied, then the method would return immediately and change nothing on the board. Remember React will only start a re-render when ```setState``` is called.
 
     <details>
       <summary>Show Code</summary>
