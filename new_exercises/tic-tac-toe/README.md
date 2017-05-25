@@ -90,6 +90,10 @@ We want to design a React component called Square - it represents a "grid" in ou
     }
     ```
 
+    Our new board should look like the following:
+
+    ![](./img/img3.png)
+
 ## Part 3: Lifting State Up
 ### Goal
 
@@ -206,7 +210,7 @@ Now we have a game where player x (but not y) can place pieces (and thus always 
     ```
 1. Change the board component's ```handleClick``` so that
     1. The ```squares``` array is updated with the correct player piece
-    1. xIsNext as a state variable is updated
+    1. ```xIsNext``` as a state variable is updated
     ```javascript
     handleClick(i){
         ...
@@ -223,6 +227,8 @@ Now we have a game where player x (but not y) can place pieces (and thus always 
     ```
 
     At this point, you should be able to play through the game as expected - but without a proper endgame. Let's fix that.
+
+    ![](./img/img4.png)
 
 ## Part 5: Winner Calculation
 ### Goal
@@ -277,6 +283,10 @@ We want the game to stop when one of the players has made a line - one can have 
         });
     }
     ```
+
+    After a game has finished our board should look something like this:
+
+    ![](./img/img5.png)
 
 ## Part 6: Storing and Showing History
 ### Goal
@@ -388,10 +398,7 @@ history = [
 1. Show the moves as a list next to the game board. We do this by mapping a history object to a list, then placing it in our final render for the Game component. Your final ```render``` for the Game component should look like this:
     ```javascript
     render() {
-        const history = this.state.history;
-        const current = history[history.length - 1];
-        const winner = calculateWinner(current.squares);
-
+        ...
         const moves = history.map((step, move) => {
             const desc = move ?
                 'Move #' + move :
@@ -402,22 +409,9 @@ history = [
                 </li>
             );
         });
-
-        let status;
-        if (winner) {
-            status = 'Winner: ' + winner;
-        } else {
-            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-        }
-
+        ...
         return (
-            <div className="game">
-                <div className="game-board">
-                <Board
-                squares={current.squares}
-                onClick={(i) => this.handleClick(i)}
-                />
-            </div>
+            ...
             <div className="game-info">
                 <div>{status}</div>
                 <ol>{moves}</ol>
@@ -426,6 +420,10 @@ history = [
         );
     }
     ```
+
+    Now you should be able to view all of the previous moves on our board!
+
+    ![](./img/img6.png)
 
 ## Part 7: Time Travel
 ### Goal
