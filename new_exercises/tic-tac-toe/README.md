@@ -6,9 +6,13 @@ Today we will be making a Tic Tac Toe game in React - the "Hello World" equivale
 1. A history panel that allows for time travel
 
 Here are the part of the exercise:
-1. Install React Development Tools
-1. The Square Component
-1. etc
+1. [Install React Development Tools](#part-1-install-react-development-tools)
+1. [The Square Component](#part-2-the-square-component)
+1. [Lifting State Up](#part-3-lifting-state-up)
+1. [Taking Turns](#part-4-taking-turns)
+1. [Winner Calculator](#part-5-winner-calculation)
+1. [Storing and Showing History](#part-6-storing-and-showing-history)
+1. [Time Travel](#part-7-time-travel)
 
 ## Part 1: Install React Development Tools
 Install the React Developer Tools extension [here](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi).
@@ -321,6 +325,77 @@ history = [
       );
     }
     ```
-1. Since the Game component is calculating the status, remove the ```<div className="status">``` and the lines calculating the status in the Board's ```render()```.
+1. Since the Game component is calculating the status, remove the ```<div className="status">``` and the lines calculating the status in the Board's ```render()```. Your new ```render``` should look like this:
+    ```javascript
+    render() {
+        return (
+        <div>
+            <div className="board-row">
+              ...
+            </div>
+            ...
+        </div>
+        );
+    }
+    ```
+1. We should also move ```handleClick``` from Board to Game. First, simple cut and paste. Then, since we want to track history-related information, we need 
+    ```javascipt
+        handleClick(i) {
+            const history = this.state.history;
+            const current = history[history.length - 1];
+            const squares = current.squares.slice();
+            if (calculateWinner(squares) || squares[i]) {
+                return;
+            }
+            squares[i] = this.state.xIsNext ? 'X' : 'O';
+            this.setState({
+                history: history.concat([{
+                    squares: squares
+                }]),
+                xIsNext: !this.state.xIsNext,
+            });
+        }
+    ```
+1. Show the moves as a list next to the game board. We do this by mapping a history object to a list, then placing it in our final render for the Game component. Your final ```render``` for the Game component should look like this:
+    ```javascript
+    render() {
+        const history = this.state.history;
+        const current = history[history.length - 1];
+        const winner = calculateWinner(current.squares);
+
+        const moves = history.map((step, move) => {
+            const desc = move ?
+                'Move #' + move :
+                'Game start';
+            return (
+                <li>
+                <a href="#" onClick={() => this.jumpTo(move)}>{desc}</a>
+                </li>
+            );
+        });
+
+        let status;
+        if (winner) {
+            status = 'Winner: ' + winner;
+        } else {
+            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+        }
+
+        return (
+            <div className="game">
+                <div className="game-board">
+                <Board
+                squares={current.squares}
+                onClick={(i) => this.handleClick(i)}
+                />
+            </div>
+            <div className="game-info">
+                <div>{status}</div>
+                <ol>{moves}</ol>
+            </div>
+          </div>
+        );
+    }
+    ```
 
 ## Part 7: Time Travel
