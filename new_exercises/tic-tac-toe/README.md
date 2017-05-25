@@ -39,9 +39,9 @@ We want to design a React component representing a "grid" in our game, capable o
     class Square extends React.Component {
       render() {
         return (
-          <button className="square">
-            {this.props.value}
-          </button>
+            <button className="square">
+                {this.props.value}
+            </button>
         );
       }
     }
@@ -68,7 +68,7 @@ We want to design a React component representing a "grid" in our game, capable o
     render() {
         return (
             <button className="square" onClick={() => this.setState({value: 'X'})}>
-            {this.state.value}
+                {this.state.value}
             </button>
         );
     }
@@ -87,13 +87,13 @@ When you want to **aggregate data** from multiple children or to have two child 
 
     ```javascript
     class Board extends React.Component {
-      constructor() {
-        super();
-        this.state = {
-          squares: Array(9).fill(null),
-        };
-      }
-    ...
+        constructor() {
+            super();
+            this.state = {
+                squares: Array(9).fill(null),
+            };
+        }
+        ...
     }
     ```
 
@@ -101,9 +101,9 @@ When you want to **aggregate data** from multiple children or to have two child 
 
     ```
     [
-      'O', null, 'X',
-      'X', 'X', 'O',
-      'O', null, null,
+        'O', null, 'X',
+        'X', 'X', 'O',
+        'O', null, null,
     ]
     ```
 
@@ -111,7 +111,7 @@ When you want to **aggregate data** from multiple children or to have two child 
 
     ```javascript
     renderSquare(i) {
-      return <Square value={this.state.squares[i]} />;
+        return <Square value={this.state.squares[i]} />;
     }
     ```
 
@@ -123,8 +123,8 @@ When you want to **aggregate data** from multiple children or to have two child 
     renderSquare(i) {
       return (
         <Square
-          value={this.state.squares[i]}
-          onClick={() => this.handleClick(i)}
+            value={this.state.squares[i]}
+            onClick={() => this.handleClick(i)}
         />
       );
     }
@@ -142,9 +142,9 @@ When you want to **aggregate data** from multiple children or to have two child 
     class Square extends React.Component {
       render() {
         return (
-          <button className="square" onClick={() => this.props.onClick()}>
-            {this.props.value}
-          </button>
+            <button className="square" onClick={() => this.props.onClick()}>
+                {this.props.value}
+            </button>
         );
       }
     }
@@ -156,13 +156,13 @@ When you want to **aggregate data** from multiple children or to have two child 
 
     ```javascript
     class Board extends React.Component {
-      ...
-      handleClick(i) {
-        const squares = this.state.squares.slice();
-        squares[i] = 'X';
-        this.setState({squares: squares});
-      }
-      ...
+        ...
+        handleClick(i) {
+            const squares = this.state.squares.slice();
+            squares[i] = 'X';
+            this.setState({squares: squares});
+        }
+        ...
     }
     ```
     We call ```.slice()``` to copy the ```squares``` array instead of mutating the existing array. This is done to maintain **Immutability** which we will cover in a later video.
