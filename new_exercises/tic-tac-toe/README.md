@@ -502,14 +502,25 @@ When we select one of our previous moves the board should display its state at t
 
 If you click any move link now, the board should immediately update to show what the game looked like at that time.
 
-## Bonus
-Try to complete the following bonus tasks:
-1. Bold the currently-selected item in History
-    
-    ![](./img/bonus1.gif)
-1. Rewrite Board to use two loops instead of hard-coding the Squares
-1. Add a toggle button that lets you choose between sorting the History in ascending/descending order
-1. When someone wins, highlight the winning squares
+## Part 8: Feeling Emboldened?
+### Goal
+Bold the currently-selected item in History (so that our time traveling is a little less confusing)
+
+![](./img/bonus1.gif)
+
+## Part 9: Maximum Loopiness
+### Goal
+Rewrite Board to use two loops instead of hard-coding the Squares
+
+## Part 10: A Sorting Problem
+### Goal
+Add a toggle button that lets you choose between sorting the History in ascending/descending order
+
+![](./img/bonus3.gif)
+
+## Part 11: Gloat in Victory
+### Goal
+When someone wins, highlight the winning squares
 
 ## Credits
 This guide was largely based off of the official React tutorial [here](https://facebook.github.io/react/tutorial/tutorial.html)
