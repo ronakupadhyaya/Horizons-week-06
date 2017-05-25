@@ -22,6 +22,7 @@ This extension allows you to inspect React components, states, props etc, as you
 We will be using [this codepen](https://codepen.io/josephch405/pen/RVdPQw) for this exercise.
 
 Before we begin our board should look like this:
+
 ![](./img/img1.png)
 
 ## Part 2: The Square Component
