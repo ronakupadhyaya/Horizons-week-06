@@ -182,7 +182,7 @@ When you want to **aggregate data** from multiple children or to have two child 
 
     </details>
 
-1. Now we need to change what happens when a square is clicked. Since component state is private, we can't update Board's state directly from Square.
+1. Now we need to change what happens when a square is clicked. Since component state is always private, we can't update Board's state directly from Square.
 
     The usual pattern here is pass down a function from Board to Square that gets called when the square is clicked. Change renderSquare in Board again so that it reads:
 
