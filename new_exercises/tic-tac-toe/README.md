@@ -46,9 +46,9 @@ We want to design a React component called Square - it represents a "grid" in ou
         ...
     }
     ```
-    
+
     </details>
-    
+
 1. Change the Square component so that the Square displays the passed-down prop:
 
     <details>
@@ -67,7 +67,7 @@ We want to design a React component called Square - it represents a "grid" in ou
     ```
 
      </details>
- 
+
     At this point, your app should look like this, meaning that the Board is correctly passing down dummy values (1-9) down to its "children" Squares:
 
     ![](./img/img2.png)
@@ -75,7 +75,7 @@ We want to design a React component called Square - it represents a "grid" in ou
 
     <details>
       <summary>Show Code</summary>
-      
+
     ```javascript
     class Square extends React.Component {
         render() {
@@ -87,14 +87,14 @@ We want to design a React component called Square - it represents a "grid" in ou
         }
     }
     ```
-    
+
     </details>
 
 1. Add a constructor to Square so that it starts with a state; this state contains a certain ```value``` initialized to ```null```:
 
     <details>
       <summary>Show Code</summary>
-      
+
     ```
     class Square extends React.Component {
         constructor(props) {
@@ -106,15 +106,14 @@ We want to design a React component called Square - it represents a "grid" in ou
         ...
     }
     ```
-    
+
     </details>
-    
     Remember to call ```super(props)``` first in a constructor - this sets up the component correctly.
 1. Update the Square```render``` method to display the value from its current state, and then toggle the value on click. We need to replace ```this.props.value``` with ```this.state.value```, and then replace the alert function with ```this.setState({value: 'X'})```:
 
     <details>
       <summary>Show Code</summary>
-      
+
     ```
     render() {
         return (
@@ -124,7 +123,7 @@ We want to design a React component called Square - it represents a "grid" in ou
         );
     }
     ```
-    
+
     </details>
 
     Our new board should look like the following:
@@ -144,7 +143,7 @@ When you want to **aggregate data** from multiple children or to have two child 
 
     <details>
       <summary>Show Code</summary>
-      
+
     ```javascript
     class Board extends React.Component {
         constructor(props) {
@@ -156,7 +155,7 @@ When you want to **aggregate data** from multiple children or to have two child 
         ...
     }
     ```
-    
+
     </details>
 
     We'll fill it in later so that a board looks something like
@@ -173,13 +172,13 @@ When you want to **aggregate data** from multiple children or to have two child 
 
     <details>
       <summary>Show Code</summary>
-      
+
     ```javascript
     renderSquare(i) {
         return <Square value={this.state.squares[i]} />;
     }
     ```
-    
+
     </details>
 
 1. Now we need to change what happens when a square is clicked. Since component state is private, we can't update Board's state directly from Square.
@@ -188,7 +187,7 @@ When you want to **aggregate data** from multiple children or to have two child 
 
     <details>
       <summary>Show Code</summary>
-      
+
     ```javascript
     renderSquare(i) {
         return (
@@ -199,7 +198,7 @@ When you want to **aggregate data** from multiple children or to have two child 
         );
     }
     ```
-    
+
     </details>
 
     Now we're passing down two props from Board to Square: ```value``` and ```onClick```. The latter is a function that Square can call. Let's make the following changes to Square:
@@ -212,7 +211,7 @@ When you want to **aggregate data** from multiple children or to have two child 
 
     <details>
       <summary>Show Code</summary>
-      
+
     ```javascript
     class Square extends React.Component {
         render() {
@@ -224,7 +223,7 @@ When you want to **aggregate data** from multiple children or to have two child 
         }
     }
     ```
-    
+
     </details>
 
     Now when the square is clicked, it calls the ```onClick``` function that was passed by Board.
@@ -233,7 +232,7 @@ When you want to **aggregate data** from multiple children or to have two child 
 
     <details>
       <summary>Show Code</summary>
-      
+
     ```javascript
     class Board extends React.Component {
         ...
@@ -245,9 +244,9 @@ When you want to **aggregate data** from multiple children or to have two child 
         ...
     }
     ```
-    
+
     </details>
-    
+
     We call ```.slice()``` to copy the ```squares``` array instead of mutating the existing array. This is done to maintain **Immutability** which we will cover in a later video.
 
     Now you should be able to click in squares to fill them again, but the state is stored in the Board component instead of in each Square.
@@ -263,7 +262,7 @@ Now we have a game where player x (but not y) can place pieces (and thus always 
 
     <details>
       <summary>Show Code</summary>
-      
+
     ```javascript
     class Board extends React.Component {
         constructor(props) {
@@ -275,16 +274,16 @@ Now we have a game where player x (but not y) can place pieces (and thus always 
         }
     }
     ```
-    
+
     </details>
-    
+
 1. Change the board component's ```handleClick``` so that
     1. The ```squares``` array is updated with the correct player piece
     1. ```xIsNext``` as a state variable is updated
-    
+
     <details>
       <summary>Show Code</summary>
-      
+
     ```javascript
     handleClick(i){
         ...
@@ -295,18 +294,18 @@ Now we have a game where player x (but not y) can place pieces (and thus always 
         });
     }
     ```
-    
+
     </details>
-    
+
 1. Change the board component's ```render``` method so that the status updates correctly - ie it says "Next player: X" or "Next player: O"
 
     <details>
       <summary>Show Code</summary>
-      
+
     ```javascript
     const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     ```
-    
+
     </details>
 
     At this point, you should be able to play through the game as expected - but without a proper endgame. Let's fix that.
@@ -322,7 +321,7 @@ We want the game to stop when one of the players has made a line - one can have 
 
     <details>
       <summary>Show Code</summary>
-      
+
     ```javascript
     function calculateWinner(squares) {
         const lines = [
@@ -344,14 +343,14 @@ We want the game to stop when one of the players has made a line - one can have 
         return null;
     }
     ```
-    
+
     </details>
-    
+
 1. Update the ```render``` code in Board so that we first use ```calculateWinner``` to check if someone has won, then update the status accordingly.
 
     <details>
       <summary>Show Code</summary>
-      
+
     ```javascript
     render() {
         const winner = calculateWinner(this.state.squares);
@@ -363,14 +362,14 @@ We want the game to stop when one of the players has made a line - one can have 
         }
     }
     ```
-    
+
     </details>
-    
+
 1. Update the ```handleClick``` method so that if either someone has won *or* the target location is already occupied, then the method would return immediately and change nothing on the board.
 
     <details>
       <summary>Show Code</summary>
-      
+
     ```javascript
     handleClick(i) {
         const squares = this.state.squares.slice();
@@ -384,7 +383,7 @@ We want the game to stop when one of the players has made a line - one can have 
         });
     }
     ```
-    
+
     </details>
 
     After a game has finished our board should look something like this:
@@ -394,7 +393,7 @@ We want the game to stop when one of the players has made a line - one can have 
 ## Part 6: Storing and Showing History
 ### Goal
 We want to implement a history feature, where we can revisit the board across different points in time. This means that we need to **store**, **show** and **restore** game states. Let's store history in an array like so:
-      
+
 ```javascript
 history = [
     {
@@ -421,7 +420,7 @@ history = [
 
     <details>
       <summary>Show Code</summary>
-      
+
     ```javascript
     class Game extends React.Component {
         constructor(props) {
@@ -439,9 +438,9 @@ history = [
         }
     }
     ```
-    
+
     </details>
-    
+
 1. Change the Board component so that it takes ```squares``` and ```onClick``` from the Game component, instead of having its own version.
     1. Delete the constructor in Board:
     1. Replace any instance of ```this.state.squares``` with ```this.props.squares``` in ```renderSquare``` for the Board
@@ -450,7 +449,7 @@ history = [
 
     <details>
       <summary>Show Code</summary>
-      
+
     ```javascript
     render() {
         const history = this.state.history;
@@ -480,14 +479,14 @@ history = [
         );
     }
     ```
-    
+
     </details>
-    
+
 1. Since the Game component is calculating the status, remove the ```<div className="status">``` and the lines calculating the status in the Board's ```render()```. Your new ```render``` should look like this:
 
     <details>
       <summary>Show Code</summary>
-      
+
     ```javascript
     render() {
         return (
@@ -500,14 +499,14 @@ history = [
         );
     }
     ```
-    
+
     </details>
-    
+
 1. We should also move ```handleClick``` from Board to Game. First, simply cut and paste. Then, since we want to track history-related information, we need
 
     <details>
       <summary>Show Code</summary>
-      
+
     ```javascipt
         handleClick(i) {
             const history = this.state.history;
@@ -525,14 +524,14 @@ history = [
             });
         }
     ```
-    
+
     </details>
-    
+
 1. Show the moves as a list next to the game board. We do this by mapping a history object to a list, then placing it in our final render for the Game component. Your final ```render``` for the Game component should look like this:
 
     <details>
       <summary>Show Code</summary>
-      
+
     ```javascript
     render() {
         ...
@@ -557,7 +556,7 @@ history = [
         );
     }
     ```
-    
+
     </details>
 
     Now you should be able to view all of the previous moves on our board!
@@ -583,15 +582,15 @@ When we select one of our previous moves the board should display its state at t
     );
     ...
     ```
-    
+
     </details>
-    
+
 1. Next we need to add the ```jumpTo``` method that we referenced in part 6.
     1. First add a ```key``` to Game's state to indicate which step we're viewing.
-    
+
         <details>
           <summary>Show Code</summary>
-      
+
         ```javascript
         class Game extends React.Component {
             constructor(props) {
@@ -607,14 +606,14 @@ When we select one of our previous moves the board should display its state at t
         }
         ...
         ```
-        
+
         </details>
-        
+
     1. Next, we'll define the ```jumpTo``` method in Game to update that state. We should also update ```xIsNext``` to ```true``` if the index of the move number is an even number.
-    
+
         <details>
           <summary>Show Code</summary>
-      
+
         ```javascript
         ...
         handleClick(i) {
@@ -633,14 +632,14 @@ When we select one of our previous moves the board should display its state at t
         }
         ...
         ```
-        
+
         </details>
-        
+
 1. Then update stepNumber when a new move is made by adding ```stepNumber: history.length``` to the state update in Game's ```handleClick```:
 
     <details>
       <summary>Show Code</summary>
-      
+
     ```javascript
     handleClick(i) {
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
@@ -652,14 +651,14 @@ When we select one of our previous moves the board should display its state at t
         });
     }
     ```
-    
+
     </details>
-    
+
 1. Now you can modify Game's render to read from that step in the history:
 
     <details>
       <summary>Show Code</summary>
-      
+
     ```javascript
     render() {
         const history = this.state.history;
@@ -668,7 +667,7 @@ When we select one of our previous moves the board should display its state at t
         ...
     }
     ```
-    
+
     </details>
 
 If you click any move link now, the board should immediately update to show what the game looked like at that time.
@@ -692,6 +691,8 @@ Add a toggle button that lets you choose between sorting the History in ascendin
 ## Part 11: Gloat in Victory
 ### Goal
 When someone wins, highlight the winning squares
+
+![](./img/bonus4.png)
 
 ## Credits
 This guide was largely based off of the official React tutorial [here](https://facebook.github.io/react/tutorial/tutorial.html)
