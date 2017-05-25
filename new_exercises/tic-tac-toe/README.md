@@ -96,7 +96,7 @@ We want to design a React component called Square - it represents a "grid" in ou
     <details>
       <summary>Show Code</summary>
 
-    ```
+    ```javascript
     class Square extends React.Component {
         constructor(props) {
             super(props);
@@ -109,14 +109,14 @@ We want to design a React component called Square - it represents a "grid" in ou
     ```
 
     </details>
-    
+
     Remember to call ```super(props)``` first in a constructor - this sets up the component correctly.
 1. Update the Square```render``` method to display the value from its current state, and then toggle the value on click. We need to replace ```this.props.value``` with ```this.state.value```, and then replace the alert function with ```this.setState({value: 'X'})```:
 
     <details>
       <summary>Show Code</summary>
 
-    ```
+    ```javascript
     render() {
         return (
             <button className="square" onClick={() => this.setState({value: 'X'})}>
