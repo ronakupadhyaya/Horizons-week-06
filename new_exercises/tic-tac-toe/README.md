@@ -13,6 +13,7 @@ Sections:
 1. [Winner Calculator](#part-5-winner-calculation)
 1. [Storing and Showing History](#part-6-storing-and-showing-history)
 1. [Time Travel](#part-7-time-travel)
+1. [Bonus](#bonus)
 
 ## Part 1: Install React Development Tools
 Install the React Developer Tools extension for Chrome [here](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi).
@@ -150,7 +151,7 @@ When you want to **aggregate data** from multiple children or to have two child 
     }
     ```
 
-    Now we're passing down two props from Board to Square: value and onClick. The latter is a function that Square can call. Let's make the following changes to Square:
+    Now we're passing down two props from Board to Square: ```value``` and ```onClick```. The latter is a function that Square can call. Let's make the following changes to Square:
 
     * Replace ```this.state.value``` with ```this.props.value``` in Square's ```render```.
     * Replace ```this.setState()``` with ```this.props.onClick()``` in Square's ```render```.
@@ -170,7 +171,7 @@ When you want to **aggregate data** from multiple children or to have two child 
     }
     ```
 
-    Now when the square is clicked, it calls the onClick function that was passed by Board.
+    Now when the square is clicked, it calls the ```onClick``` function that was passed by Board.
 
 1. Try clicking a square – you should get an error because we haven't defined handleClick yet. Add it to the Board class.
 
@@ -500,3 +501,13 @@ When we select one of our previous moves the board should display its state at t
     ```
 
 If you click any move link now, the board should immediately update to show what the game looked like at that time.
+
+##Bonus
+Try to complete the following bonus tasks:
+1. Bold the currently-selected item in History
+1. Rewrite Board to use two loops instead of hard-coding the Squares
+1. Add a toggle button that lets you choose between sorting the History in ascending/descending order
+1. When someone wins, highlight the winning squares
+
+##Credits
+This guide was largely based off of the official React tutorial [here](https://facebook.github.io/react/tutorial/tutorial.html)
