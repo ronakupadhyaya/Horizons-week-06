@@ -49,15 +49,28 @@ We want to design a React component representing a "grid" in our game, capable o
     At this point, your app should look like this:
 
     ![](./img/img2.png)
-1. Change the button so that when clicked, it'll display an alert saying "1337". Remember that for React components, the "onclick" property is actually "onClick", camel-case. Clicking the squares now should trigger a popup.
-1. Since Square only uses the ```render``` method, we can turn it into a **functional component**. The general structure of a functional component looks like this, as an example:
-    ```javascript
-    function ComponentName(props){
-      return(
-        <div>
-          //stuff here
-        </div>
-      );
+1. Change the button so that when clicked, it'll display an alert saying "Szechuan Sauce". Remember that for React components, the "onclick" property is actually "onClick", camel-case. Clicking the squares now should trigger a popup.
+1. Add a constructor to Square so that it contains a state, with a certain ```value``` initialized to ```null```:
+    ```
+    class Square extends React.Component {
+        constructor() {
+            super();
+            this.state = {
+                value: null,
+            };
+        }
+        ...
+    }
+    ```
+    Remember to call ```super()``` first in a constructor - this sets up the component correctly.
+1. Update the Square```render``` method to display the value from its current state, and then toggle the value on click. We need to replace ```this.props.value``` with ```this.state.value```, and then replace the alert function with ```this.setState({value: 'X'})```:
+    ```
+    render() {
+        return (
+            <button className="square" onClick={() => this.setState({value: 'X'})}>
+            {this.state.value}
+            </button>
+        );
     }
     ```
 
@@ -66,7 +79,7 @@ We want to design a React component representing a "grid" in our game, capable o
 
 We now need to check if one player has won the game, and alternate placing X and O in the squares. To check if someone has won, we'll need to have the value of all 9 squares in one place, rather than split up across the Square components. The best solution here is to store this state in the Board component instead of in each Square.
 
-**When you want to aggregate data from multiple children or to have two child components communicate with each other, move the state upwards so that it lives in the parent component. The parent can then pass the state back down to the children via props, so that the child components are always in sync with each other and with the parent.**
+When you want to **aggregate data** from multiple children or to have two child components communicate with each other, **move the state upwards** so that it **lives in the parent component**. The parent can then pass the state back down to the children via props, so that the child components are always in sync with each other and with the parent.**
 
 ### Steps
 
@@ -94,7 +107,7 @@ We now need to check if one player has won the game, and alternate placing X and
     ]
     ```
 
-1. Modify Board's ```renderSquare``` method to look like this:
+1. Modify Board's ```renderSquare``` method so that we are passing a value from the Board's ```state``` into the square:
 
     ```javascript
     renderSquare(i) {
@@ -102,7 +115,7 @@ We now need to check if one player has won the game, and alternate placing X and
     }
     ```
 
-1. Now we need to change what happens when a square is clicked. Since component state is considered private, we can't update Board's state directly from Square.
+1. Now we need to change what happens when a square is clicked. Since component state is private, we can't update Board's state directly from Square.
 
     The usual pattern here is pass down a function from Board to Square that gets called when the square is clicked. Change renderSquare in Board again so that it reads:
 
