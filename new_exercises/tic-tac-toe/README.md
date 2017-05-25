@@ -27,23 +27,23 @@ We want to design a React component representing a "grid" in our game, capable o
 ### Steps
 1. From the Board component, change ```renderSquare``` so that we pass a value to the Square:
     ```javascript
-      class Board extends React.Component {
-      renderSquare(i) {
-        return <Square value={i} />;
-      }
-      ...
+    class Board extends React.Component {
+        renderSquare(i) {
+            return <Square value={i} />;
+        }
+        ...
     }
     ```
 1. Change the Square component so that the Square displays the passed-down prop:
     ```javascript
     class Square extends React.Component {
-      render() {
-        return (
-            <button className="square">
-                {this.props.value}
-            </button>
-        );
-      }
+        render() {
+            return (
+                <button className="square">
+                    {this.props.value}
+                </button>
+            );
+        }
     }
     ```
     At this point, your app should look like this:
@@ -121,12 +121,12 @@ When you want to **aggregate data** from multiple children or to have two child 
 
     ```javascript
     renderSquare(i) {
-      return (
-        <Square
-            value={this.state.squares[i]}
-            onClick={() => this.handleClick(i)}
-        />
-      );
+        return (
+            <Square
+                value={this.state.squares[i]}
+                onClick={() => this.handleClick(i)}
+            />
+        );
     }
     ```
 
@@ -140,9 +140,9 @@ When you want to **aggregate data** from multiple children or to have two child 
 
     ```javascript
     class Square extends React.Component {
-      render() {
-        return (
-            <button className="square" onClick={() => this.props.onClick()}>
+        render() {
+            return (
+                <button className="square" onClick={() => this.props.onClick()}>
                 {this.props.value}
             </button>
         );
@@ -178,28 +178,28 @@ Now we have a game where player x (but not y) can place pieces (and thus always 
 ### Steps
 1. Make a new boolean in the Board's state object called ```xIsNext``` - initialize it to ```true``` so that player x plays first.
     ```javascript
-      class Board extends React.Component {
+    class Board extends React.Component {
         constructor() {
-          ...
-          this.state = {
             ...
-            xIsNext: true,
-          };
+            this.state = {
+                ...
+                xIsNext: true,
+            };
         }
-      }
+    }
     ```
 1. Change the board component's ```handleClick``` so that
     1. The ```squares``` array is updated with the correct player piece
     1. xIsNext as a state variable is updated
     ```javascript
-      handleClick(i){
+    handleClick(i){
         ...
         squares[i] = this.state.xIsNext ? 'X' : 'O';
         this.setState({
-          ...
-          xIsNext: !this.state.xIsNext,
+            ...
+            xIsNext: !this.state.xIsNext,
         });
-      }
+    }
     ```
 1. Change the board component's ```render``` method so that the status updates correctly - ie it says "Next player: X" or "Next player: O"
     ```javascript
@@ -216,35 +216,35 @@ We want the game to stop when one of the players has made a line - one can have 
 1. Add ```calculateWinner``` to the end of your code - this is a help function that takes in an array representing a board and outputs a winner (x, o) or ```null``` if nobody has won yet.
     ```javascript
     function calculateWinner(squares) {
-      const lines = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6],
-      ];
-      for (let i = 0; i < lines.length; i++) {
-        const [a, b, c] = lines[i];
-        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-          return squares[a];
+        const lines = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6],
+        ];
+        for (let i = 0; i < lines.length; i++) {
+            const [a, b, c] = lines[i];
+            if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+                return squares[a];
+            }
         }
-      }
-      return null;
+        return null;
     }
     ```
 1. Update the ```render``` code in Board so that we first use ```calculateWinner``` to check if someone has won, then update the status accordingly.
     ```javascript
     render() {
-      const winner = calculateWinner(this.state.squares);
-      let status;
-      if (winner) {
-        status = 'Winner: ' + winner;
-      } else {
-        status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-      }
+        const winner = calculateWinner(this.state.squares);
+        let status;
+        if (winner) {
+            status = 'Winner: ' + winner;
+        } else {
+            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+        }
     }
     ```
 1. Update the ```handleClick``` method so that if either someone has won *or* the target location is already occupied, then the method would return immediately and change nothing on the board.
@@ -252,14 +252,14 @@ We want the game to stop when one of the players has made a line - one can have 
     handleClick(i) {
         const squares = this.state.squares.slice();
         if (calculateWinner(squares) || squares[i]) {
-          return;
+            return;
         }
         squares[i] = this.state.xIsNext ? 'X' : 'O';
         this.setState({
-          squares: squares,
-          xIsNext: !this.state.xIsNext,
+            squares: squares,
+            xIsNext: !this.state.xIsNext,
         });
-      }
+    }
     ```
 
 ## Part 6: Storing and Showing History
@@ -267,21 +267,21 @@ We want the game to stop when one of the players has made a line - one can have 
 We want to implement a history feature, where we can revisit the board across different points in time. This means that we need to **store**, **show** and **restore** game states. Let's store history in an array like so:
 ```javascript
 history = [
-  {
-    squares: [
-      null, null, null,
-      null, null, null,
-      null, null, null,
-    ]
-  },
-  {
-    squares: [
-      null, null, null,
-      null, 'X', null,
-      null, null, null,
-    ]
-  },
-  // ...
+    {
+        squares: [
+            null, null, null,
+            null, null, null,
+            null, null, null,
+        ]
+    },
+    {
+        squares: [
+            null, null, null,
+            null, 'X', null,
+            null, null, null,
+        ]
+    },
+    // ...
 ]
 ```
 
@@ -289,19 +289,19 @@ history = [
 1. We want to move the state up again - from the Board component to the Game component. Initialize the game state in the constructor for Game:
     ```javascript
     class Game extends React.Component {
-      constructor() {
-        super();
-        this.state = {
-          history: [{
-            squares: Array(9).fill(null),
-          }],
-          xIsNext: true,
-        };
-      }
+        constructor() {
+            super();
+            this.state = {
+                history: [{
+                    squares: Array(9).fill(null),
+                }],
+                xIsNext: true,
+            };
+        }
 
-      render() {
-        ...
-      }
+        render() {
+            ...
+        }
     }
     ```
 1. Change the Board component so that it takes ```squares``` and ```onClick``` from the Game component, instead of having its own version.
@@ -311,31 +311,31 @@ history = [
 1. Have the Game component look at the history array and correctly calculate the game's status.
     ```javascript
     render() {
-      const history = this.state.history;
-      const current = history[history.length - 1];
-      const winner = calculateWinner(current.squares);
+        const history = this.state.history;
+        const current = history[history.length - 1];
+        const winner = calculateWinner(current.squares);
 
-      let status;
-      if (winner) {
-        status = 'Winner: ' + winner;
-      } else {
-        status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-      }
+        let status;
+        if (winner) {
+            status = 'Winner: ' + winner;
+        } else {
+            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+        }
 
-      return (
-        <div className="game">
-          <div className="game-board">
-            <Board
-              squares={current.squares}
-              onClick={(i) => this.handleClick(i)}
-            />
-          </div>
-          <div className="game-info">
-            <div>{status}</div>
-            <ol>{/* TODO */}</ol>
-          </div>
-        </div>
-      );
+        return (
+            <div className="game">
+                <div className="game-board">
+                    <Board
+                    squares={current.squares}
+                    onClick={(i) => this.handleClick(i)}
+                />
+            </div>
+                <div className="game-info">
+                    <div>{status}</div>
+                    <ol>{/* TODO */}</ol>
+                </div>
+            </div>
+        );
     }
     ```
 1. Since the Game component is calculating the status, remove the ```<div className="status">``` and the lines calculating the status in the Board's ```render()```. Your new ```render``` should look like this:
@@ -431,16 +431,16 @@ When we select one of our previous moves the board should display its state at t
     1. First add a ```key``` to Game's state to indicate which step we're viewing.
         ```javascript
         class Game extends React.Component {
-          constructor() {
-            super();
-            this.state = {
-              history: [{
-                squares: Array(9).fill(null),
-              }],
-              stepNumber: 0,
-              xIsNext: true,
-            };
-          }
+            constructor() {
+                super();
+                this.state = {
+                    history: [{
+                        squares: Array(9).fill(null),
+                    }],
+                    stepNumber: 0,
+                    xIsNext: true,
+                };
+            }
         }
         ...
         ```
@@ -448,40 +448,40 @@ When we select one of our previous moves the board should display its state at t
         ```javascript
         ...
         handleClick(i) {
-          // this method has not changed
+            // this method has not changed
         }
 
         jumpTo(step) {
-          this.setState({
-            stepNumber: step,
-            xIsNext: (step % 2) ? false : true,
-          });
+            this.setState({
+                stepNumber: step,
+                xIsNext: (step % 2) ? false : true,
+            });
         }
 
         render() {
-          // this method has not changed
+            // this method has not changed
         }
         ...
         ```
 1. Then update stepNumber when a new move is made by adding ```stepNumber: history.length``` to the state update in Game's ```handleClick```:
     ```javascript
     handleClick(i) {
-      const history = this.state.history.slice(0, this.state.stepNumber + 1);
-      ...
-      this.setState({
+        const history = this.state.history.slice(0, this.state.stepNumber + 1);
         ...
-        stepNumber: history.length,
-        ...
-      });
+        this.setState({
+            ...
+            stepNumber: history.length,
+            ...
+        });
     }
     ```
 1. Now you can modify Game's render to read from that step in the history:
     ```javascript
     render() {
-      const history = this.state.history;
-      const current = history[this.state.stepNumber];
-      const winner = calculateWinner(current.squares);
-      ...
+        const history = this.state.history;
+        const current = history[this.state.stepNumber];
+        const winner = calculateWinner(current.squares);
+        ...
     }
     ```
 
