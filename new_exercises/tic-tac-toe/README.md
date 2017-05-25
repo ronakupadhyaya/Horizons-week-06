@@ -40,6 +40,8 @@ We want to design a React component called Square - it represents a "grid" in ou
     }
     ```
 1. Change the Square component so that the Square displays the passed-down prop:
+<details>
+  <summary>Show Code</summary>
     ```javascript
     class Square extends React.Component {
         render() {
@@ -51,6 +53,7 @@ We want to design a React component called Square - it represents a "grid" in ou
         }
     }
     ```
+ </details>
     At this point, your app should look like this, meaning that the Board is correctly passing down dummy values (1-9) down to its "children" Squares:
 
     ![](./img/img2.png)
