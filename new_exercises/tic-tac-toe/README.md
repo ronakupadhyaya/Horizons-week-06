@@ -22,40 +22,40 @@ We will be using [this codepen](https://codepen.io/josephch405/pen/RVdPQw) for t
 We want to design a React component representing a "grid" in our game, capable of displaying Xs and Os and responding to events.
 ### Steps
 1. From the Board component, change ```renderSquare``` so that we pass a value to the Square:
-  ```javascript
-  class Board extends React.Component {
-    renderSquare(i) {
-      return <Square value={i} />;
+    ```javascript
+      class Board extends React.Component {
+      renderSquare(i) {
+        return <Square value={i} />;
+      }
+      ...
     }
-    ...
-  }
-  ```
+    ```
 1. Change the Square component so that the Square displays the passed-down prop:
-  ```javascript
-  class Square extends React.Component {
-    render() {
-      return (
-        <button className="square">
-          {this.props.value}
-        </button>
-      );
+    ```javascript
+    class Square extends React.Component {
+      render() {
+        return (
+          <button className="square">
+            {this.props.value}
+          </button>
+        );
+      }
     }
-  }
-  ```
-  At this point, your app should look like this:
+    ```
+    At this point, your app should look like this:
 
-  ![](./img/img2.png)
+    ![](./img/img2.png)
 1. Change the button so that when clicked, it'll display an alert saying "1337". Remember that for React components, the "onclick" property is actually "onClick", camel-case. Clicking the squares now should trigger a popup.
 1. Since Square only uses the ```render``` method, we can turn it into a **functional component**. The general structure of a functional component looks like this, as an example:
-  ```javascript
-  function ComponentName(props){
-    return(
-      <div>
-        //stuff here
-      </div>
-    );
-  }
-  ```
+    ```javascript
+    function ComponentName(props){
+      return(
+        <div>
+          //stuff here
+        </div>
+      );
+    }
+    ```
 
 ## Part 3: Lifting State Up
 ### Goal
