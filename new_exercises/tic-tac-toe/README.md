@@ -143,10 +143,10 @@ When you want to **aggregate data** from multiple children or to have two child 
         render() {
             return (
                 <button className="square" onClick={() => this.props.onClick()}>
-                {this.props.value}
-            </button>
-        );
-      }
+                    {this.props.value}
+                </button>
+            );
+        }
     }
     ```
 
