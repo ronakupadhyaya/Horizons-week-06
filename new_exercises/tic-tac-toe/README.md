@@ -69,7 +69,7 @@ We want to design a React component called Square - it represents a "grid" in ou
 
      </details>
 
-    At this point, your app should look like this, meaning that the Board is correctly passing down dummy values (1-9) down to its "children" Squares:
+    At this point, your app should look like this, meaning that the Board is correctly passing down dummy values (0-8) down to its "children" Squares:
 
     ![](./img/img2.png)
 1. Change the button so that when clicked, it'll display an alert saying "Szechuan Sauce". Remember that for React components, the "onclick" property is actually "onClick", camel-case. Clicking the squares now should trigger a popup.
