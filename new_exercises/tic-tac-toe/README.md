@@ -42,6 +42,7 @@ We want to design a React component called Square - it represents a "grid" in ou
 1. Change the Square component so that the Square displays the passed-down prop:
 <details>
   <summary>Show Code</summary>
+  
     ```javascript
     class Square extends React.Component {
         render() {
