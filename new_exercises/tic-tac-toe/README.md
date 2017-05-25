@@ -17,9 +17,9 @@ Sections:
 ## Part 1: Install React Development Tools
 Install the React Developer Tools extension for Chrome [here](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi).
 
-This extension allows you to inspect React components, states, props etc, as your app is running. Use this often to make sure your components are behaving correctly!
+This extension allows you to inspect React components, states, props etc, as your app is running. Use this often to check "behind the scenes"!
 
-We will be using [this codepen](https://codepen.io/josephch405/pen/RVdPQw) for this exercise.
+We will be using [this codepen](https://codepen.io/josephch405/pen/RVdPQw) for this exercise. The result is automatically compiled on the fly as you edit.
 
 Before we begin our board should look like this:
 
@@ -27,7 +27,7 @@ Before we begin our board should look like this:
 
 ## Part 2: The Square Component
 ### Goal
-We want to design a React component representing a "grid" in our game, capable of displaying Xs and Os and responding to events.
+We want to design a React component called Square - it represents a "grid" in our game, capable of displaying Xs and Os and responding to events.
 ### Steps
 1. From the Board component, change ```renderSquare``` so that we pass a value to the Square:
     ```javascript
@@ -50,11 +50,23 @@ We want to design a React component representing a "grid" in our game, capable o
         }
     }
     ```
-    At this point, your app should look like this:
+    At this point, your app should look like this, meaning that the Board is correctly passing down dummy values (1-9) down to its "children" Squares:
 
     ![](./img/img2.png)
 1. Change the button so that when clicked, it'll display an alert saying "Szechuan Sauce". Remember that for React components, the "onclick" property is actually "onClick", camel-case. Clicking the squares now should trigger a popup.
-1. Add a constructor to Square so that it contains a state, with a certain ```value``` initialized to ```null```:
+    ```javascript
+    class Square extends React.Component {
+        render() {
+            return (
+                <button className="square" onClick={() => alert('click')}>
+                    {this.props.value}
+                </button>
+            );
+        }
+    }
+    ```
+
+1. Add a constructor to Square so that it starts with a state; this state contains a certain ```value``` initialized to ```null```:
     ```
     class Square extends React.Component {
         constructor() {
@@ -355,7 +367,7 @@ history = [
         );
     }
     ```
-1. We should also move ```handleClick``` from Board to Game. First, simple cut and paste. Then, since we want to track history-related information, we need
+1. We should also move ```handleClick``` from Board to Game. First, simply cut and paste. Then, since we want to track history-related information, we need
     ```javascipt
         handleClick(i) {
             const history = this.state.history;
