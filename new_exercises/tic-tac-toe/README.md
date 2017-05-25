@@ -351,7 +351,7 @@ history = [
         );
     }
     ```
-1. We should also move ```handleClick``` from Board to Game. First, simple cut and paste. Then, since we want to track history-related information, we need 
+1. We should also move ```handleClick``` from Board to Game. First, simple cut and paste. Then, since we want to track history-related information, we need
     ```javascipt
         handleClick(i) {
             const history = this.state.history;
@@ -412,3 +412,77 @@ history = [
     ```
 
 ## Part 7: Time Travel
+### Goal
+When we select one of our previous moves the board should display its state at the time of that move. To accomplish this we will use a ```key``` to ensure each element in our list has a unique ID. We'll further discuss keys in a later video.
+
+### Steps
+1. For our move list, we already have a unique ID for each step: the number of the move when it happened. In the Game's render method, add the key as ```<li key={move}>``` and the key warning should disappear:
+
+    ```javascript
+    ...
+    return (
+    <li key={move}>
+      <a href="#" onClick={() => this.jumpTo(move)}>{desc}</a>
+    </li>
+    );
+    ...
+    ```
+1. Next we need to add the ```jumpTo``` method that we referenced in part 6.
+    1. First add a ```key``` to Game's state to indicate which step we're viewing.
+        ```javascript
+        class Game extends React.Component {
+          constructor() {
+            super();
+            this.state = {
+              history: [{
+                squares: Array(9).fill(null),
+              }],
+              stepNumber: 0,
+              xIsNext: true,
+            };
+          }
+        }
+        ...
+        ```
+    1. Next, we'll define the ```jumpTo``` method in Game to update that state. We should also update ```xIsNext``` to ```true``` if the index of the move number is an even number.
+        ```javascript
+        ...
+        handleClick(i) {
+          // this method has not changed
+        }
+
+        jumpTo(step) {
+          this.setState({
+            stepNumber: step,
+            xIsNext: (step % 2) ? false : true,
+          });
+        }
+
+        render() {
+          // this method has not changed
+        }
+        ...
+        ```
+1. Then update stepNumber when a new move is made by adding ```stepNumber: history.length``` to the state update in Game's ```handleClick```:
+    ```javascript
+    handleClick(i) {
+      const history = this.state.history.slice(0, this.state.stepNumber + 1);
+      ...
+      this.setState({
+        ...
+        stepNumber: history.length,
+        ...
+      });
+    }
+    ```
+1. Now you can modify Game's render to read from that step in the history:
+    ```javascript
+    render() {
+      const history = this.state.history;
+      const current = history[this.state.stepNumber];
+      const winner = calculateWinner(current.squares);
+      ...
+    }
+    ```
+
+If you click any move link now, the board should immediately update to show what the game looked like at that time.
