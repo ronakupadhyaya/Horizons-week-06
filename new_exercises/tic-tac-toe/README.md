@@ -30,7 +30,11 @@ Before we begin our board should look like this:
 ### Goal
 We want to design a React component called Square - it represents a "grid" in our game, capable of displaying Xs and Os and responding to events.
 ### Steps
-1. From the Board component, change ```renderSquare``` so that we pass a value to the Square:
+1. From the Board component, change ```renderSquare``` so that we pass a prop called "value" to the Square with value equal to i:
+
+    <details>
+      <summary>Show Code</summary>
+
     ```javascript
     class Board extends React.Component {
         renderSquare(i) {
@@ -39,27 +43,36 @@ We want to design a React component called Square - it represents a "grid" in ou
         ...
     }
     ```
-1. Change the Square component so that the Square displays the passed-down prop:
-<details>
-  <summary>Show Code</summary>
-  
-```javascript
-class Square extends React.Component {
-  render() {
-    return (
-      <button className="square">
-        {this.props.value}
-      </button>
-    );
-  }
-}
-```
     
- </details>
+    </details>
+    
+1. Change the Square component so that the Square displays the passed-down prop:
+
+    <details>
+      <summary>Show Code</summary>
+
+    ```javascript
+    class Square extends React.Component {
+      render() {
+        return (
+          <button className="square">
+            {this.props.value}
+          </button>
+        );
+      }
+    }
+    ```
+
+     </details>
+ 
     At this point, your app should look like this, meaning that the Board is correctly passing down dummy values (1-9) down to its "children" Squares:
 
     ![](./img/img2.png)
 1. Change the button so that when clicked, it'll display an alert saying "Szechuan Sauce". Remember that for React components, the "onclick" property is actually "onClick", camel-case. Clicking the squares now should trigger a popup.
+
+    <details>
+      <summary>Show Code</summary>
+      
     ```javascript
     class Square extends React.Component {
         render() {
@@ -71,8 +84,14 @@ class Square extends React.Component {
         }
     }
     ```
+    
+    </details>
 
 1. Add a constructor to Square so that it starts with a state; this state contains a certain ```value``` initialized to ```null```:
+
+    <details>
+      <summary>Show Code</summary>
+      
     ```
     class Square extends React.Component {
         constructor() {
@@ -84,8 +103,14 @@ class Square extends React.Component {
         ...
     }
     ```
+    
+    </details>
+    
     Remember to call ```super()``` first in a constructor - this sets up the component correctly.
 1. Update the Square```render``` method to display the value from its current state, and then toggle the value on click. We need to replace ```this.props.value``` with ```this.state.value```, and then replace the alert function with ```this.setState({value: 'X'})```:
+
+    <details>
+      <summary>Show Code</summary>
     ```
     render() {
         return (
@@ -95,6 +120,8 @@ class Square extends React.Component {
         );
     }
     ```
+    
+    </details>
 
     Our new board should look like the following:
 
@@ -111,6 +138,9 @@ When you want to **aggregate data** from multiple children or to have two child 
 
 1. Add a constructor to the Board and set its initial state to contain an array with 9 nulls, corresponding to the 9 squares:
 
+    <details>
+      <summary>Show Code</summary>
+      
     ```javascript
     class Board extends React.Component {
         constructor() {
@@ -122,6 +152,8 @@ When you want to **aggregate data** from multiple children or to have two child 
         ...
     }
     ```
+    
+    </details>
 
     We'll fill it in later so that a board looks something like
 
@@ -135,16 +167,24 @@ When you want to **aggregate data** from multiple children or to have two child 
 
 1. Modify Board's ```renderSquare``` method so that we are passing a value from the Board's ```state``` into the square:
 
+    <details>
+      <summary>Show Code</summary>
+      
     ```javascript
     renderSquare(i) {
         return <Square value={this.state.squares[i]} />;
     }
     ```
+    
+    </details>
 
 1. Now we need to change what happens when a square is clicked. Since component state is private, we can't update Board's state directly from Square.
 
     The usual pattern here is pass down a function from Board to Square that gets called when the square is clicked. Change renderSquare in Board again so that it reads:
 
+    <details>
+      <summary>Show Code</summary>
+      
     ```javascript
     renderSquare(i) {
         return (
@@ -155,6 +195,8 @@ When you want to **aggregate data** from multiple children or to have two child 
         );
     }
     ```
+    
+    </details>
 
     Now we're passing down two props from Board to Square: ```value``` and ```onClick```. The latter is a function that Square can call. Let's make the following changes to Square:
 
@@ -164,6 +206,9 @@ When you want to **aggregate data** from multiple children or to have two child 
 
     After these changes, the whole Square component looks like this:
 
+    <details>
+      <summary>Show Code</summary>
+      
     ```javascript
     class Square extends React.Component {
         render() {
@@ -175,11 +220,16 @@ When you want to **aggregate data** from multiple children or to have two child 
         }
     }
     ```
+    
+    </details>
 
     Now when the square is clicked, it calls the ```onClick``` function that was passed by Board.
 
 1. Try clicking a square – you should get an error because we haven't defined handleClick yet. Add it to the Board class.
 
+    <details>
+      <summary>Show Code</summary>
+      
     ```javascript
     class Board extends React.Component {
         ...
@@ -191,6 +241,9 @@ When you want to **aggregate data** from multiple children or to have two child 
         ...
     }
     ```
+    
+    </details>
+    
     We call ```.slice()``` to copy the ```squares``` array instead of mutating the existing array. This is done to maintain **Immutability** which we will cover in a later video.
 
     Now you should be able to click in squares to fill them again, but the state is stored in the Board component instead of in each Square.
@@ -203,6 +256,10 @@ Now we have a game where player x (but not y) can place pieces (and thus always 
 
 ### Steps
 1. Make a new boolean in the Board's state object called ```xIsNext``` - initialize it to ```true``` so that player x plays first.
+
+    <details>
+      <summary>Show Code</summary>
+      
     ```javascript
     class Board extends React.Component {
         constructor() {
@@ -214,6 +271,9 @@ Now we have a game where player x (but not y) can place pieces (and thus always 
         }
     }
     ```
+    
+    </details>
+    
 1. Change the board component's ```handleClick``` so that
     1. The ```squares``` array is updated with the correct player piece
     1. ```xIsNext``` as a state variable is updated
