@@ -3,9 +3,9 @@
 Today we will be making a Tic Tac Toe game in React - the "Hello World" equivalent for real programmers (saying "Hello world!" just isn't impressive enough anymore). By the end of this exercise you will have:
 1. A clickable grid where our master strategists can place Xs and Os
 1. A status text reflecting the state of the Game
-1. A history panel that allows for time travel
+1. A history panel that allows for (psuedo) time travel
 
-Here are the part of the exercise:
+Sections:
 1. [Install React Development Tools](#part-1-install-react-development-tools)
 1. [The Square Component](#part-2-the-square-component)
 1. [Lifting State Up](#part-3-lifting-state-up)
@@ -15,7 +15,7 @@ Here are the part of the exercise:
 1. [Time Travel](#part-7-time-travel)
 
 ## Part 1: Install React Development Tools
-Install the React Developer Tools extension [here](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi).
+Install the React Developer Tools extension for Chrome [here](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi).
 
 This extension allows you to inspect React components, states, props etc, as your app is running. Use this often to make sure your components are behaving correctly!
 
@@ -421,9 +421,9 @@ When we select one of our previous moves the board should display its state at t
     ```javascript
     ...
     return (
-    <li key={move}>
-      <a href="#" onClick={() => this.jumpTo(move)}>{desc}</a>
-    </li>
+        <li key={move}>
+            <a href="#" onClick={() => this.jumpTo(move)}>{desc}</a>
+        </li>
     );
     ...
     ```
