@@ -10,12 +10,12 @@
 
 Use Codepen [here](https://codepen.io/rick-shar/pen/xdeQxQ)
 	
-	![](./img/list-1.png)
+	![](./img/lists-1.png)
 
 1. Scroll down in the same Codepen for Part 2. Display array ```roster``` as a nested list, as in the picture. Use the provided classes in a way that makes sense - make sure that you use keys for both mappings, and that the keys are unique!
 
 Use Codepen [here](https://codepen.io/rick-shar/pen/JNVejw)
-	![](./img/list-2.png)
+	![](./img/lists-2.png)
 
 ## State, Lifecycle Hooks
 
