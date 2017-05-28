@@ -33,9 +33,9 @@ Use Codepen [here](https://codepen.io/rick-shar/pen/EmJGvP)
 
 ## [Watch Me]()
 
-1. Use the component ```Req``` to request information using a GET request, but only do so when the component has mounted. The state must be initialized and then set correctly on a callback.
+1. In the Codepen below utilize the correct lifecycle hook and ajax to grab data (using ajax GET) from URL: https://api.myjson.com/bins/rztih . 
 
-	Use Codepen [here](https://codepen.io/josephch405/pen/BREbaK)
+	Use Codepen [here](https://codepen.io/rick-shar/pen/BRezxW)
 
 1. A local Squirrel sleeps or wakes up whenever it is poked. While it is awake, it collects nuts to survive. You are given a function, ```gather```, as a prop. Using only lifecycle functions and a timer, make it so that the Squirrel component only "gathers" nuts while it is awake (the Squirrel component is mounted when woken and unmounted when asleep).
 
