@@ -7,7 +7,7 @@
 
  1. Open up the settings tab on [codepen](https://codepen.io/rick-shar/pen/qrBwRz) and add the react-redux library
     
-    !()[https://cl.ly/412l1Q2N0x3M]
+![](https://d3vv6lp55qjaqc.cloudfront.net/items/1j2I3y2m2x25092r2q0F/Screen%20Shot%202017-05-28%20at%205.11.11%20PM.png?v=aea6a25a)
 
 1. Remove the `render()` method `store.subscribe(render)` call and `render()` call at the bottom of the javascript portion on codepen.
 
@@ -17,18 +17,18 @@
 
 1. At this pointer the counter buttons will reappear but no value will be shown
 
-    !()[https://cl.ly/073C2h3Q1P1X]
+![](https://d3vv6lp55qjaqc.cloudfront.net/items/260h0g2I2d3e1f3C0F0D/Screen%20Shot%202017-05-28%20at%205.20.37%20PM.png?v=fed2bf49)
 
 1. Since the component is disconnected from the store at this point we need to reconnect it using `connect()` from the ReactRedux library. Lets also import `connect` by updating our `const { Provider } = ReactRedux` to `const { Provider, connect } = ReactRedux`.
 
 1. If we recall our example during lecture the `connect()` function requires two functions `mapStateToProps` and `mapDispatchToProps`. Although this pair of functions sound complicated they are really simple! 
-
-    - `mapDispatchToProps` is responsible for giving our component any dispatch calls it needs.
+    
     - `mapStateToProps` is responsible for giving our component any pieces of state that this component needs.
-
+    - `mapDispatchToProps` is responsible for giving our component any dispatch calls it needs.
+    
 1. If we look through the Counter component we notice that the `onClick` is using `store.dispatch()` so we need to supply that through `connect` which in turn needs to be supplied dispatch through `mapDispatchToProps`. Other than `onClick` there is no other mention of dispatch so we know that we can begin writing our `mapDispatchToProps` method.
 
-1. Lets add the snippet below.
+1. Let's add the snippet below.
     ```javascript
        
         const mapDispatchToProps = (dispatch) => {
@@ -64,4 +64,4 @@
 
 1. Rejoice! Everything should be working again!
 
-    !()[https://cl.ly/3c2J2p102j3t]
+![](https://d3vv6lp55qjaqc.cloudfront.net/items/0k3A0A0Z1q0U09011G1M/Screen%20Recording%202017-05-28%20at%2005.59%20PM.gif?v=713df0df)
