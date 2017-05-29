@@ -7,7 +7,7 @@
 
  1. Open up the settings tab on [codepen](https://codepen.io/rick-shar/pen/qrBwRz) and add the react-redux library
     
-    !()[https://d3vv6lp55qjaqc.cloudfront.net/items/1j2I3y2m2x25092r2q0F/Screen%20Shot%202017-05-28%20at%205.11.11%20PM.png?v=aea6a25a]
+![](https://d3vv6lp55qjaqc.cloudfront.net/items/1j2I3y2m2x25092r2q0F/Screen%20Shot%202017-05-28%20at%205.11.11%20PM.png?v=aea6a25a)
 
 1. Remove the `render()` method `store.subscribe(render)` call and `render()` call at the bottom of the javascript portion on codepen.
 
@@ -17,7 +17,7 @@
 
 1. At this pointer the counter buttons will reappear but no value will be shown
 
-    !()[https://d3vv6lp55qjaqc.cloudfront.net/items/260h0g2I2d3e1f3C0F0D/Screen%20Shot%202017-05-28%20at%205.20.37%20PM.png?v=fed2bf49]
+![](https://d3vv6lp55qjaqc.cloudfront.net/items/260h0g2I2d3e1f3C0F0D/Screen%20Shot%202017-05-28%20at%205.20.37%20PM.png?v=fed2bf49)
 
 1. Since the component is disconnected from the store at this point we need to reconnect it using `connect()` from the ReactRedux library. Lets also import `connect` by updating our `const { Provider } = ReactRedux` to `const { Provider, connect } = ReactRedux`.
 
@@ -64,4 +64,4 @@
 
 1. Rejoice! Everything should be working again!
 
-    !()[https://d3vv6lp55qjaqc.cloudfront.net/items/0k3A0A0Z1q0U09011G1M/Screen%20Recording%202017-05-28%20at%2005.59%20PM.gif?v=713df0df]
+![](https://d3vv6lp55qjaqc.cloudfront.net/items/0k3A0A0Z1q0U09011G1M/Screen%20Recording%202017-05-28%20at%2005.59%20PM.gif?v=713df0df)
