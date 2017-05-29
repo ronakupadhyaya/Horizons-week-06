@@ -22,13 +22,13 @@
 1. Since the component is disconnected from the store at this point we need to reconnect it using `connect()` from the ReactRedux library. Lets also import `connect` by updating our `const { Provider } = ReactRedux` to `const { Provider, connect } = ReactRedux`.
 
 1. If we recall our example during lecture the `connect()` function requires two functions `mapStateToProps` and `mapDispatchToProps`. Although this pair of functions sound complicated they are really simple! 
-
-    - `mapDispatchToProps` is responsible for giving our component any dispatch calls it needs.
+    
     - `mapStateToProps` is responsible for giving our component any pieces of state that this component needs.
-
+    - `mapDispatchToProps` is responsible for giving our component any dispatch calls it needs.
+    
 1. If we look through the Counter component we notice that the `onClick` is using `store.dispatch()` so we need to supply that through `connect` which in turn needs to be supplied dispatch through `mapDispatchToProps`. Other than `onClick` there is no other mention of dispatch so we know that we can begin writing our `mapDispatchToProps` method.
 
-1. Lets add the snippet below.
+1. Let's add the snippet below.
     ```javascript
        
         const mapDispatchToProps = (dispatch) => {
