@@ -15,9 +15,7 @@ const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess, guess
         <div>
             <Man badGuesses={badGuesses} />
             <Board wordLetters={wordLetters} />
-            <div>Guessed Letters: {typeof guessedLetters}</div>
-            <div>Guessed Letters: {guessedLetters}</div>
-            <div>{guessedLetters.forEach((e) => <span>{e}</span>)}</div>
+            <div>Guessed Letters: {guessedLetters.map((e) => <span>{e} </span>)}</div>
             <input type="text"
                 value={''}
                 ref={node => {input = node;}}
