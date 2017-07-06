@@ -6,6 +6,7 @@ import Root from './containers/Root';
 
 const store = configureStore();
 
+// ReactDOM.render call that starts up whole app
 render(
     <AppContainer>
         <Root store={store} history={history} />
