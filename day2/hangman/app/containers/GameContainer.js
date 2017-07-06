@@ -3,15 +3,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Man from '../components/Man';
 import Board from '../components/Board';
+import {onGoodGuess, onBadGuess, initialState} from '../actions/index';
 
 // let inputWord = '';
-const GameContainer = ({ guessedLetters, badGuesses, wordLetters, onBadGuess, onGoodGuess, initialState }) => {
+const GameContainer = ({ guessedLetters, badGuesses, wordLetters, onBadGuessFunc, onGoodGuessFunc, initialStateFunc }) => {
     let input;
     let variableHoldingInputField;
     const setWord = () => {
         const passBack = variableHoldingInputField.value.split('').map(
         x => ({letter: x.toUpperCase(), guessed: false}));
-        initialState(passBack);
+        initialStateFunc(passBack);
     };
     const letterInAnswer = letter => wordLetters.some(
        letterObj => letterObj.letter === letter);
@@ -23,21 +24,22 @@ const GameContainer = ({ guessedLetters, badGuesses, wordLetters, onBadGuess, on
                 <strong>Input the customized word</strong>
                 <input type="text"
                     ref={node => {variableHoldingInputField = node;}}
-                    // o nChange={() => updateWord(variableHoldingInputField.value)}
                 />
                 <input type="submit"
                     value="SUBMIT"
                     onClick={() => setWord()}
                 />
             </div>
-
+            <div>
+                <strong style={{color: 'blue'}}>{wordLetters.filter(x=>x.guessed ? false : true).length === 0 && wordLetters.length !== 0 ? 'YOU WON!!!' : ''}</strong>
+            </div>
             <span>{guessedLetters}</span>
             <Man badGuesses={badGuesses} />
             <Board wordLetters={wordLetters} />
             <input type="text"
                 value={""}
                 ref={node => {input = node;}}
-                onChange={() => letterInAnswer(input.value.toUpperCase()) ? onGoodGuess(input.value) : onBadGuess(input.value) }
+                onChange={() => letterInAnswer(input.value.toUpperCase()) ? onGoodGuessFunc(input.value) : onBadGuessFunc(input.value) }
             />
         </div>
     );
@@ -45,9 +47,9 @@ const GameContainer = ({ guessedLetters, badGuesses, wordLetters, onBadGuess, on
 
 GameContainer.propTypes = {
     badGuesses: PropTypes.number,
-    onBadGuess: PropTypes.func,
-    onGoodGuess: PropTypes.func,
-    initialState: PropTypes.func,
+    onBadGuessFunc: PropTypes.func,
+    onGoodGuessFunc: PropTypes.func,
+    initialStateFunc: PropTypes.func,
     wordLetters: PropTypes.array,
     guessedLetters: PropTypes.array
 };
@@ -62,14 +64,14 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onBadGuess: (inputLetter) => {
-            dispatch({ type: 'BAD_GUESS', letter: inputLetter, initialState: inputLetter });
+        onBadGuessFunc: (inputLetter) => {
+            dispatch(onBadGuess(inputLetter));
         },
-        onGoodGuess: (inputLetter) => {
-            dispatch({ type: 'GOOD_GUESS', letter: inputLetter });
+        onGoodGuessFunc: (inputLetter) => {
+            dispatch(onGoodGuess(inputLetter));
         },
-        initialState: (initialState) => {
-            dispatch({ type: 'INITIAL_STATE', initialState: initialState });
+        initialStateFunc: (state) => {
+            dispatch(initialState(state));
         }
     };
 };
