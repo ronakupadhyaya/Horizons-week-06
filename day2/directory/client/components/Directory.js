@@ -1,8 +1,12 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
+import {Route, Link, Switch } from 'react-router-dom';
 
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
+  { "fName": "Pam", "lName": "Needle", "number": "(516)-426-1057", "email": "pneedle@colgate.edu" },
+  { "fName": "Pam", "lName": "Notneedle", "number": "(516)-333-3333", "email": "pneedle1@colgate.edu" },
+  { "fName": "Greg", "lName": "Needle", "number": "(516)-384-1464", "email": "gneedle@gmail.com" },
+  { "fName": "Robin", "lName": "Needle", "number": "(516)-641-6845", "email": "rneedle@gmail.com" },
   { "fName": "Nihar", "lName": "Harhar", "number": "(421)-666-2022", "email": "puppysmacker94@hotmail.com" },
   { "fName": "Nihar", "lName": "Kardashian", "number": "(608)-633-1254", "email": "kanyebae@tidal.com" },
   { "fName": "Graham", "lName": "Smith", "number": "(610)-256-6599", "email": "graham@joinhorizons.com" },
@@ -24,11 +28,23 @@ class Directory extends React.Component {
   render() {
     return (
       <div>
-        <h1>Horizons Directory</h1>
+          <h1>Horizons Directory</h1>
+          <Route path="/directory/:any" render={() => <Link to="/directory">Back To Listings</Link>}/>
+
+          <Route exact={true} path="/directory" render={ () => <LinkList links={ppl.map(pplToFullLink)}></LinkList>}/>
+          <Switch>
+              <Route path="/directory/surname/:lName" render={ (props) => <LinkList links={ppl.filter( (person) => person.lName === props.match.params.lName).map(pplToFullLink)}></LinkList>}/>
+
+              <Route path="/directory/areacode/:code" render={ (props) => <LinkList links={ppl.filter( (person) => person.number.slice(1,4) === props.match.params.code).map(pplToFullLink)}></LinkList>}/>
 
 
 
+              <Route path="/directory/:fName" render={ (props) => <LinkList links={ppl.filter( (person) => person.fName === props.match.params.fName).map(pplToFullLink)}></LinkList>}/>
 
+              <Route path="/directory/:fName/:lName" component={Person} />
+
+
+          </Switch>
       </div>
     );
   }
@@ -37,13 +53,16 @@ class Directory extends React.Component {
 class LinkList extends React.Component {
   render() {
     return (
-        <ul>
-          {this.props.links.map(link => (
-            <li key={link.key}>
-              <Link to={link.to}>{link.text}</Link>
-            </li>
-          ))}
-        </ul>
+        <div>
+            <ul>
+                {/* <Route path="/directory/:fName/:lName" component={Person} /> */}
+                {this.props.links.map(link => (
+                    <li key={link.key}>
+                        <Link to={link.to}>{link.text}</Link>
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
   }
 };
@@ -58,12 +77,12 @@ class Person extends React.Component {
 
     return person ? (
       <div>
-        <h2>{`${person.fName} ${person.lName}`}</h2>
-        <h3>{person.number}</h3>
-        <h3>{person.email}</h3>
+          <h2>{`${person.fName} ${person.lName}`}</h2>
+          <h3>{person.number}</h3>
+          <h3>{person.email}</h3>
 
-        Not the {`${person.fName}`} you're looking for? {' '}
-        Too bad!!!
+          Not the {`${person.fName}`} you're looking for? {' '}
+          <Link to={`/directory/${person.fName}`} >Try here</Link>
       </div>
     ) : (
       <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
