@@ -5,33 +5,55 @@ import Man from '../components/Man';
 import Board from '../components/Board';
 // import { addTodo, toggleTodo, removeTodo, filterTodo } from '../actions/index.js';
 
-const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess, guessedLetters }) => {
+const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess, guessedLetters, gameStarted, onWordSet }) => {
     let input;
-    // let gameWordInputField;
+    let gameWordInputField;
     const letterInAnswer = letter => wordLetters.some(
        letterObj => letterObj.letter === letter);
 
-    /* the ref node thing in the code below is another way
-    to handle input in React Forms */
     return (
         <div>
-            {/* <input type="text"
-                value={gameWordInputField ? gameWordInputField.value : ''}
-                ref={node => {gameWordInputField = node;}}
-            /> */}
-            {/* gameWordInputField.value */}
-            <Man badGuesses={badGuesses} />
-            <Board wordLetters={wordLetters} />
-            <input type="text"
-                value={''}
-                ref={node => {input = node;}}
-                onChange={() => {
-                    const guess = input.value.toUpperCase();
-                    return letterInAnswer(guess) ? onGoodGuess(guess) : onBadGuess(guess);
-                }
-                }
-            />
-            <div>Guessed Letters: {guessedLetters}</div>
+            {gameStarted ? (
+                <div>
+                    <Man badGuesses={badGuesses} />
+                    <Board wordLetters={wordLetters} />
+                    <input type="text"
+                        value={''}
+                        ref={node => {input = node;}}
+                        onChange={() => {
+                            const guess = input.value.toUpperCase();
+                            console.log('game started', gameStarted);
+                            return letterInAnswer(guess) ? onGoodGuess(guess) : onBadGuess(guess);
+                        }
+                        }
+                    />
+                    <div>Guessed Letters: {guessedLetters}</div>
+                </div>
+            ) : (
+                <div>
+                    <p>Choose a word and press enter to play! </p>
+                    <input type="text"
+                        ref={node => {gameWordInputField = node;}}
+                        onChange={() => {
+                            console.log(gameWordInputField.value);
+                            // gameWordInputField.value += gameWordInputField.value;
+                        }}
+                        onKeyPress={(event) => {
+                            // console.log(gameWordInputField.value);
+                            if(event.charCode === 13) {
+                                const word = gameWordInputField.value.toUpperCase();
+                                // gameWordInputField.value = '';
+                                console.log('pressed enter:word is', word);
+                                return onWordSet(word);
+                            }
+                            return null;
+                        }
+                        }
+                    />
+                </div>
+            )}
+
+
             {/* <div className="guesses">{guessedLetters.map( (letter) => {letter + ' '})}</div> */}
         </div>
     );
@@ -42,24 +64,17 @@ GameContainer.propTypes = {
     wordLetters: PropTypes.array,
     onBadGuess: PropTypes.func,
     onGoodGuess: PropTypes.func,
-    guessedLetters: PropTypes.array
+    guessedLetters: PropTypes.array,
+    onWordSet: PropTypes.func,
+    gameStarted: PropTypes.bool
 };
 
 const mapStateToProps = (state) => {
     return {
         badGuesses: state.badGuesses,
         wordLetters: state.wordLetters,
-        guessedLetters: state.guessedLetters
-        // [
-        //     {letter: 'H', guessed: true},
-        //     {letter: 'O', guessed: false},
-        //     {letter: 'R', guessed: false},
-        //     {letter: 'I', guessed: false},
-        //     {letter: 'Z', guessed: true},
-        //     {letter: 'O', guessed: false},
-        //     {letter: 'N', guessed: true},
-        //     {letter: 'S', guessed: false}
-        // ]
+        guessedLetters: state.guessedLetters,
+        gameStarted: state.gameStarted
     };
 };
 
@@ -70,6 +85,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         onGoodGuess: (inputLetter) => {
             dispatch({type: 'GOOD_GUESS', letter: inputLetter});
+        },
+        onWordSet: (gameWord) => {
+            dispatch({type: 'WORD_SET', word: gameWord});
         }
 
     };

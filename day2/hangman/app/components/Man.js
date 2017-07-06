@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const Man = ({ badGuesses }) => {
     return (
       <div>
-        <p>{badGuesses}</p>
+          <p>Incorrect Guesses: {badGuesses}</p>
         <img src={imgUrls[badGuesses]}/>
       </div>
   );
