@@ -1,25 +1,49 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import Man from '../components/Man';
 import Board from '../components/Board';
+import {onBadGuess} from '../actions/index.js';
+import {onGoodGuess} from '../actions/index.js';
+import {onNewWord} from '../actions/index.js';
 
-const GameContainer = ({ badGuesses, wordLetters, onInput }) => {
+const GameContainer = ({
+    badGuesses,
+    wordLetters,
+    onBadGuessClick,
+    onGoodGuessClick,
+    guessedLetters,
+    newWord
+}) => {
     let input;
-    // const letterInAnswer = letter => wordLetters.some(
-    //    letterObj => letterObj.letter === letter);
+    const letterInAnswer = letter => wordLetters.some(letterObj => letterObj.letter === letter);
 
     /* the ref node thing in the code below is another way
     to handle input in React Forms */
+    let str = ' ';
+    guessedLetters.forEach((item) => {
+        str += ' ' + item;
+    });
+    let variableHoldingInputField;
     return (
         <div>
-            <Man badGuesses={badGuesses} />
-            <Board wordLetters={wordLetters} />
-            <input type="text"
-                value={''}
-                ref={node => {input = node;}}
-                onChange={() => onInput(input.value) }
-            />
+            <Man badGuesses={badGuesses}/>
+            <Board wordLetters={wordLetters}/>
+            <input type="text" value={''} ref={node => {
+                input = node;
+            }} onChange={() => letterInAnswer(input.value)
+                ? onGoodGuessClick(input.value)
+                : onBadGuessClick(input.value)}/>
+            <div>
+                letter guessed {str}
+
+            </div>
+            <input type="text" placeholder="enter word" ref={node => {
+                variableHoldingInputField = node;
+            }}/>
+            <button onClick={() => newWord(variableHoldingInputField.value.split(''))}>
+
+                New word</button>
         </div>
     );
 };
@@ -27,32 +51,28 @@ const GameContainer = ({ badGuesses, wordLetters, onInput }) => {
 GameContainer.propTypes = {
     badGuesses: PropTypes.number,
     wordLetters: PropTypes.array,
-    onInput: PropTypes.func
+    onBadGuessClick: PropTypes.func,
+    onGoodGuessClick: PropTypes.func,
+    guessedLetters: PropTypes.array,
+    newWord: PropTypes.func
 };
 
-const mapStateToProps = (/* state */) => {
+const mapStateToProps = (state) => {
+    return {badGuesses: state.badGuesses, wordLetters: state.wordLetters, guessedLetters: state.guessedLetters};
+};
+
+const mapDispatchToProps = (dispatch) => {
     return {
-        badGuesses: 0,
-        wordLetters: [
-            {letter: 'H', guessed: true},
-            {letter: 'O', guessed: false},
-            {letter: 'R', guessed: false},
-            {letter: 'I', guessed: false},
-            {letter: 'Z', guessed: true},
-            {letter: 'O', guessed: false},
-            {letter: 'N', guessed: true},
-            {letter: 'S', guessed: false}
-        ]
+        onBadGuessClick: (inputLetter) => {
+            dispatch(onBadGuess(inputLetter));
+        },
+        onGoodGuessClick: (inputLetter) => {
+            dispatch(onGoodGuess(inputLetter));
+        },
+        newWord: (inputLetter) => {
+            dispatch(onNewWord(inputLetter));
+        }
     };
 };
 
-const mapDispatchToProps = (/* dispatch */) => {
-    return {
-        onInput: (inputLetter) => alert(inputLetter)
-    };
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(GameContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(GameContainer);
