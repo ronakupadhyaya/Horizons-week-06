@@ -1,5 +1,5 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
@@ -20,55 +20,62 @@ const pplToFullLink = person => ({
     key: person.number
 });
 
-class Directory extends React.Component {
-  render() {
+function Directory (props) {
     return (
-      <div>
-        <h1>Horizons Directory</h1>
-
-
-
-
-      </div>
+        <div>
+            <h1>Horizons Directory</h1>
+            <Switch>
+                <Route path="/directory/surname/:lname" render={({match}) =>
+                    <LinkList links={match.params.lname} /> } />
+                <Route path="/directory/:fname/:lname" component={Person} />
+                {/* <Route path="/directory/:fname" render={() =>
+                    <LinkList links={['fName']} /> } /> */}
+                <Route exact path="/directory" render={() =>
+                    <LinkList links={ppl.map(pplToFullLink)} /> } />
+            </Switch>
+        </div>
     );
-  }
 };
 
-class LinkList extends React.Component {
-  render() {
+function LinkList (props) {
+    console.log("MATCH in link", props);
+    // let newLinks;
+    // if (this.props.match.params.fname) {
+    //     newLinks = ppl.filter((person) => {return person.fName === this.props.match.params.fname});
+    // }
+    let links = props.links;
+    if (typeof props.links[0] === "string" ) {
+        const name = props.links[0];
+        links = ppl.filter((person) => {return person[name] === name})
+    }
     return (
         <ul>
-          {this.props.links.map(link => (
+          {links.map(link => (
             <li key={link.key}>
               <Link to={link.to}>{link.text}</Link>
             </li>
           ))}
         </ul>
     );
-  }
 };
 
-class Person extends React.Component {
-  render() {
+function Person (props) {
+     console.log(props.match.params);
     // Array.prototype.find returns the first item satisfying the fn
     const person = ppl.find(p => (
-      p.fName === this.props.match.params.fName &&
-      p.lName === this.props.match.params.lName
+        p.fName === props.match.params.fname &&
+        p.lName === props.match.params.lname
     ));
 
     return person ? (
-      <div>
-        <h2>{`${person.fName} ${person.lName}`}</h2>
-        <h3>{person.number}</h3>
-        <h3>{person.email}</h3>
-
-        Not the {`${person.fName}`} you're looking for? {' '}
-        Too bad!!!
-      </div>
+        <div>
+            <h2>{`${person.fName} ${person.lName}`}</h2>
+            <h3>{person.number}</h3>
+            <h3>{person.email}</h3>
+        </div>
     ) : (
-      <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
+        <h3> No contact found. Link back to directory to search for others </h3>
     )
-  }
 }
 
 
