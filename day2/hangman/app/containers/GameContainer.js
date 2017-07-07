@@ -39,7 +39,7 @@ GameContainer.propTypes = {
     onBadGuess: PropTypes.func,
     onGoodGuess: PropTypes.func,
     guessedLetters: PropTypes.array,
-    onNewGame: PropTypes.string
+    onNewGame: PropTypes.func
 };
 
 const mapStateToProps = ( state ) => {
