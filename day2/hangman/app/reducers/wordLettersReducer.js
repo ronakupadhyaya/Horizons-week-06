@@ -6,6 +6,25 @@
 
 // import * as types from '../actions/types';
 
-// const wordLettersReducer =
+const wordLettersReducer = (state = [], action) =>{
+    switch (action.type) {
+        case 'START_GAME':
+            const wrdSplit = action.word.split('');
+            const emptyArr = [];
+            wrdSplit.forEach((letter) => emptyArr.push({letter: letter, guessed: false}));
+            return emptyArr;
+        case 'GOOD_GUESS':
+            return state.map((guess) => {
+                if(guess.letter === action.letter) {
+                    return {letter: action.letter, guessed: true};
+                }
+                return guess;
+            }
+        );
+        default:
+            return state;
+    }
+};
 
-// export default wordLettersReducer;
+
+export default wordLettersReducer;
