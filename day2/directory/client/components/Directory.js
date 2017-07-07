@@ -1,5 +1,5 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
+import { Route,  Link } from 'react-router-dom';
 
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
@@ -25,7 +25,9 @@ class Directory extends React.Component {
     return (
       <div>
         <h1>Horizons Directory</h1>
-
+        <Route path='/directory' exact render={() => <LinkList links={ppl.map(pplToFullLink)}/>}/>
+        <Route path='/directory/:fName/:lName' exact component={ Person }/>
+        
 
 
 
@@ -64,6 +66,7 @@ class Person extends React.Component {
 
         Not the {`${person.fName}`} you're looking for? {' '}
         Too bad!!!
+        <br/><Link to="/directory">Back to Directory</Link>
       </div>
     ) : (
       <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
