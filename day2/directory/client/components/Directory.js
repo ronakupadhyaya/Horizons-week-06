@@ -1,5 +1,6 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
+import { Route, Link, Switch } from 'react-router-dom';
+
 
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
@@ -22,12 +23,69 @@ const pplToFullLink = person => ({
 
 class Directory extends React.Component {
   render() {
+    let input;
     return (
       <div>
         <h1>Horizons Directory</h1>
+        <input type="text" placeholder="Search by Surname"
+          ref={node => {input = node;}}/>
+        {/* <Link to={"/directory/surname/"+input.value}> */}
+          <input type="submit" value="search"/>
+        {/* </Link> */}
 
-
-
+        <Switch>
+          {/* <Route path='/directory/surname/:lName' render={({match})=>
+            <LinkList
+              links={ppl
+                .filter(p => p.lName === match.params.lName)
+                .map(pplToFullLink)}
+            />
+          }/>
+          <Route path='/directory/areacode/:CODE' render={({match})=>
+              <LinkList
+                links={ppl
+                .filter(p => p.number.substring(1,4) === match.params.CODE.toString())
+                .map(pplToFullLink)}
+              />
+          }/> */}
+          <Route path='/directory/:fName/:lName' component={Person}/>
+          <Route path='/directory/:fName' render={({match})=>
+            <LinkList
+              links={ppl
+                .filter(p => p.fName === match.params.fName)
+                .map(pplToFullLink)}
+              />
+          }/>
+          <Route path='/directory' render={({location})=>{
+            var queriesArr = location.search.substring(1).split('&').map(item=>item.split('='));
+            var queries = {};
+            queriesArr.forEach(array=>queries[array[0]]=array[1]);
+            console.log(queries)
+            return<LinkList
+              links={ppl
+                .filter(p => {
+                  if (queries.hasOwnProperty('fName')){
+                    return p.fName.toUpperCase() === queries.fName.toUpperCase()
+                  }
+                  return true;
+                })
+                .filter(p => {
+                  if (queries.hasOwnProperty('lName')){
+                    return p.lName.toUpperCase() === queries.lName.toUpperCase()
+                  }
+                  return true;
+                })
+                .filter(p => {
+                  if (queries.hasOwnProperty('area')){
+                    return p.number.substring(1,4) === queries.area.toString()
+                  }
+                  return true;
+                })
+                .map(pplToFullLink)}
+            />
+          }}/>
+          <LinkList links={ppl.map(pplToFullLink)} />
+        </Switch>
 
       </div>
     );
@@ -63,7 +121,7 @@ class Person extends React.Component {
         <h3>{person.email}</h3>
 
         Not the {`${person.fName}`} you're looking for? {' '}
-        Too bad!!!
+        <Link to={'/directory/'+person.fName}>Find others</Link>
       </div>
     ) : (
       <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
