@@ -1,15 +1,15 @@
-import React from 'react';
+import React from 'react'
 
 const About = () =>
-    <div>
-        <h3>Redux Hangman, Horizons Edition</h3>
-        <p>
+  <div>
+    <h3>Redux Hangman, Horizons Edition</h3>
+    <p>
           Hangman is a paper and pencil guessing game for two or more players.
           One player thinks of a word, phrase or sentence and the other tries
           to guess it by suggesting letters or numbers, within a certain number
           of guesses.
-        </p>
-        <p>
+    </p>
+    <p>
           The word to guess is represented by a row of dashes, representing
           each letter of the word. In most variants, proper nouns, such as
           names, places, and brands, are not allowed. Slang words, sometimes
@@ -18,8 +18,8 @@ const About = () =>
           other player writes it in all its correct positions. If the suggested
           letter or number does not occur in the word, the other player draws
           one element of a hanged man stick figure as a tally mark.
-        </p>
-        <p>
+    </p>
+    <p>
           The player guessing the word may, at any time, attempt to guess the
           whole word. If the word is correct, the game is over and the guesser
           wins. Otherwise, the other player may choose to penalize the guesser
@@ -29,9 +29,8 @@ const About = () =>
           guesser losing. However, the guesser can also win by guessing all the
           letters or numbers that appears in the word, thereby completing the
           word, before the diagram is completed.
-        </p>
+    </p>
 
-    </div>;
+  </div>
 
-
-export default About;
+export default About

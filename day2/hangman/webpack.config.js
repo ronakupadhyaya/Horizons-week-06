@@ -32,7 +32,7 @@ module.exports = {
         })
     ],
     eslint: {
-        configFile: '.eslintrc',
+        configFile: 'eslintrc.json',
         failOnWarning: false,
         failOnError: false
     },
