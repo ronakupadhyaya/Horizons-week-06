@@ -4,8 +4,24 @@
 /* "letter": a 1 character string */
 /* "guessed": a boolean */
 
-// import * as types from '../actions/types';
+import * as types from '../actions/types';
+const wordLettersReducer = ( state = [], action) => {
+    switch (action.type) {
+        case types.SET_WORD :
+            const newWord = action.word.split('');
+            const newState2 = newWord.map(letter => ({letter: letter.toUpperCase(), guessed: false}));
+            return newState2;
+        case types.GOOD_GUESS:
+            const newState = [...state];
+            newState.forEach((each, index) => {
+                if(action.letter === each.letter) {
+                    newState[index].guessed = true;
+                }
+            });
+            return newState;
+        default:
+            return state;
+    }
+};
 
-// const wordLettersReducer =
-
-// export default wordLettersReducer;
+export default wordLettersReducer;

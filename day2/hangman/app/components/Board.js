@@ -8,7 +8,7 @@ const Board = ({ wordLetters }) => {
         {/* PSA: Box in this map should normally be given a key */}
         {wordLetters.map(letter => <Box letter={letter}/>)}
       </div>
-  );
+    );
 };
 
 Board.propTypes = {

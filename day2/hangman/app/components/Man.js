@@ -8,7 +8,7 @@ const Man = ({ badGuesses }) => {
         <p>{badGuesses}</p>
         <img src={imgUrls[badGuesses]}/>
       </div>
-  );
+    );
 };
 
 Man.propTypes = {
