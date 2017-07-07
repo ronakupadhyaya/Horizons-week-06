@@ -13,8 +13,8 @@ class App extends React.Component {
           {/* In a Switch, only the 1st matched route renders.*/}
           <Switch>
             {/* Your routes here */}
-            <Route exact path='/' component={Home} />
-            <Route path="/directory" component={Directory} />
+            <Route exact path='/subapp/directoryApp' component={Home} />
+            <Route path="/subapp/directoryApp/directory" component={Directory} />
             {/* A route with no path is matched unconditionally.*/}
             <Route render={() => <h1>404</h1>} />
           </Switch>

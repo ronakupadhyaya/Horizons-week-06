@@ -16,7 +16,7 @@ const ppl = [
 ];
 
 const pplToFullLink = person => ({
-    to: `/directory/${person.fName}/${person.lName}`,
+    to: `/subapp/directoryApp/directory/${person.fName}/${person.lName}`,
     text: `${person.fName} ${person.lName}`,
     key: person.number
 });
@@ -43,10 +43,10 @@ class Directory extends React.Component {
   render() {
     return (
       <div>
-        <Link to="/">Back to Home</Link>
+        <Link to="/subapp/directoryApp">Back to Home</Link>
         <h1>Horizons Directory</h1>
         {/* { showing all of the people } */}
-        <Route path="/directory" exact render={({location}) => <LinkList links={this.helperFilter(location).map(pplToFullLink)}/>} />
+        <Route path="/subapp/directoryApp/directory" exact render={({location}) => <LinkList links={this.helperFilter(location).map(pplToFullLink)}/>} />
 
         <Switch>
           {/* {Filter by surname} */}
@@ -59,7 +59,7 @@ class Directory extends React.Component {
           {/* <Route exact path="/directory/:fName" render={({match}) => <div> <LinkList links={ppl.filter(p => p.fName === match.params.fName).map(pplToFullLink)} /> <Link to="/directory" >Back to listings</Link> </div> } /> */}
 
           {/* {Displaying one person} */}
-          <Route exact path="/directory/:fName/:lName" component={Person} />
+          <Route exact path="/subapp/directoryApp/directory/:fName/:lName" component={Person} />
         </Switch>
 
 
@@ -96,17 +96,17 @@ class Person extends React.Component {
         <h3>{person.number}</h3>
         <h3>{person.email}</h3>
 
-        <p> Not the {`${person.fName}`} you're looking for? {' '} <Link to={"/directory/" + person.fName} >Find others</Link> </p>
-        <Link to="/directory">Back to listings</Link>
+        <p> Not the {`${person.fName}`} you're looking for? {' '} <Link to={"/subapp/directoryApp/directory/" + person.fName} >Find others</Link> </p>
+        <Link to="/subapp/directoryApp/directory">Back to listings</Link>
         <br/>
-        <Link to={"/directory?lName=" + person.lName}>Search People With Same Last Name</Link>
+        <Link to={"/subapp/directoryApp/directory?lName=" + person.lName}>Search People With Same Last Name</Link>
         <br/>
-        <Link to={"/directory?areacode=" + person.number.substring(1, 4)}>Search People With Same Areacode</Link>
+        <Link to={"/subapp/directoryApp/directory?areacode=" + person.number.substring(1, 4)}>Search People With Same Areacode</Link>
       </div>
     ) : (
       <div>
         <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
-        <Link to="/directory">Back to listings</Link>
+        <Link to="/subapp/directoryApp/directory">Back to listings</Link>
       </div>
     )
   }
