@@ -6,11 +6,11 @@ import {connect} from 'react-redux';
 
 const Man = ({ badGuesses }) => {
     return (
-      <div>
-        <p>{badGuesses}</p>
-        <img src={imgUrls[badGuesses]}/>
-      </div>
-  );
+        <div>
+            <p>{badGuesses}</p>
+            <img src={imgUrls[badGuesses]}/>
+        </div>
+    );
 };
 
 Man.propTypes = {
@@ -22,9 +22,7 @@ const mapStateToProps = (state) =>{
         badGuesses: state.badGuesses
     };
 };
-const mapDispatchToProps = (
-
-) =>{
+const mapDispatchToProps = () =>{
     return{};
 };
 
