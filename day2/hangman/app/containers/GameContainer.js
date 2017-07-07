@@ -21,10 +21,12 @@ const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess, guess
             <div>
             Choose your word
             <input type="text"
+              // value={''}ul
               ref={node => {variableHoldingInputField = node;}}
             />
             <input type="submit"   onClick={() => {
-                return wordChosen( variableHoldingInputField.value);
+                wordChosen( variableHoldingInputField.value);
+                variableHoldingInputField.value = '';
             }}/>
             </div>
             <div>
