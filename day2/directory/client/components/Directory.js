@@ -1,5 +1,5 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
+import {Switch, Route, Link } from 'react-router-dom';
 
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
@@ -25,10 +25,46 @@ class Directory extends React.Component {
     return (
       <div>
         <h1>Horizons Directory</h1>
-
-
-
-
+        <Route
+          exact={true}
+          path='/directory'
+          render={() => <LinkList links={ppl.map(pplToFullLink)} />}
+        />
+        <Switch>
+        <Route
+          exact={true}
+          path='/directory/:fName'
+          render={({match}) => (
+            <LinkList
+              links={ppl
+              .filter(p => p.fName === match.params.fName)
+              .map(pplToFullLink)}
+            />
+          )}
+        />
+        <Route
+          exact={true}
+          path="/directory/surname/:lName"
+          render={({match}) => (
+            <LinkList
+              links={ppl
+                .filter(p => p.lName === match.params.lName)
+                .map(pplToFullLink)}
+            />
+          )}
+        />
+        <Route
+          exact={true}
+          path="/directory/areacode/:digitareacode"
+          render={({match}) => (
+            <LinkList
+              links={ppl
+                .filter(p => p.number.slice(1, 4) === match.params.digitareacode)
+                .map(pplToFullLink)}
+            />
+          )}
+        />
+      </Switch>
       </div>
     );
   }
@@ -63,7 +99,9 @@ class Person extends React.Component {
         <h3>{person.email}</h3>
 
         Not the {`${person.fName}`} you're looking for? {' '}
-        Too bad!!!
+        <Link to={"/directory/" + person.fName}>Find Another {person.fName}</Link> {' '}
+        <Link to={"/directory/surname/" + person.lName}>Find Another {person.lName}</Link> {' '}
+        <Link to={"/directory/areacode/" + person.number.slice(1, 4)}>Find Another {person.number.slice(1,4)} Areacode</Link>
       </div>
     ) : (
       <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
@@ -72,4 +110,4 @@ class Person extends React.Component {
 }
 
 
-export default Directory;
+export {Directory, LinkList, Person};
