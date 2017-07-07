@@ -1,67 +1,97 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import Man from '../components/Man';
-import Board from '../components/Board';
 
-const GameContainer = ({ onNewGame, badGuesses, guessedLetters, wordLetters, onBadGuess, onGoodGuess }) => {
-    let input;
-    let gameword;
-    const letterInAnswer = letter => wordLetters.some(
-       letterObj => letterObj.letter.toLowerCase() === letter.toLowerCase());
+const GameContainer = ({  }) => {
+    class Game extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      history: [
+        {
+          squares: Array(9).fill(null)
+        }
+      ],
+      stepNumber: 0,
+      xIsNext: true
+    };
+  }
 
-    /* the ref node thing in the code below is another way
-    to handle input in React Forms */
+  handleClick(i) {
+    const history = this.state.history.slice(0, this.state.stepNumber + 1);
+    const current = history[history.length - 1];
+    const squares = current.squares.slice();
+    if (calculateWinner(squares) || squares[i]) {
+      return;
+    }
+    squares[i] = this.state.xIsNext ? "X" : "O";
+    this.setState({
+      history: history.concat([
+        {
+          squares: squares
+        }
+      ]),
+      stepNumber: history.length,
+      xIsNext: !this.state.xIsNext
+    });
+  }
+
+  jumpTo(step) {
+    this.setState({
+      stepNumber: step,
+      xIsNext: (step % 2) === 0
+    });
+  }
+
+  render() {
+    const history = this.state.history;
+    const current = history[this.state.stepNumber];
+    const winner = calculateWinner(current.squares);
+
+    const moves = history.map((step, move) => {
+      const desc = move ? "Move #" + move : "Game start";
+      return (
+        <li key={move}>
+          <a href="#" onClick={() => this.jumpTo(move)}>{desc}</a>
+        </li>
+      );
+    });
+
+    let status;
+    if (winner) {
+      status = "Winner: " + winner;
+    } else {
+      status = "Next player: " + (this.state.xIsNext ? "X" : "O");
+    }
+
     return (
-        <div>
-            <Man badGuesses={badGuesses} guessedLetters={guessedLetters}/>
-            <Board wordLetters={wordLetters} />
-            <span>Your Guess:</span>
-            <input type="text"
-                value={''}
-                ref={node => {input = node;}}
-                onChange = {() => {
-                    if (letterInAnswer(input.value)) {
-                        onGoodGuess(input.value);
-                    } else {
-                        onBadGuess(input.value);
-                    }
-                }}
-            />
-            <br/>
-            <span>Pick a new word:</span>
-            <input type="text"
-                ref = {node => {gameword = node;}}
-            />
-            <input type="submit"
-                onClick={() => onNewGame(gameword.value)}
-            />
+      <div className="game">
+        <div className="game-board">
+          <Board
+            squares={current.squares}
+            onClick={i => this.handleClick(i)}
+          />
         </div>
+        <div className="game-info">
+          <div>{status}</div>
+          <ol>{moves}</ol>
+        </div>
+      </div>
     );
-};
+  }
+}
+
 
 GameContainer.propTypes = {
-    badGuesses: PropTypes.number,
-    wordLetters: PropTypes.array,
-    guessedLetters: PropTypes.array,
-    onBadGuess: PropTypes.func,
-    onGoodGuess: PropTypes.func,
-    onNewGame: PropTypes.func
 };
 
 const mapStateToProps = (state) => {
     return {
-        badGuesses: state.badGuesses,
-        wordLetters: state.wordLetters,
-        guessedLetters: state.guessedLetters
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onNewGame: (newWord) => dispatch({type: 'NEW_GAME', word: newWord}),
-        onBadGuess: (inputLetter) => dispatch({type: 'BAD_GUESS', letter: inputLetter}),
-        onGoodGuess: (inputLetter) => dispatch({type: 'GOOD_GUESS', letter: inputLetter})
     };
 };
 
