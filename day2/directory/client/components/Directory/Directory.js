@@ -1,5 +1,6 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
+import { Route, Link, Switch } from 'react-router-dom';
+import { parse } from 'qs';
 
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
@@ -15,9 +16,9 @@ const ppl = [
 ];
 
 const pplToFullLink = person => ({
-    to: `/directory/${person.fName}/${person.lName}`,
-    text: `${person.fName} ${person.lName}`,
-    key: person.number
+  to: `/directory/${person.fName}/${person.lName}`,
+  text: `${person.fName} ${person.lName}`,
+  key: person.number
 });
 
 class Directory extends React.Component {
@@ -25,10 +26,22 @@ class Directory extends React.Component {
     return (
       <div>
         <h1>Horizons Directory</h1>
+        <Switch>
+          <Route exact path="/directory" render={() => <LinkList links={ppl.map(pplToFullLink)} />} />
+          <Route exact path="/directory/:fName" render={({ match }) =>
+            <LinkList links={ppl.filter(p => p.fName === match.params.fName).map(pplToFullLink)} />
+          } />
+          <Route exact path="/directory/surname/:lName" render={({ match }) =>
+            <LinkList links={ppl.filter(p => p.lName === match.params.lName).map(pplToFullLink)} />
+          } />
+          <Route exact path="/directory/areacode/:areacode" render={({ match }) =>
+            <LinkList links={ppl.filter(p => p.number.substr(1,3) === match.params.areacode).map(pplToFullLink)} />
+          } />
+          <Route path="/directory/:fName/:lName" component={Person} />
+        </Switch>
 
 
-
-
+        <Route path="/directory/:anything" render={() => <Link to="/directory">Back To Directory</Link>} />
       </div>
     );
   }
@@ -37,13 +50,13 @@ class Directory extends React.Component {
 class LinkList extends React.Component {
   render() {
     return (
-        <ul>
-          {this.props.links.map(link => (
-            <li key={link.key}>
-              <Link to={link.to}>{link.text}</Link>
-            </li>
-          ))}
-        </ul>
+      <ul>
+        {this.props.links.map(link => (
+          <li key={link.key}>
+            <Link to={link.to}>{link.text}</Link>
+          </li>
+        ))}
+      </ul>
     );
   }
 };
@@ -63,11 +76,11 @@ class Person extends React.Component {
         <h3>{person.email}</h3>
 
         Not the {`${person.fName}`} you're looking for? {' '}
-        Too bad!!!
+        <Link to={`/directory/${person.fName}`}>Search for other {person.fName}s</Link>
       </div>
     ) : (
-      <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
-    )
+        <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
+      )
   }
 }
 

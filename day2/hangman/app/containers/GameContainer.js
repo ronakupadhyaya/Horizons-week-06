@@ -3,23 +3,38 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Man from '../components/Man';
 import Board from '../components/Board';
+import { onBadGuessAction, onGoodGuessAction, changeWordAction } from '../actions/index';
 
-const GameContainer = ({ badGuesses, wordLetters, onInput }) => {
+const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess, guessedLetters, changeWord }) => {
     let input;
-    // const letterInAnswer = letter => wordLetters.some(
-    //    letterObj => letterObj.letter === letter);
+    const letterInAnswer = letter => wordLetters.some(
+       letterObj => letterObj.letter === letter.toUpperCase());
 
+    let wordInput;
     /* the ref node thing in the code below is another way
     to handle input in React Forms */
     return (
         <div>
+            <input type="text"
+                value={''}
+                ref={node => {wordInput = node;}}
+                value={wordInput}
+            />
+            <button onClick={() => changeWord(wordInput.value)}>Set Word</button>
             <Man badGuesses={badGuesses} />
             <Board wordLetters={wordLetters} />
             <input type="text"
                 value={''}
                 ref={node => {input = node;}}
-                onChange={() => onInput(input.value) }
+                onChange={() => {
+                    if (letterInAnswer(input.value.toUpperCase())) {
+                        onGoodGuess(input.value.toUpperCase());
+                    } else {
+                        onBadGuess(input.value.toUpperCase());
+                    }
+                } }
             />
+            <p>{guessedLetters}</p>
         </div>
     );
 };
@@ -27,28 +42,25 @@ const GameContainer = ({ badGuesses, wordLetters, onInput }) => {
 GameContainer.propTypes = {
     badGuesses: PropTypes.number,
     wordLetters: PropTypes.array,
-    onInput: PropTypes.func
+    onBadGuess: PropTypes.func,
+    onGoodGuess: PropTypes.func,
+    guessedLetters: PropTypes.array,
+    changeWord: PropTypes.func
 };
 
-const mapStateToProps = (/* state */) => {
+const mapStateToProps = (state) => {
     return {
-        badGuesses: 0,
-        wordLetters: [
-            {letter: 'H', guessed: true},
-            {letter: 'O', guessed: false},
-            {letter: 'R', guessed: false},
-            {letter: 'I', guessed: false},
-            {letter: 'Z', guessed: true},
-            {letter: 'O', guessed: false},
-            {letter: 'N', guessed: true},
-            {letter: 'S', guessed: false}
-        ]
+        badGuesses: state.badGuesses,
+        wordLetters: state.wordLetters,
+        guessedLetters: state.guessedLetters
     };
 };
 
-const mapDispatchToProps = (/* dispatch */) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        onInput: (inputLetter) => alert(inputLetter)
+        onBadGuess: (letter) => dispatch(onBadGuessAction(letter)),
+        onGoodGuess: (letter) => dispatch(onGoodGuessAction(letter)),
+        changeWord: (word) => dispatch(changeWordAction(word))
     };
 };
 
