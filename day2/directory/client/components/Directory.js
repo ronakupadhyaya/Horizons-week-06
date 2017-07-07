@@ -22,16 +22,31 @@ const pplToFullLink = person => ({
 });
 
 class Directory extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      somelink: ''
+    }
+  }
+  componentDidMount(){
+
+  }
   render() {
-    let input;
+
     return (
       <div>
         <h1>Horizons Directory</h1>
         <input type="text" placeholder="Search by Surname"
-          ref={node => {input = node;}}/>
-        {/* <Link to={"/directory/surname/"+input.value}> */}
+          onChange={
+            (e) => {
+              this.setState({
+                somelink: e.target.value
+              })
+            }
+          }/>
+        <Link to={this.state.somelink}>
           <input type="submit" value="search"/>
-        {/* </Link> */}
+        </Link>
 
         <Switch>
           {/* <Route path='/directory/surname/:lName' render={({match})=>

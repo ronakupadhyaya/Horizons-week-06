@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Man from '../components/Man';
 import Board from '../components/Board';
 import {badGuess, goodGuess, setWord} from '../actions/index';
-const GameContainer = ({ badGuesses, wordLetters, onSetWord, guessedLetters, onBadGuess, onGoodGuess }) => {
+const GameContainer = ({ wordLetters, onSetWord, guessedLetters, onBadGuess, onGoodGuess }) => {
     let input;
     const letterInAnswer = letter => wordLetters.some(
       letterObj => letterObj.letter === letter);
@@ -30,7 +30,7 @@ const GameContainer = ({ badGuesses, wordLetters, onSetWord, guessedLetters, onB
             <br/>
             <br/>
             Guessed Letters: {guessedLetters.map(letter => <b>{letter + ' '}</b>)}
-            <Man badGuesses={badGuesses} />
+            <Man />
             <Board wordLetters={wordLetters} />
             <input type="text"
                 value={''}
@@ -44,7 +44,7 @@ const GameContainer = ({ badGuesses, wordLetters, onSetWord, guessedLetters, onB
 };
 
 GameContainer.propTypes = {
-    badGuesses: PropTypes.number,
+    // badGuesses: PropTypes.number,
     wordLetters: PropTypes.array,
     guessedLetters: PropTypes.array,
     onBadGuess: PropTypes.func,
@@ -72,3 +72,4 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(GameContainer);
+// so what we export is a container because we connect it
