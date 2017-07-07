@@ -8,7 +8,7 @@ import { goodGuess } from '../actions/index';
 import { chosenWord } from '../actions/index';
 
 
-const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess, guessedLetters, setInitialState }) => {
+const GameContainer = ({ wordLetters, onBadGuess, onGoodGuess, guessedLetters, setInitialState }) => {
     let variableHoldingInputField;
     const letterInAnswer = letter => wordLetters.some(
        letterObj => letterObj.letter === letter);
@@ -17,7 +17,7 @@ const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess, guess
     to handle input in React Forms */
     return (
         <div>
-            <Man badGuesses={badGuesses} />
+            <Man />
             <Board wordLetters={wordLetters} />
             <input type="text" placeholder="Hangman Word"
                ref={node => {variableHoldingInputField = node;}}
@@ -27,7 +27,6 @@ const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess, guess
                 value={''}
                 ref={node => {input = node;}}
                 onChange={() => {
-                    console.log(input.value);
                     return letterInAnswer(input.value.toUpperCase()) ? onGoodGuess(input.value.toUpperCase()) : onBadGuess(input.value.toUpperCase());
                 }}
             />
@@ -37,7 +36,6 @@ const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess, guess
 };
 
 GameContainer.propTypes = {
-    badGuesses: PropTypes.number,
     wordLetters: PropTypes.array,
     onBadGuess: PropTypes.func,
     onGoodGuess: PropTypes.func,
@@ -47,7 +45,6 @@ GameContainer.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        badGuesses: state.badGuesses,
         wordLetters: state.wordLetters,
         guessedLetters: state.guessedLetters
     };
