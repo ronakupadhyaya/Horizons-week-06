@@ -12,15 +12,7 @@ const wordLettersReducer = (state = initialState, action) => {
     switch (action.type) {
         case types.NEW_WORD:
             const tempArray = action.word.split('');
-            const newState1 = tempArray.map(letter => ({letter: letter, guessed: false}));
-            return newState1;
-        case types.GOOD_GUESS:
-            const newState = [...state];
-            newState.map((letter, index)=> {
-                if (letter.letter === action.letter) {
-                    newState[index].guessed = true;
-                }
-            });
+            const newState = tempArray.map(letter => ({letter: letter, guessed: false}));
             return newState;
         default:
             return state;
