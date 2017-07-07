@@ -3,23 +3,45 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Man from '../components/Man';
 import Board from '../components/Board';
+import { serveBadGuess } from '../actions/index';
+import { serveGoodGuess } from '../actions/index';
+import { serveNewGame } from '../actions/index';
 
-const GameContainer = ({ badGuesses, wordLetters, onInput }) => {
+import * as data from '../data/englishWords.json';
+const randomNum = Math.floor(Math.random() * data.default.length);
+const randomObj = data[randomNum];
+const randomWord = randomObj.word;
+
+const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess, guessedLetters, onNewGame }) => {
     let input;
-    // const letterInAnswer = letter => wordLetters.some(
-    //    letterObj => letterObj.letter === letter);
-
-    /* the ref node thing in the code below is another way
-    to handle input in React Forms */
+    // let variableHoldingInputField;
+    const letterInAnswer = letter => wordLetters.some(
+       letterObj => letterObj.letter === letter);
     return (
         <div>
+            <form>
+              {/* Type your word: <input type="text"
+                  ref={node => {randomWord = node;}}
+              /> */}
+              {/* {console.log(randomNum)}
+              {data[randomNum].word} */}
+              <button type="reset" onClick={() => onNewGame(randomWord)}> New Game </button> <br/>
+              Hint: Starts with {randomWord[0]}, Ends with {randomWord[randomWord.length - 1]} <br/>
+            </form>
+            <h2>
+              Definitions: {randomObj.definition}
+            </h2>
             <Man badGuesses={badGuesses} />
+            <span>
+                Guessed Letters: {guessedLetters}
+            </span>
             <Board wordLetters={wordLetters} />
             <input type="text"
                 value={''}
                 ref={node => {input = node;}}
-                onChange={() => onInput(input.value) }
+                onChange={() => letterInAnswer(input.value) ? onGoodGuess(input.value) : onBadGuess(input.value)}
             />
+            <br/>
         </div>
     );
 };
@@ -27,28 +49,31 @@ const GameContainer = ({ badGuesses, wordLetters, onInput }) => {
 GameContainer.propTypes = {
     badGuesses: PropTypes.number,
     wordLetters: PropTypes.array,
-    onInput: PropTypes.func
+    onBadGuess: PropTypes.func,
+    onGoodGuess: PropTypes.func,
+    guessedLetters: PropTypes.array,
+    onNewGame: PropTypes.func
 };
 
-const mapStateToProps = (/* state */) => {
+const mapStateToProps = (state) => {
     return {
-        badGuesses: 0,
-        wordLetters: [
-            {letter: 'H', guessed: true},
-            {letter: 'O', guessed: false},
-            {letter: 'R', guessed: false},
-            {letter: 'I', guessed: false},
-            {letter: 'Z', guessed: true},
-            {letter: 'O', guessed: false},
-            {letter: 'N', guessed: true},
-            {letter: 'S', guessed: false}
-        ]
+        badGuesses: state.badGuesses,
+        wordLetters: state.wordLetters,
+        guessedLetters: state.guessedLetters
     };
 };
 
-const mapDispatchToProps = (/* dispatch */) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        onInput: (inputLetter) => alert(inputLetter)
+        onBadGuess: (inputLetter) => {
+            dispatch(serveBadGuess(inputLetter));
+        },
+        onGoodGuess: (inputLetter) => {
+            dispatch(serveGoodGuess(inputLetter));
+        },
+        onNewGame: (inputWord) => {
+            dispatch(serveNewGame(inputWord));
+        }
     };
 };
 
