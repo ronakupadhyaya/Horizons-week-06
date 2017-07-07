@@ -8,6 +8,8 @@ import {badGuess, goodGuess} from '../actions/index.js';
 
 const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess, guessedLetters}) => {
     let input;
+    // let newWord;
+    // console.log(newWord);
     const letterInAnswer = letter => wordLetters.some(
        letterObj => letterObj.letter === letter);
 
@@ -22,8 +24,14 @@ const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess, guess
                 ref={node => {input = node;}}
                 onChange={() => letterInAnswer(input.value) ? onGoodGuess(input.value) : onBadGuess(input.value)}
             />
-              <h3>GUESSED</h3>
-              {guessedLetters.map((letter) => <div>{letter}</div>)}
+            <h3>GUESSED</h3>
+            {guessedLetters.map((letter) => <div>{letter}</div>)}
+              {/* <input
+                  type="text"
+                  value={''}
+                  ref={node => {newWord = node;}}
+              />
+              <button value="NEW GAME"></button> */}
         </div>
     );
 };
