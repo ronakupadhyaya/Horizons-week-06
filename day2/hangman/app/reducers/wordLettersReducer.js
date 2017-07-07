@@ -7,5 +7,31 @@
 // import * as types from '../actions/types';
 
 // const wordLettersReducer =
+const wordLettersReducer = (state = [
+    {letter: 'H', guessed: true},
+    {letter: 'O', guessed: false},
+    {letter: 'R', guessed: false},
+    {letter: 'I', guessed: false},
+    {letter: 'Z', guessed: true},
+    {letter: 'O', guessed: false},
+    {letter: 'N', guessed: true},
+    {letter: 'S', guessed: false}
+], action) => {
+    switch (action.type) {
+        case 'GOOD_GUESS':
+            const newState = [ ...state ];
+            for(let i = 0; i < newState.length; i++) {
+                if(action.letter === newState[i].letter) {
+                    newState[i].guessed = true;
+                }
+            }
+            return newState;
+        default:
+            return state;
+    }
+};
+
+export default wordLettersReducer;
+
 
 // export default wordLettersReducer;
