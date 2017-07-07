@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Man from '../components/Man';
 import Board from '../components/Board';
 
-const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess, guessedLetters, onGameWord}) => {
+const GameContainer = ({ wordLetters, onBadGuess, onGoodGuess, guessedLetters, onGameWord}) => {
     let input;
     const letterInAnswer = letter => wordLetters.some(
        letterObj => letterObj.letter === letter);
@@ -18,7 +18,7 @@ const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess, guess
                 ref={node => {gameWord = node;}}
             />
             <button onClick={()=>{onGameWord(gameWord.value); gameWord.value = '';}}>Set Word</button>
-            <Man badGuesses={badGuesses} />
+            <Man badGuesses />
             <Board wordLetters={wordLetters} /> <br/>
             <input type="text"
                 ref={node => {input = node;}}
@@ -39,7 +39,6 @@ const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess, guess
 };
 
 GameContainer.propTypes = {
-    badGuesses: PropTypes.number,
     wordLetters: PropTypes.array,
     onBadGuess: PropTypes.func,
     onGoodGuess: PropTypes.func,
@@ -49,7 +48,6 @@ GameContainer.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        badGuesses: state.badGuesses,
         wordLetters: state.wordLetters,
         guessedLetters: state.guessedLetters
     };
