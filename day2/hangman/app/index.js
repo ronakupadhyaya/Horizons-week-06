@@ -6,7 +6,7 @@ import Root from './containers/Root';
 
 const store = configureStore();
 
-render(
+render( // = ReactDom.render
     <AppContainer>
         <Root store={store} history={history} />
     </AppContainer>,
