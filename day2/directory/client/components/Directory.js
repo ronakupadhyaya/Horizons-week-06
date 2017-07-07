@@ -1,10 +1,10 @@
 import React from 'react';
 import { /* Route, */ Link } from 'react-router-dom';
 
-const ppl = [
+export const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
   { "fName": "Nihar", "lName": "Harhar", "number": "(421)-666-2022", "email": "puppysmacker94@hotmail.com" },
-  { "fName": "Nihar", "lName": "Kardashian", "number": "(608)-633-1254", "email": "kanyebae@tidal.com" },
+  { "fName": "Nihar", "lName": "Kardashian", "number": "(610)-633-1254", "email": "kanyebae@tidal.com" },
   { "fName": "Graham", "lName": "Smith", "number": "(610)-256-6599", "email": "graham@joinhorizons.com" },
   { "fName": "Graham", "lName": "Slam", "number": "(611)-845-0967", "email": "cmonandslam@welcometothejam.com" },
   { "fName": "Graham", "lName": "Master", "number": "(612)-284-3678", "email": "senseibaybay@aol.com" },
@@ -14,7 +14,7 @@ const ppl = [
 
 ];
 
-const pplToFullLink = person => ({
+export const pplToFullLink = person => ({
     to: `/directory/${person.fName}/${person.lName}`,
     text: `${person.fName} ${person.lName}`,
     key: person.number
@@ -25,10 +25,7 @@ class Directory extends React.Component {
     return (
       <div>
         <h1>Horizons Directory</h1>
-
-
-
-
+        <LinkList links={ppl.map(pplToFullLink)} />
       </div>
     );
   }
@@ -50,6 +47,7 @@ class LinkList extends React.Component {
 
 class Person extends React.Component {
   render() {
+    console.log(this.props.match.params.fName, this.props.match.params.lName)
     // Array.prototype.find returns the first item satisfying the fn
     const person = ppl.find(p => (
       p.fName === this.props.match.params.fName &&
@@ -72,4 +70,4 @@ class Person extends React.Component {
 }
 
 
-export default Directory;
+export {Directory, Person, LinkList};
