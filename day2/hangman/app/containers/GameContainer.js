@@ -7,7 +7,7 @@ import Board from '../components/Board';
 const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess, guessArray, onCreateGame }) => {
     let input;
     let variableInput;
-    const letterInAnswer = letter => wordLetters.some(
+      const letterInAnswer = letter => wordLetters.some(
     letterObj => letterObj.letter === letter);
     /* the ref node thing in the code below is another way
     to handle input in React Forms */
