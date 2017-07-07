@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Box from './Box';
+import { connect } from 'react-redux';
 
 const Board = ({ wordLetters }) => {
     return (
@@ -15,4 +16,17 @@ Board.propTypes = {
     wordLetters: PropTypes.array
 };
 
-export default Board;
+const mapStateToProps = (state) => {
+    return {
+        wordLetters: state.wordLetters,
+    };
+};
+
+const mapDispatchToProps = () => {
+    return {};
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Board);
