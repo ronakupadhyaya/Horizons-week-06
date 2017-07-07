@@ -1,5 +1,6 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
+import { Route, Link, Switch } from 'react-router-dom';
+import { parse } from 'qs';
 
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
@@ -25,10 +26,24 @@ class Directory extends React.Component {
     return (
       <div>
         <h1>Horizons Directory</h1>
+        <Route path='/directory' exact='true' render = {()=><LinkList links={ppl.map(pplToFullLink)}/>}/>
+        <Switch>
+        <Route path={'/directory/surname/:lName'} exact="true" render= {(props)=>
+          <LinkList
+            links={ppl
+              .filter(p => p.lName === props.match.params.lName).map(pplToFullLink)}/>}/>
 
+        <Route path={'/directory/areacode/:areacode'} exact="true" render={(props)=> <LinkList links={
+          ppl.filter(p=> p.number.substring(1,4) === props.match.params.areacode).map(pplToFullLink)}/>}/>
 
-
-
+        <Route path={'/directory/:fName/:lName'} exact="true" component={Person}/>
+      </Switch>
+        <Route path={'/directory/:fName'} exact="true"
+          render={ (props)=>
+            <LinkList
+              links={ppl
+                .filter(p => p.fName === props.match.params.fName).map(pplToFullLink)}/>}/>
+        <Route path={'/directory'} render={()=><Link to={'/directory'}>Back to Directory</Link>}/>
       </div>
     );
   }
@@ -53,7 +68,8 @@ class Person extends React.Component {
     // Array.prototype.find returns the first item satisfying the fn
     const person = ppl.find(p => (
       p.fName === this.props.match.params.fName &&
-      p.lName === this.props.match.params.lName
+      p.lName === this.props.match.params.lName &&
+      p.areacode === this.props.match.params.areacode
     ));
 
     return person ? (
@@ -63,7 +79,15 @@ class Person extends React.Component {
         <h3>{person.email}</h3>
 
         Not the {`${person.fName}`} you're looking for? {' '}
-        Too bad!!!
+        <div>
+        <Link to={'/directory/'+this.props.match.params.fName}>Find a Different {person.fName}</Link>
+        </div>
+        <div>
+          <Link to={'/directory/surname/'+this.props.match.params.lName}>Find a Different {person.lName}</Link>
+        </div>
+        <div>
+          <Link to={'/directory/areacode/'+person.number.substring(1,4)}>Find all with area code {person.number.substring(0,5)}</Link>
+        </div>
       </div>
     ) : (
       <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
