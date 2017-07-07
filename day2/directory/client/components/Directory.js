@@ -1,5 +1,5 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
+import { Route,  Link } from 'react-router-dom';
 
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
@@ -20,15 +20,23 @@ const pplToFullLink = person => ({
     key: person.number
 });
 
+const
+
+
 class Directory extends React.Component {
   render() {
     return (
       <div>
         <h1>Horizons Directory</h1>
 
+        <Route path="/directory/:fName/:lName" component={Person}></Route>
+        <Route path="/directory/:fName/" render={() => {
 
+        }}>
 
+        </Route>
 
+        <Route exact path="/directory" render={() => <LinkList links={ppl.map(pplToFullLink)} />} />
       </div>
     );
   }
@@ -36,6 +44,7 @@ class Directory extends React.Component {
 
 class LinkList extends React.Component {
   render() {
+      console.log("making list");
     return (
         <ul>
           {this.props.links.map(link => (
@@ -49,12 +58,17 @@ class LinkList extends React.Component {
 };
 
 class Person extends React.Component {
+
   render() {
     // Array.prototype.find returns the first item satisfying the fn
+    console.log(this.props.match.params.fName);
+    console.log(this.props.match.params.lName);
     const person = ppl.find(p => (
       p.fName === this.props.match.params.fName &&
       p.lName === this.props.match.params.lName
     ));
+
+    
 
     return person ? (
       <div>
