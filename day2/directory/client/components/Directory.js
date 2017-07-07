@@ -1,5 +1,6 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
+import { Switch,Route, Link } from 'react-router-dom';
+import { parse } from 'qs';
 
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
@@ -15,7 +16,7 @@ const ppl = [
 ];
 
 const pplToFullLink = person => ({
-    to: `/directory/${person.fName}/${person.lName}`,
+    to: `/subapp/directory/${person.fName}/${person.lName}`,
     text: `${person.fName} ${person.lName}`,
     key: person.number
 });
@@ -25,10 +26,34 @@ class Directory extends React.Component {
     return (
       <div>
         <h1>Horizons Directory</h1>
+        {/*<Route exact path="/directory" render={() => <LinkList links={ppl.map(pplToFullLink)} />} />*/}
+          {/*<Route exact path="/directory/:fName" render={(props) => <LinkList*/}
+              {/*links={ppl*/}
+                  {/*.filter(p => p.fName === props.match.params.fName)*/}
+                  {/*.map(pplToFullLink)}*/}
+          {/*/>} />*/}
+        {/*<Switch>*/}
+            {/*<Route exact path="/directory/surname/:lName" render=render={(props) => <LinkList*/}
+                {/*links={ppl*/}
+                    {/*.filter(p => p.lName === props.match.params.lName)*/}
+                    {/*.map(pplToFullLink)}*/}
+            {/*/>} />*/}
+            {/*<Route exact path="/directory/areacode/:area" render=render={(props) => <LinkList*/}
+                {/*links={ppl*/}
+                    {/*.filter(p => p.lName === props.match.params.area)*/}
+                    {/*.map(pplToFullLink)}*/}
+            {/*/>} />*/}
+        {/*</Switch>*/}
 
-
-
-
+          <Route exact path="/subapp/directory" render={(props) => <LinkList links={ppl.filter(p => {
+              const query = parse(location.search.substring(1));
+              const fName = query.fName;
+              const lName= query.lName;
+              const area = query.area;
+              const areaCode = p.number.split('-')[0].substring(1,4);
+              return (!fName || fName === p.fName) && (!lName || lName === p.lName) && (!area || area === areaCode);
+          }).map(pplToFullLink)} />} />
+          <Route exact path="/subapp/directory/:fName/:lName" component={Person} />
       </div>
     );
   }
@@ -36,14 +61,18 @@ class Directory extends React.Component {
 
 class LinkList extends React.Component {
   render() {
+      console.log(this.props.links);
     return (
-        <ul>
-          {this.props.links.map(link => (
-            <li key={link.key}>
-              <Link to={link.to}>{link.text}</Link>
-            </li>
-          ))}
-        </ul>
+        <div>
+            <ul>
+              {this.props.links.map(link => (
+                <li key={link.key}>
+                  <Link to={link.to}>{link.text}</Link>
+                </li>
+              ))}
+            </ul>
+            {ppl.length!==this.props.links.length ? <Link to="/subapp/directory">Back to Listings</Link> : <div></div>}
+        </div>
     );
   }
 };
@@ -51,22 +80,34 @@ class LinkList extends React.Component {
 class Person extends React.Component {
   render() {
     // Array.prototype.find returns the first item satisfying the fn
-    const person = ppl.find(p => (
-      p.fName === this.props.match.params.fName &&
-      p.lName === this.props.match.params.lName
-    ));
-
+    let person = ppl.find((p) => {
+        return p.fName === this.props.match.params.fName && p.lName === this.props.match.params.lName
+    });
     return person ? (
       <div>
+
         <h2>{`${person.fName} ${person.lName}`}</h2>
         <h3>{person.number}</h3>
         <h3>{person.email}</h3>
 
-        Not the {`${person.fName}`} you're looking for? {' '}
-        Too bad!!!
+          <div>
+            Not the {`${person.fName}`} you're looking for? {' '} <Link to={"/subapp/directory?fName=" + this.props.match.params.fName}>Find others.</Link>
+          </div>
+          <div>
+            Looking for other people with the last name: {' '} {`${person.lName}`}? {' '} <Link to={"/subapp/directory?lName=" + person.lName}>Find them.</Link>
+          </div>
+          <div>
+            Want to find other people with this area code? {' '} <Link to={"/subapp/directory?area=" + person.number.split('-')[0].substring(1,4)}>Find them.</Link>
+          </div>
+          <div>
+            <Link to="/subapp/directory">Back to Listings</Link>
+          </div>
       </div>
     ) : (
-      <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
+        <div>
+            <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
+            <Link to="/subapp/directory">Back to Listings</Link>
+        </div>
     )
   }
 }
