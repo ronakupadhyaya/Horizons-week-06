@@ -1,11 +1,11 @@
 {
-  "name": "hangman",
+  "name": "webpack-react-redux",
   "version": "1.0.0",
-  "description": "redux hangman toy app",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "",
-    "start": "nodemon server",
+    "start": "node server",
     "build": "rimraf dist && webpack --config ./webpack.production.config.js --progress --profile --colors",
     "eslint": "eslint ."
   },
@@ -14,11 +14,9 @@
     "react",
     "redux"
   ],
-  "author": "Ricky Sharma",
-  "license": "MIT",
+  "author": "",
   "dependencies": {
     "file-loader": "^0.9.0",
-    "nodemon": "^1.11.0",
     "prop-types": "^15.5.9",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
@@ -26,7 +24,8 @@
     "react-redux": "^4.4.5",
     "react-router-dom": "^4.1.1",
     "react-router-redux": "next",
-    "redux": "^3.5.2"
+    "redux": "^3.5.2",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.6",

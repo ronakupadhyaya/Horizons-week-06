@@ -7,7 +7,8 @@ const inlineStyle = (letter) => ({
     'display': 'flex',
     'alignItems': 'center',
     'justifyContent': 'center',
-    'backgroundColor': letter.guessed ? 'red' : 'yellow'
+    'borderRadius': '10px',
+    'backgroundColor': letter.guessed ? 'skyblue' : 'white'
 });
 const Box = ({ letter }) => {
     return (
