@@ -6,7 +6,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     devtool: 'eval-source-map',
-    entry: [
+    entry: [    //specifies what file is the topmost level of the frontend code that webpack will have to build
         'babel-polyfill',
         'webpack-dev-server/client?http://localhost:3000',
         'webpack/hot/only-dev-server',

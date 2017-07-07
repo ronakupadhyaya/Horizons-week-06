@@ -13,7 +13,7 @@ class App extends React.Component {
           {/* In a Switch, only the 1st matched route renders.*/}
           <Switch>
             {/* Your routes here */}
-
+            <Route path="/" component={Home}/>
 
             {/* A route with no path is matched unconditionally.*/}
             <Route render={() => <h1>404</h1>} />
