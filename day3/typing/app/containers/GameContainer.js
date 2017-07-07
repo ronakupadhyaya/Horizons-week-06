@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import WordBox from '../components/WordBox'
 
 class GameContainer extends React.Component {
     onInput(input) {
@@ -11,9 +12,7 @@ class GameContainer extends React.Component {
         return (
             <div>
                 I am the game container!
-                {
-                    // YOUR GAME COMPONENT HERE
-                }
+                <WordBox wordsList={wordsList} />
             </div>
         );
     }
@@ -22,12 +21,13 @@ class GameContainer extends React.Component {
 GameContainer.propTypes = {
     badGuesses: PropTypes.number,
     wordLetters: PropTypes.array,
-    onInput: PropTypes.func
+    onInput: PropTypes.func,
+    wordsList: PropTypes.array,
 };
 
 const mapStateToProps = (state) => {
     return {
-        // YOUR MAP STATE TO PROPS HERE
+        wordsList: state.wordsList,
     };
 };
 
