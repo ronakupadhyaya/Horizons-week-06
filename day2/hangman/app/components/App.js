@@ -10,24 +10,20 @@ import {Link} from 'react-router-dom';
 
 const App = () =>
     <div>
-      <h1>Redux Hangman</h1>
+        <h1>Redux Hangman</h1>
 
-      <Route exact={true} path="/" component={GameContainer}/>
-      <Route path="/about" component={About}/>
-      {/* </ConnectedRouter> */}
-      <nav className="navbar navbar-inverse navbar-fixed-bottom">
-        <div className="container-fluid">
-          {/* <div className="navbar-header">
-            <a className="navbar-brand" href="#">WebSiteName</a>
-          </div> */}
-          <ul className="nav navbar-nav">
-            <li><Link to="/">Go to Game</Link></li>
-            <li>  <Link to="/about">About</Link></li>
+        <Route exact={true} path="/" component={GameContainer}/>
+        <Route path="/about" component={About}/>
+        <nav className="navbar navbar-inverse navbar-fixed-bottom">
+            <div className="container-fluid">
+                <ul className="nav navbar-nav">
+                    <li><Link to="/">Go to Game</Link></li>
+                    <li>  <Link to="/about">About</Link></li>
 
 
-          </ul>
-        </div>
-      </nav>
+                </ul>
+            </div>
+        </nav>
 
     </div>;
 
