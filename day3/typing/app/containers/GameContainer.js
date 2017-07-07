@@ -13,7 +13,6 @@ class GameContainer extends React.Component {
         const val = input.value;
         if(val.length > 0) {
             if(val[val.length - 1] !== ' ') {
-                console.log('user inputed space, about to trigger charadded action');
                 this.props.onNewChar(val); // THIS SHOULD call with new word as payload
             } else {
                 input.value = '';
@@ -26,18 +25,9 @@ class GameContainer extends React.Component {
         return (
             <div>
                 I am the game container!
-                <WordBox wordList={this.props.wordList} userInput={this.props.userInput} currentIndex={this.props.currentIndex}/>
-                {/* <div className="scoring score">Score: </div> */}
+                <WordBox wordList={this.props.wordList} userInput={this.props.userInput}/>
                 <TextBox onInput={(input) => this.onInput(input)} onStartTyping={() => this.onUserTyping}/>
-                {/* <div className="scoring">
-                    <div className="timer">Time Remaining: </div>
-                    <div className="wordstreak">Word Streak: </div>
-                </div> */}
                 <InfoBar />
-                {
-                    // YOUR GAME COMPONENT HERE
-                }
-
             </div>
         );
     }

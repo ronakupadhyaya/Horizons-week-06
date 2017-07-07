@@ -9,9 +9,6 @@ const TextBox = ({ onInput }) => {
             type="text"
             ref={node => {userinput = node;}}
             onChange={()=>onInput(userinput)}
-            // onChange={(e) => {console.log(e.target.value);
-            //     onInput(e.target.value);
-            // }}
         />
   );
 };

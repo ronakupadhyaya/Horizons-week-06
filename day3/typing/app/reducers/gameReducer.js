@@ -9,8 +9,6 @@ const gameReducer = (state = {wordList: shuffledWords, userInput: [], currentInd
             return state;
             // return Object.assign({}, state, {wordList: shuffledWords.slice(0, 100)});
         case 'CHAR_ADDED':
-            // console.log('char added action triggered with word', action.word);
-            // console.log('user input inside charadded is', state.userInput);
             const newword = action.word;
             const newInput = [...state.userInput];
             newInput[state.currentIndex[0]] = newword;
