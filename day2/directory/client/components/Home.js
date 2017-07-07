@@ -7,7 +7,7 @@ class Home extends React.Component {
       <div>
         <h1>Welcome to the Horizons Directory</h1>
         <h2>Click the link below to go to the directory.</h2>
-        {/* Link to /directory here */} 
+        <a href="/directory">Directory</a> 
       </div>
     )
   }
