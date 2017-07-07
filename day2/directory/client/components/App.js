@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch /*, Link */ } from 'react-router-dom';
-
 import Home from './Home';
 import Directory from './Directory';
 
@@ -13,6 +12,7 @@ class App extends React.Component {
           {/* In a Switch, only the 1st matched route renders.*/}
           <Switch>
             {/* Your routes here */}
+            <Route exact path="/" component={Home}/>
 
 
             {/* A route with no path is matched unconditionally.*/}
