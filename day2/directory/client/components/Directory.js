@@ -25,8 +25,8 @@ class Directory extends React.Component {
     return (
       <div>
         <h1>Horizons Directory</h1>
-
-
+        {/* <Route exact path="/directory" render={()=>} */}
+        <LinkList links={ppl.map(pplToFullLink)} />
 
 
       </div>
