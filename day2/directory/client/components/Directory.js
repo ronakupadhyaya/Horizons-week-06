@@ -1,5 +1,5 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
@@ -25,7 +25,7 @@ class Directory extends React.Component {
     return (
       <div>
         <h1>Horizons Directory</h1>
-
+        <Route path="/directory" render={() => <LinkList links={ppl.map(pplToFullLink)}/>}/>
 
 
 
