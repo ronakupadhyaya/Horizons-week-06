@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {Provider} from 'react-redux';
 import {Route} from 'react-router-dom';
-import {ConnectedRouter} from 'react-router-redux';
+import { ConnectedRouter } from 'react-router-redux';
 
 import App from '../components/App';
 import DevTools from './DevTools';
