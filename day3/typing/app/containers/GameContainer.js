@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import WordBox from '../components/WordBox'
+import WordBox from '../components/WordBox';
 
 class GameContainer extends React.Component {
     onInput(input) {
@@ -12,7 +12,7 @@ class GameContainer extends React.Component {
         return (
             <div>
                 I am the game container!
-                <WordBox wordsList={wordsList} />
+                <WordBox wordsList={this.props.wordsList} />
             </div>
         );
     }

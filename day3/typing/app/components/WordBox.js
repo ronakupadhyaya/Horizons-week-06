@@ -1,13 +1,18 @@
 import React from 'react';
-import Routes from '../routes';
-import GameContainer from '../containers/GameContainer';
+import PropTypes from 'prop-types';
 
 const WordBox = ({ wordsList }) => {
-    <div className="main">
-      <div className="wordbox">
-        {wordsList.map((character) => <span>{character}</span>)}
+    return (
+      <div className="main">
+        <div className="wordbox">
+          {wordsList.map((character) => <span>{character}</span>)}
+        </div>
       </div>
-    </div>
+  );
+};
+
+WordBox.propTypes = {
+    wordsList: PropTypes.array,
 };
 
 export default WordBox;
