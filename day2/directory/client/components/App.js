@@ -11,11 +11,10 @@ class App extends React.Component {
         <div>
           {/* Normally multiple routes can match at once.*/}
           {/* In a Switch, only the 1st matched route renders.*/}
+          <Route path="/" render={() => <Link to="/">Link</Link>}
           <Switch>
-            {/* Your routes here */}
-
-
-            {/* A route with no path is matched unconditionally.*/}
+            <Route path="/" component={Home} />
+            <Route path="/directory" component={Directory} />
             <Route render={() => <h1>404</h1>} />
           </Switch>
         </div>
