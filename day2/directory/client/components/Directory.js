@@ -1,5 +1,5 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
+import { Route, Link, Switch } from 'react-router-dom';
 
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
@@ -25,10 +25,22 @@ class Directory extends React.Component {
     return (
       <div>
         <h1>Horizons Directory</h1>
+        <Switch>
+            <Route path="/directory" render={()=><LinkList links={ppl.filter((p)=>{
+              console.log('qurty',this.props.location.search.split('=')[1]);
+              let name = this.props.location.search.split('=')[1]
+              if(!name){
+                return true;
+              }
+              return p.fName === name;
+            }).map(pplToFullLink)} />}/>
+            {/* <Route path="/directory" render={()=><LinkList links={ppl.map(pplToFullLink)} />}/> */}
+            <Route exact path="/directory?fName" render={(props)=> <LinkList links={ppl.filter(p => p.fName === props.match.params.fName).map(pplToFullLink)} />}/>
 
-
-
-
+            {/* <Route path="/directory/areacode/:areacode" render={(props)=> <LinkList links={ppl.filter(p => p.number.substr(1,3) === props.match.params.areacode).map(pplToFullLink)} />}/>
+            <Route path="/directory/:fName/:lName" component={Person} /> */}
+        </Switch>
+        <Route path="/directory/:something" render={()=><Link to="/directory">Back to listings</Link>}/>
       </div>
     );
   }
@@ -63,7 +75,9 @@ class Person extends React.Component {
         <h3>{person.email}</h3>
 
         Not the {`${person.fName}`} you're looking for? {' '}
-        Too bad!!!
+        <Link to={'/directory/' + person.fName}>Find others.</Link>
+        <br />
+        <Link to={'/directory/areacode/' + person.number.substr(1,3)}>Find others in your area.</Link>
       </div>
     ) : (
       <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
