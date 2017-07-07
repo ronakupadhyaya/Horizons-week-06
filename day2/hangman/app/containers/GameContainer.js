@@ -19,10 +19,10 @@ const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess, onCre
         <div>
           <input type="text"
               ref={node => {input1 = node;}}
-              // onChange={() => {
-              //     this.input = input1.value;
-              //     console.log(onCreateWord);
-              //     // onCreateWord(input1.value);
+              onChange={() => {
+                  this.input = input1.value;
+                  console.log(onCreateWord);
+                  // onCreateWord(input1.value);
               }
             }
           />
