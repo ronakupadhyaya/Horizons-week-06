@@ -7,11 +7,11 @@ import About from './About';
 const App = () =>
     <div>
         <h1>Redux Hangman</h1>
-        <Route exact path="/" component={GameContainer}/>
-        <Route path="/about" component={About}/>
+        <Route exact path="/hangman" component={GameContainer}/>
+        <Route path="/hangman/about" component={About}/>
         <Link to="/">Home</Link>
         <span> | </span>
-        <Link to="/about">About</Link>
+        <Link to="/hangman/about">About</Link>
     </div>;
 
 export default App;
