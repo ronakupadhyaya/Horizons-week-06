@@ -6,6 +6,7 @@
 
 // import * as types from '../actions/types';
 
+<<<<<<< HEAD
 const wordLettersReducer = (state = [{letter:"A", guessed:false}], action) => {
     switch (action.type) {
         case 'GOOD_GUESS':
@@ -22,3 +23,8 @@ export default wordLettersReducer;
 
 //) => if(letterInAnswer(input.value)){return onGoodGuess(input.value)}
 // return onBadGuess(input.value)}}
+=======
+// const wordLettersReducer =
+
+// export default wordLettersReducer;
+>>>>>>> 442651ce66adbdb2ac1a491b5a808af3d8ab4e8a
