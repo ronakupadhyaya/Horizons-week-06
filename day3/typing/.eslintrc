@@ -31,7 +31,6 @@
   "rules": {
     "no-var": 2,                     // http://eslint.org/docs/rules/no-var
     "prefer-const": 2,               // http://eslint.org/docs/rules/prefer-const
-
     /**
      * Variables
      */
@@ -43,7 +42,6 @@
       "args": "after-used"
     }],
     "no-use-before-define": 2,       // http://eslint.org/docs/rules/no-use-before-define
-
     /**
      * Possible errors
      */
@@ -67,7 +65,6 @@
     "no-unreachable": 2,             // http://eslint.org/docs/rules/no-unreachable
     "use-isnan": 2,                  // http://eslint.org/docs/rules/use-isnan
     "block-scoped-var": 2,           // http://eslint.org/docs/rules/block-scoped-var
-
     /**
      * Best practices
      */
@@ -109,7 +106,6 @@
     "radix": 2,                      // http://eslint.org/docs/rules/radix
     "vars-on-top": 2,                // http://eslint.org/docs/rules/vars-on-top
     "yoda": 2,                       // http://eslint.org/docs/rules/yoda
-
     /**
      * Style
      */
