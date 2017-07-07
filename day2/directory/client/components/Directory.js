@@ -1,5 +1,5 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
@@ -22,13 +22,24 @@ const pplToFullLink = person => ({
 
 class Directory extends React.Component {
   render() {
+  // console.log(this.props.match);
     return (
       <div>
         <h1>Horizons Directory</h1>
+        <div>
+        <Link to="/">Back to Home</Link>
 
-
-
-
+        <Route path="/directory" exact render={()=><LinkList links={ppl.map(pplToFullLink)} />}/>
+        <Route path={'/directory/:fName/:lName'} exact component={Person}/>
+        <Route path={'/directory/:fName/'} exact render={({match})=>{
+          console.log(match);
+          return <LinkList links={ppl.filter(p => p.fName === match.params.fName).map(pplToFullLink)}/>}
+        }/>
+        <Route
+          path='/directory/:anything'
+          render={() => <Link to='/directory'>Back to listings</Link>}
+        />
+        </div>
       </div>
     );
   }
@@ -37,12 +48,14 @@ class Directory extends React.Component {
 class LinkList extends React.Component {
   render() {
     return (
+
         <ul>
           {this.props.links.map(link => (
             <li key={link.key}>
               <Link to={link.to}>{link.text}</Link>
             </li>
           ))}
+
         </ul>
     );
   }
@@ -55,7 +68,6 @@ class Person extends React.Component {
       p.fName === this.props.match.params.fName &&
       p.lName === this.props.match.params.lName
     ));
-
     return person ? (
       <div>
         <h2>{`${person.fName} ${person.lName}`}</h2>
@@ -63,10 +75,15 @@ class Person extends React.Component {
         <h3>{person.email}</h3>
 
         Not the {`${person.fName}`} you're looking for? {' '}
-        Too bad!!!
+        <Link to={`/directory/${person.fName}`} >Find Others</Link>
+
+
       </div>
     ) : (
+      <div>
       <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
+
+      </div>
     )
   }
 }

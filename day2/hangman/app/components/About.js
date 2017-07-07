@@ -1,6 +1,8 @@
 import React from 'react';
 
-const About = () =>
+
+const About = () => {
+    return (
     <div>
         <h3>Redux Hangman, Horizons Edition</h3>
         <p>
@@ -31,7 +33,7 @@ const About = () =>
           word, before the diagram is completed.
         </p>
 
-    </div>;
-
+    </div>);
+};
 
 export default About;
