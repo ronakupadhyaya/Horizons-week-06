@@ -15,8 +15,7 @@ class App extends React.Component {
           <Switch>
             {/* Your routes here */}
             <Route exact={true} path="/" component={Home} />
-            <Route path="/directory" component={Directory} />
-
+            <Route exact={true} path="/directory" component={Directory} />
             {/* A route with no path is matched unconditionally.*/}
             <Route render={() => <h1>404</h1>} />
           </Switch>
