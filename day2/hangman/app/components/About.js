@@ -1,7 +1,7 @@
 import React from 'react';
 
 const About = () =>
-    <div>
+    (<div>
         <h3>Redux Hangman, Horizons Edition</h3>
         <p>
           Hangman is a paper and pencil guessing game for two or more players.
@@ -31,7 +31,7 @@ const About = () =>
           word, before the diagram is completed.
         </p>
 
-    </div>;
+    </div>);
 
 
 export default About;

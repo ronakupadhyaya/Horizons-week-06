@@ -4,55 +4,64 @@ import { connect } from 'react-redux';
 import Man from '../components/Man';
 import Board from '../components/Board';
 
-const GameContainer = ({ badGuesses, wordLetters, onInput }) => {
+const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess, guessedLetters, onNewGame }) => {
     let input;
-    // const letterInAnswer = letter => wordLetters.some(
-    //    letterObj => letterObj.letter === letter);
-
-    /* the ref node thing in the code below is another way
-    to handle input in React Forms */
+    let newItem;
+    const letterInAnswer = letter => wordLetters.some(
+        letterObj => letterObj.letter === letter);
+        /* the ref node thing in the code below is another way
+        to handle input in React Forms */
     return (
-        <div>
-            <Man badGuesses={badGuesses} />
-            <Board wordLetters={wordLetters} />
-            <input type="text"
-                value={''}
-                ref={node => {input = node;}}
-                onChange={() => onInput(input.value) }
-            />
-        </div>
-    );
+            <div>
+                <Man badGuesses={badGuesses} />
+                <Board wordLetters={wordLetters} />
+                <input type="text"
+                    value={''}
+                    ref={node => {input = node;}}
+                    onChange={() => {
+                        if (letterInAnswer(input.value)) {
+                            onGoodGuess(input.value);
+                        }   else {
+                            onBadGuess(input.value);
+                        }
+                    }}
+                /><br/>
+                {guessedLetters}<br/>
+                <input type="text"
+                        ref={node => {newItem = node;}}
+                        onChange={() => {
+                            newItem.value;
+                        }}
+                    />
+                    <button onClick={() => onNewGame(newItem.value)}> New Game!</button>
+            </div>
+        );
 };
-
 GameContainer.propTypes = {
     badGuesses: PropTypes.number,
+    guessedLetters: PropTypes.array,
     wordLetters: PropTypes.array,
-    onInput: PropTypes.func
+    onBadGuess: PropTypes.func,
+    onGoodGuess: PropTypes.func,
+    onNewGame: PropTypes.func
 };
-
-const mapStateToProps = (/* state */) => {
+const mapStateToProps = (state) => {
     return {
-        badGuesses: 0,
-        wordLetters: [
-            {letter: 'H', guessed: true},
-            {letter: 'O', guessed: false},
-            {letter: 'R', guessed: false},
-            {letter: 'I', guessed: false},
-            {letter: 'Z', guessed: true},
-            {letter: 'O', guessed: false},
-            {letter: 'N', guessed: true},
-            {letter: 'S', guessed: false}
-        ]
+        badGuesses: state.badGuesses,
+        wordLetters: state.wordLetters,
+        guessedLetters: state.guessedLetters
     };
 };
 
-const mapDispatchToProps = (/* dispatch */) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        onInput: (inputLetter) => alert(inputLetter)
+        onBadGuess: (inputLetter) => dispatch({type: 'BAD_GUESS', letter: inputLetter}),
+        onGoodGuess: (inputLetter) => dispatch({type: 'GOOD_GUESS', letter: inputLetter}),
+        onNewGame: (inputWord) => dispatch({type: 'NEW_GAME', word: inputWord})
     };
 };
 
-export default connect(
+export default (connect(
     mapStateToProps,
     mapDispatchToProps
-)(GameContainer);
+)(GameContainer));
