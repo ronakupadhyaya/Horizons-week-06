@@ -1,5 +1,5 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
+import { Route, Link, Switch } from 'react-router-dom';
 
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
@@ -20,15 +20,30 @@ const pplToFullLink = person => ({
     key: person.number
 });
 
-class Directory extends React.Component {
+ class Directory extends React.Component {
   render() {
     return (
       <div>
         <h1>Horizons Directory</h1>
-
-
-
-
+        <Route exact path="/directory" render={() => <LinkList links={ppl.map(pplToFullLink)}/>}/>
+        <Switch>
+          <Route path="/directory/:fName/:lName" component={Person} />
+          <Route exact path="/directory/:lName" render={(props) => <LinkList
+          links={ppl
+            .filter(p => p.lName === props.match.params.lName)
+            .map(pplToFullLink)}
+          />}/>
+        </Switch>
+        <Route exact path="/directory/:fName" render={(props) => <LinkList
+        links={ppl
+          .filter(p => p.fName === props.match.params.fName)
+          .map(pplToFullLink)}
+        />}/>
+        {/* <Route path='/directory/areacode/:code' render={(props) => <LinkList
+        links={ppl
+          .filter(p => p.number.splice(1, 3) === props.match.params.code)
+          .map(pplToFullLink)}
+        />}/> */}
       </div>
     );
   }
@@ -52,7 +67,8 @@ class Person extends React.Component {
   render() {
     // Array.prototype.find returns the first item satisfying the fn
     const person = ppl.find(p => (
-      p.fName === this.props.match.params.fName &&
+      p.fName === this.props.match.params.fName
+      &&
       p.lName === this.props.match.params.lName
     ));
 
@@ -63,13 +79,15 @@ class Person extends React.Component {
         <h3>{person.email}</h3>
 
         Not the {`${person.fName}`} you're looking for? {' '}
-        Too bad!!!
+        <Link to={"/directory/" + person.fName}>Find others</Link>
+        {' '}or{' '}<Link to={"/directory/" + person.lName}>Find by last name.</Link>
+        {' '}or{' '}<Link to={"/directory/" + person.lName}>Find by last name.</Link>
+
       </div>
     ) : (
       <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
     )
   }
 }
-
 
 export default Directory;

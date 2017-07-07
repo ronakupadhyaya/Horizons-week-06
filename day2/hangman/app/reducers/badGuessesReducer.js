@@ -2,7 +2,15 @@
 /* This reducer's state will be a simple integer */
 
 // import * as types from '../actions/types';
+const badGuessesReducer = (state = 0, action) => {
+    switch(action.type) {
+        case 'BAD_GUESS':
+            let newState = state;
+            newState = newState + 1;
+            return newState;
+        default:
+            return state;
+    }
+};
 
-// const badGuessesReducer =
-
-// export default badGuessesReducer;
+export default badGuessesReducer;
