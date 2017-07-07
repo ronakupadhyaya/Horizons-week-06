@@ -9,3 +9,10 @@ export function badGuess(letter) {
         letter
     };
 }
+
+export function goodGuess(letter) {
+    return {
+        type: 'GOOD_GUESS',
+        letter
+    };
+}
