@@ -1,5 +1,5 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
@@ -25,10 +25,7 @@ class Directory extends React.Component {
     return (
       <div>
         <h1>Horizons Directory</h1>
-
-
-
-
+        <Route path="/directory" exact={true} render={() => <LinkList links={ppl.map(pplToFullLink)} />}/>
       </div>
     );
   }
@@ -63,7 +60,16 @@ class Person extends React.Component {
         <h3>{person.email}</h3>
 
         Not the {`${person.fName}`} you're looking for? {' '}
-        Too bad!!!
+        <br></br>
+        Find other single <Link to={`/directory/${person.fName}`}> {`${person.fName}`} </Link> near you!!
+        <br></br>
+        <Route path="directory/:fName" exact={true} component= {
+          <LinkList links={
+            ppl.filter(p => p.fName === this.props.match.params.fName).map(pplToFullLink)
+          }/>
+        }/>
+        <br></br>
+        <Route path = "/directory/:fName/:lName" render={() => <Link to={"/directory"}>Back to Directory</Link>}/>
       </div>
     ) : (
       <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
@@ -72,4 +78,4 @@ class Person extends React.Component {
 }
 
 
-export default Directory;
+export {Directory, Person};

@@ -6,7 +6,7 @@ import Board from '../components/Board';
 
 import { handleBadGuess, handleGoodGuess } from '../actions/index';
 
-const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess}) => {
+const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess, guessedLetters}) => {
     let input;
 
     const letterInAnswer = letter => wordLetters.some(
@@ -23,6 +23,9 @@ const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess}) => {
                 ref={node => {input = node;}}
                 onChange={() => letterInAnswer(input.value.toUpperCase()) ? onGoodGuess(input.value.toUpperCase()) : onBadGuess(input.value.toUpperCase()) }
             />
+            <ul>
+              {guessedLetters.map((letter) => <li key={letter}>{letter}</li>)}
+            </ul>
         </div>
     );
 };
@@ -31,7 +34,8 @@ GameContainer.propTypes = {
     badGuesses: PropTypes.number,
     wordLetters: PropTypes.array,
     onBadGuess: PropTypes.func,
-    onGoodGuess: PropTypes.func
+    onGoodGuess: PropTypes.func,
+    guessedLetters: PropTypes.array
 };
 
 const mapStateToProps = (state) => {
