@@ -5,9 +5,13 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-          <h1>Welcome to the Horizons Directory</h1>
-          <h2>Click the link below to go to the directory.</h2>
-          <Link to="/directory">Directory</Link>
+          <h1>Swiss Army App</h1>
+          <div>
+              <Link to="/directory">Directory</Link>
+          </div>
+          <div>
+              <Link to="/directory">Hangman</Link>
+          </div>
       </div>
     )
   }
