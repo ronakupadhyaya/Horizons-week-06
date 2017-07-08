@@ -31,4 +31,29 @@ function nextWord() {
     };
 }
 
-export {startGame, decrementTimer, endGame, addChar, nextWord};
+function badGuess() {
+    return {
+        type: 'BAD_GUESS'
+    };
+}
+
+function correctGuess() {
+    return {
+        type: 'CORRECT_GUESS'
+    };
+}
+
+function addToStreakCount() {
+    return {
+        type: 'ADD_TO_STREAK_COUNT'
+    };
+}
+
+function cancelStreak(streakPoints) {
+    return {
+        type: 'CANCEL_STREAK',
+        streakPoints
+    };
+}
+
+export {startGame, decrementTimer, endGame, addChar, nextWord, badGuess, correctGuess, addToStreakCount, cancelStreak};

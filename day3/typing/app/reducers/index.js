@@ -3,8 +3,6 @@ import { combineReducers } from 'redux';
 import wordListReducer from './wordListReducer';
 import timeLeftReducer from './timeLeftReducer';
 import streakCountReducer from './streakCountReducer';
-import badGuessesReducer from './badGuessesReducer';
-import correctGuessesReducer from './correctGuessesReducer';
 import totalScoreReducer from './totalScoreReducer';
 import userInputReducer from './userInputReducer';
 import currentIndexReducer from './currentIndexReducer';
@@ -15,8 +13,6 @@ const rootReducer = combineReducers({
     timeLeft: timeLeftReducer,
     streakCount: streakCountReducer,
     totalScore: totalScoreReducer,
-    badGuesses: badGuessesReducer,
-    correctGuesses: correctGuessesReducer,
     userInput: userInputReducer,
     currentIndex: currentIndexReducer,
     routing

@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const InfoBar = ({timeLeft, score, wordStreak}) => {
+const InfoBar = ({timeLeft, totalScore, streakCount}) => {
     return (
         <div>
-            Time: {timeLeft} Score: {score} Word Streak: {wordStreak}
+            Time: {timeLeft} Score: {totalScore} Word Streak: {streakCount[0]}
         </div>
     );
 };
 
 InfoBar.propTypes = {
     timeLeft: PropTypes.number,
-    score: PropTypes.number,
-    wordStreak: PropTypes.number
+    totalScore: PropTypes.number,
+    streakCount: PropTypes.array
 };
 
 export default InfoBar;

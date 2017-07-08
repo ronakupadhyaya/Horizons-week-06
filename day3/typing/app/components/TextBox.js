@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 class TextBox extends React.Component {
     constructor(props) {
-        console.log('in textbox');
         super(props);
         this.state = {
             currText: ''
@@ -16,7 +15,6 @@ class TextBox extends React.Component {
                     type="text"
                     onChange={(e) => {
                         this.props.onInput(e.target.value[e.target.value.length - 1]);
-                        console.log('e target value', e.target.value);
                         if (e.target.value[e.target.value.length - 1] === ' ') {
                             e.target.value = '';
                             this.state.currText = '';
