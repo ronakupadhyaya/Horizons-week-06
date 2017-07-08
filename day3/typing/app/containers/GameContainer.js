@@ -8,8 +8,6 @@ import InfoBar from '../components/InfoBar';
 class GameContainer extends React.Component {
 
     onInput(input) {
-        // YOUR ON INPUT FUNCTION HERE
-        console.log('users typing', input, input.value);
         const val = input.value;
         if(val.length > 0) {
             if(val[val.length - 1] !== ' ') {
@@ -18,7 +16,11 @@ class GameContainer extends React.Component {
                 input.value = '';
                 this.props.onNextWord(input);
             }
+        }else {
+            console.log('input value was size 0');
         }
+        console.log('userInput', this.props.userInput);
+        console.log('on word', this.props.userInput.length);
     }
 
     render() {
