@@ -25,7 +25,9 @@
     "react-router-dom": "^4.1.1",
     "react-router-redux": "next",
     "redux": "^3.5.2",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "uuid": "^3.1.0",
+    "uuid4": "^1.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.6",
