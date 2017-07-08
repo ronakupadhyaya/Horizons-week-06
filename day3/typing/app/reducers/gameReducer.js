@@ -1,11 +1,15 @@
 import words from '../dictionary';
 import _ from 'underscore';
 
-const gameReducer = (state = _.shuffle(words).slice(0, 100), action) => {
-	switch (action.type) {
-		default:
-			return state;
-	}
+const wordListReducer = (state = _.shuffle(words).slice(0, 100), action) => {
+    switch (action.type) {
+        case 'START_GAME':
+            return state;
+        case 'END_GAME':
+            return state;
+        default:
+            return state;
+    }
 };
 
-export default gameReducer;
+export default wordListReducer;

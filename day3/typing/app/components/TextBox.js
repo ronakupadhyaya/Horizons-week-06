@@ -1,9 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const TextBox = ({ onInput }) => {
-	return (
-		<input placeholder="Start typing to begin" onChange={onInput}></input>
-	);
+const TextBox = ({ onType }) => {
+    return (
+    <input
+        className="textbox"
+        placeholder="Start typing to begin"
+        value={''}
+        onChange={(e) => {
+            onType(e.target.value);
+        }}
+    ></input>
+  );
+};
+
+TextBox.propTypes = {
+    onType: PropTypes.func
 };
 
 export default TextBox;
