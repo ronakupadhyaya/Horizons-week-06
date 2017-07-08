@@ -1,39 +1,80 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import WordBox from '../components/WordBox';
+import TextBox from '../components/TextBox';
+import InfoBar from '../components/InfoBar';
+
 
 class GameContainer extends React.Component {
     onInput(input) {
-        // YOUR ON INPUT FUNCTION HERE
+        const char = input[input.length - 1];
+        if (this.props.timer === 0) {
+            this.props.onStart();
+            this.intervalId = setInterval(() => {
+                if (this.props.timer === 0) {
+                    this.props.onEnd();
+                    clearInterval(this.intervalId);
+                } else {
+                    this.props.onDecrement();
+                }
+            }, 1000);
+        }
+        if (char === ' ') {
+            this.props.onNextWord();
+        } else if (char.keyCode !== 8) {
+            this.props.userInput.pop();
+            // console.log('container input: ' + input);
+            this.props.userInput.push(input);
+            this.props.onNextChar();
+        }
     }
-
     render() {
         return (
-            <div>
-                I am the game container!
-                {
-                    // YOUR GAME COMPONENT HERE
-                }
-            </div>
-        );
+          <div>
+                <WordBox wordList={this.props.wordList} userInput={this.props.userInput} currentIndex={this.props.currentIndex}/>
+                <TextBox onType={(input) => this.onInput(input)} />
+                <InfoBar timer={this.props.timer} streak={this.props.streak}
+                  score={this.props.score}/>
+          </div>
+      );
     }
 }
 
 GameContainer.propTypes = {
     badGuesses: PropTypes.number,
-    wordLetters: PropTypes.array,
-    onInput: PropTypes.func
+    onInput: PropTypes.func,
+    wordList: PropTypes.array,
+    timer: PropTypes.number,
+    streak: PropTypes.number,
+    score: PropTypes.number,
+    onStart: PropTypes.func,
+    onDecrement: PropTypes.func,
+    onEnd: PropTypes.func,
+    userInput: PropTypes.array,
+    onNextChar: PropTypes.func,
+    onNextWord: PropTypes.func,
+    currentIndex: PropTypes.array
 };
 
 const mapStateToProps = (state) => {
     return {
-        // YOUR MAP STATE TO PROPS HERE
+        wordList: state.gameState.wordList,
+        timer: state.gameState.timer,
+        streak: state.gameState.streak,
+        score: state.gameState.score,
+        userInput: state.gameState.userInput,
+        currentIndex: state.gameState.currentIndex
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        // YOUR MAP DISPATCH TO PROPS HERE
+        onStart: () => dispatch({type: 'START_GAME'}),
+        onDecrement: () => dispatch({type: 'DECREMENT_TIMER'}),
+        onEnd: () => dispatch({type: 'END_GAME'}),
+        onNextChar: () => dispatch({type: 'CHAR_ADDED'}),
+        onNextWord: () => dispatch({type: 'NEXT_WORD'})
     };
 };
 
