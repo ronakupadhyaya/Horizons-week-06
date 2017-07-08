@@ -9,7 +9,7 @@ const WordBox = ({ wordList, userInput}) => {
       <div className="wordBox">
           {letterList.map((char, i) => {
               let classname = 'char';
-              if(i < inputLetters.length) {
+              if(char !== ' ' && i < inputLetters.length) {
                   if(inputLetters[i] === char) {
                       classname = 'correct';
                   } else {

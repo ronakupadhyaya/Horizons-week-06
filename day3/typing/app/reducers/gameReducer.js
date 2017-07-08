@@ -1,6 +1,6 @@
 import words from '../dictionary';
 import _ from 'underscore';
-const shuffledWords = _.shuffle(words);
+const shuffledWords = _.shuffle(words).slice(0, 100);
 
 const gameReducer = (state = {wordList: shuffledWords, userInput: [], currentIndex: [0, 0]}, action) => {
     switch (action.type) {
