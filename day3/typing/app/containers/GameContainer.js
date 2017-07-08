@@ -7,10 +7,10 @@ import InfoBar from '../components/InfoBar';
 
 const GameContainer = ({wordList}) => {
     function onInput(input) {
-        // if(input.length === 1) {
-        //     this.interval = setInterval(this.props.onDecrementTimer, 1000);
-        //     this.props.onStartGame();
-        // }
+        if(input.length === 1) {
+            this.interval = setInterval(this.props.onDecrementTimer, 1000);
+            this.props.onStartGame();
+        }
         console.log('cool');
     }
 
@@ -22,7 +22,7 @@ const GameContainer = ({wordList}) => {
                 </div>
 
                 <div >
-                    <TextBox onInput={() => onInput}/>
+                    <TextBox onInput={(input) => this.onInput(input)}/>
                 </div>
 
                 <div >
