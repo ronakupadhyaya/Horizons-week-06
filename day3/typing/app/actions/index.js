@@ -18,4 +18,17 @@ function endGame() {
     };
 }
 
-export {startGame, decrementTimer, endGame};
+function addChar(char) {
+    return {
+        type: 'CHAR_ADDED',
+        char
+    };
+}
+
+function nextWord() {
+    return {
+        type: 'NEXT_WORD'
+    };
+}
+
+export {startGame, decrementTimer, endGame, addChar, nextWord};
