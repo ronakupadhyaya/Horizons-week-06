@@ -2,14 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const WordBox = ({ wordList, userInput, currentIndex }) => {
-    const wordIndex = currentIndex[0];
-    const letterIndex = currentIndex[1];
-    let currentLetter = '';
-    if (letterIndex > 0) {
-        currentLetter = userInput[wordIndex][letterIndex];
+    // const wordIndex = currentIndex[0];
+    // const letterIndex = currentIndex[1];
+    let letterBool = null;
+
+    for(let i = 0; i < wordList.length; i++) {
+        for(let j = 0; j < wordList[i].length; j++) {
+            if (userInput[i]) {
+                console.log(wordList[i][j]);
+                if (userInput[currentIndex[0]][currentIndex[1]] === wordList[i][j]) {
+                    letterBool = true;
+                } else {
+                    letterBool = false;
+                }
+            }
+        }
     }
-    const currentWord = userInput[wordIndex];
-    console.log(currentWord);
 
     return (
         <div className="main">
@@ -18,13 +26,12 @@ const WordBox = ({ wordList, userInput, currentIndex }) => {
                      const charArr = word.split('');
                      return (<span>
                            {charArr.map(char => {
-                               console.log(char);
                                let elt;
-                               if (currentLetter === char) {
+                               if (letterBool) {
                                    elt = <span className="correct">{char}</span>;
-                               } else if (currentLetter === '') {
+                               } else if (letterBool === null) {
                                    elt = <span className="inactive">{char}</span>;
-                               } else if (currentLetter !== char) {
+                               } else if (letterBool === false) {
                                    elt = <span className="wrong">{char}</span>;
                                }
                                return elt;

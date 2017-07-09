@@ -3,7 +3,7 @@ import _ from 'underscore';
 
 const newWords = _.shuffle(words).slice(0, 100);
 
-const gameReducer = (state = {timer: 0, streak: 0, score: 0, wordList: newWords, userInput: [], currentIndex: [0, 0]}, action) => {
+const gameReducer = (state = {timer: 0, streak: 0, score: 0, wordList: newWords, userInput: [], currentIndex: [0, -1]}, action) => {
     const newState = Object.assign({}, state);
     switch(action.type) {
         case 'START_GAME':
@@ -22,6 +22,7 @@ const gameReducer = (state = {timer: 0, streak: 0, score: 0, wordList: newWords,
             return newState;
         case 'NEXT_WORD':
             newState.currentIndex[0]++;
+            newState.currentIndex[1] = 0;
             return newState;
         default:
             return state;
