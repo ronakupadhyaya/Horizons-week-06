@@ -12,6 +12,9 @@ const userInputReducer = (state = [[]], {type, char}) => {
             listCopy.push([]);
             return listCopy;
         }
+        case 'END_GAME': {
+            return [[]];
+        }
         default:
             return state;
     }

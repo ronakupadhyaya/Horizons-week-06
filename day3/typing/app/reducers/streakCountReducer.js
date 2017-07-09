@@ -11,6 +11,9 @@ const streakCountReducer = (state = [0, 0], {type}) => {
         case 'CANCEL_STREAK': {
             return [0, 0];
         }
+        case 'END_GAME': {
+            return [0, 0];
+        }
         default:
             return state;
     }

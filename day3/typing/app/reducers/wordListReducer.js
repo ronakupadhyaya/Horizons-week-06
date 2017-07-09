@@ -8,6 +8,9 @@ const wordListReducer = (state = shuffled.slice(0, 10), action) => {
         case 'NEW_GAME':
             shuffled = _.shuffle(dictionary);
             return shuffled.slice(0, 10);
+        case 'END_GAME':
+            shuffled = _.shuffle(dictionary);
+            return shuffled.slice(0, 10);
         default:
             return state;
     }

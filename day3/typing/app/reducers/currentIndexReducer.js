@@ -11,6 +11,9 @@ const currentIndexReducer = (state = [0, 0], {type}) => {
             copyIndex[1] = 0;
             return copyIndex;
         }
+        case 'END_GAME': {
+            return [0, 0];
+        }
         default:
             return state;
     }

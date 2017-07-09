@@ -1,17 +1,22 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
-
-import App from '../components/App';
+import GameContainer from './GameContainer';
+import LeaderboardContainer from './LeaderboardContainer';
+import TimeUp from './TimeUp';
 
 export default function Root({store, history}) {
     return (
         <Provider store={store}>
             <div>
                 <ConnectedRouter history={history}>
-                    <Route path="/" component={App}/>
+                    <Switch>
+                        <Route exact path="/" component={GameContainer} />
+                        <Route exact path="/end" component={TimeUp} />
+                        <Route exact path="/leaderboard" component={LeaderboardContainer} />
+                    </Switch>
                 </ConnectedRouter>
             </div>
         </Provider>

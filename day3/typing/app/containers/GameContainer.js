@@ -1,61 +1,88 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import WordBox from '../components/WordBox';
-import TextBox from '../components/TextBox';
-import InfoBar from '../components/InfoBar';
-import { startGame, decrementTimer, endGame, addChar, nextWord, correctGuess, badGuess, addToStreakCount, cancelStreak} from '../actions/index';
+import WordBox from '../components/game_container_components/WordBox';
+import TextBox from '../components/game_container_components/TextBox';
+import InfoBar from '../components/game_container_components/InfoBar';
+import {Redirect} from 'react-router-dom';
+import { startGame, decrementTimer, addChar, nextWord, correctGuess, badGuess, addToStreakCount, cancelStreak} from '../actions/index';
 
 
 class GameContainer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isEnded: false
+        };
+    }
+
+    componentDidMount() {
+        this.intervalId = -1;
+    }
+    componentWillUnmount() {
+        clearInterval(this.intervalId);
+    }
+
     onInput(char) {
         const ci = this.props.currentIndex;
         const wordList = this.props.wordList;
         const userCurrWordIndex = ci[0];
         const userCurrCharIndex = ci[1];
-        this.props.onStartGame();
-        // this.intervalId = setInterval(() => {
-        //     this.props.timeLeft === 0 ? this.props.onEndGame() : this.props.onDecrementTimer();
-        // }, 1000);
-        if (this.props.timeLeft > 0) {
-            if (char === ' ') {
-                this.props.onNextWord();
-                let isStreak = true;
-                const currWord = wordList[userCurrWordIndex];
-                for (let i = 0; i < currWord.length; i++) {
-                    if (this.props.userInput[userCurrWordIndex][i] !== wordList[userCurrWordIndex][i]) {
-                        isStreak = false;
-                    }
-                }
-                if (isStreak) {
-                    this.props.onAddToStreakCount();
-                }
-            } else {
-                this.props.onAddChar(char);
-                if (char === wordList[userCurrWordIndex][userCurrCharIndex]) {
-                    this.props.onCorrectGuess();
-                } else {
-                    this.props.onBadGuess();
-                    console.log('streak count', this.props.streakCount[0]);
+        if (this.intervalId === -1 ) {
+            this.props.onStartGame();
+            this.intervalId = setInterval(() => {
+                if (this.props.timeLeft === 0) {
                     this.props.onCancelStreak(this.props.streakCount[0]);
+                    this.setState({isEnded: true});
+                } else {
+                    this.props.onDecrementTimer();
                 }
+            }, 1000);
+        }
+        if (char === ' ') {
+            this.props.onNextWord();
+            let isStreak = true;
+            const currWord = wordList[userCurrWordIndex];
+            for (let i = 0; i < currWord.length; i++) {
+                if (this.props.userInput[userCurrWordIndex][i] !== wordList[userCurrWordIndex][i]) {
+                    isStreak = false;
+                    this.props.onBadGuess();
+                }
+            }
+            if (isStreak) {
+                this.props.onAddToStreakCount();
+            }
+        } else {
+            this.props.onAddChar(char);
+            if (char === wordList[userCurrWordIndex][userCurrCharIndex]) {
+                this.props.onCorrectGuess();
+            } else {
+                this.props.onBadGuess();
+                this.props.onCancelStreak(this.props.streakCount[0]);
             }
         }
     }
 
     render() {
+        if (this.state.isEnded) {
+            if (!localStorage.getItem('leaders')) {
+                return (<Redirect to="/register" />);
+            } else {
+                const leaders = JSON.parse(localStorage.getItem('leaders'));
+                const leaderArray = Object.keys(leaders).map(key => leaders[key]);
+                if (leaderArray.length < 3 ||
+                    leaderArray.some(player => player.score < this.props.totalScore)) {
+                    return (<Redirect to="/register" />);
+                } else {
+                    return (<Redirect to="/end" />);
+                }
+            }
+        }
         return (
             <div>
-                <div className="main">
-                    <h1>I am the game container!</h1>
-                </div>
+                <h1>Typing Game</h1>
                 <div className="wordBox">
-                    <WordBox
-                        wordList={this.props.wordList}
-                        userInput={this.props.userInput}
-                        onCorrectGuess={() => this.props.onCorrectGuess()}
-                        onBadGuess={() => this.props.onBadGuess()}
-                    />
+                    <WordBox />
                 </div>
                 <div className="textBox">
                     <TextBox
@@ -63,11 +90,7 @@ class GameContainer extends React.Component {
                     />
                 </div>
                 <div className="infoBar">
-                    <InfoBar
-                        timeLeft={this.props.timeLeft}
-                        totalScore={this.props.totalScore}
-                        streakCount ={this.props.streakCount}
-                    />
+                    <InfoBar />
                 </div>
             </div>
         );
@@ -75,19 +98,15 @@ class GameContainer extends React.Component {
 }
 
 GameContainer.propTypes = {
-    badGuesses: PropTypes.number,
-    wordLetters: PropTypes.array,
-    onInput: PropTypes.func,
     wordList: PropTypes.array,
     timeLeft: PropTypes.number,
-    totalScore: PropTypes.number,
+    currentIndex: PropTypes.array,
     streakCount: PropTypes.array,
-    onEndGame: PropTypes.func,
+    userInput: PropTypes.array,
+    totalScore: PropTypes.number,
     onStartGame: PropTypes.func,
     onDecrementTimer: PropTypes.func,
     onAddChar: PropTypes.func,
-    currentIndex: PropTypes.array,
-    userInput: PropTypes.array,
     onNextWord: PropTypes.func,
     onCorrectGuess: PropTypes.func,
     onBadGuess: PropTypes.func,
@@ -100,9 +119,9 @@ const mapStateToProps = (state) => {
         wordList: state.wordList,
         timeLeft: state.timeLeft,
         currentIndex: state.currentIndex,
-        totalScore: state.totalScore,
         streakCount: state.streakCount,
         userInput: state.userInput,
+        totalScore: state.totalScore
     };
 };
 
@@ -110,7 +129,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onStartGame: () => dispatch(startGame()),
         onDecrementTimer: () => dispatch(decrementTimer()),
-        onEndGame: () => dispatch(endGame()),
         onAddChar: (char) => dispatch(addChar(char)),
         onNextWord: () => dispatch(nextWord()),
         onCorrectGuess: () => dispatch(correctGuess()),

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 const InfoBar = ({timeLeft, totalScore, streakCount}) => {
     return (
@@ -15,4 +16,20 @@ InfoBar.propTypes = {
     streakCount: PropTypes.array
 };
 
-export default InfoBar;
+const mapStateToProps = (state) => {
+    return {
+        timeLeft: state.timeLeft,
+        totalScore: state.totalScore,
+        streakCount: state.streakCount
+    };
+};
+
+const mapDispatchToProps = () => {
+    return {
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(InfoBar);
