@@ -7,7 +7,10 @@ class SubmitButton extends React.Component {
         return (
             <div>
                 <button>
-                    <Link onClick={() => this.props.onHandleClick()} to={"/leaderboard"}>Submit</Link>
+                    <Link
+                        onClick={() => this.props.onHandleClick()}
+                        to={"/leaderboard"}>Submit
+                    </Link>
                 </button>
             </div>
         );

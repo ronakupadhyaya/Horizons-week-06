@@ -11,13 +11,7 @@ class TimeUp extends React.Component {
         super(props);
     }
 
-    componentDidMount() {
-        console.log('im here');
-        console.log('props in did mount', this.props);
-    }
-
     render() {
-        console.log('final score in time up', this.props.finalScore);
         return (
             <div>
                 <FinalScore />
@@ -33,16 +27,13 @@ TimeUp.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-    console.log('state in end', state.totalScore);
     return {
         finalScore: state.totalScore
     };
 };
 
-const mapDispatchToProps = () => { // dispatch
-    return {
-
-    };
+const mapDispatchToProps = () => {
+    return {};
 };
 
 export default connect(

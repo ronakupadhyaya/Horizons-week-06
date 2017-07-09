@@ -1,12 +1,12 @@
 
-const timeLeftReducer = (state = 5, {type}) => {
+const timeLeftReducer = (state = 60, {type}) => {
     switch (type) {
         case 'START_GAME':
             return state;
         case 'DECREMENT_TIMER':
             return state - 1;
         case 'END_GAME':
-            return 5;
+            return 60;
         default:
             return state;
     }

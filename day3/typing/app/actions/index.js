@@ -1,5 +1,3 @@
-// import * as types from './types';
-
 function startGame() {
     return {
         type: 'START_GAME'

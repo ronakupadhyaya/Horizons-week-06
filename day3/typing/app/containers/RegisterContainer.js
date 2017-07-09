@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 class RegisterContainer extends React.Component {
     constructor(props) {
         super(props);
-        console.log('here');
         this.state = {
             name: ''
         };
@@ -33,7 +32,7 @@ class RegisterContainer extends React.Component {
             const leaderArray = Object.keys(leaders).map(key => leaders[key]);
             leaderArray.push(newLeader);
             leaderArray.sort((a, b) => b.score - a.score);
-            while (leaderArray.length > 3) {
+            while (leaderArray.length > 10) {
                 leaderArray.pop();
             }
             const newLeaderObject = {};
@@ -66,10 +65,8 @@ const mapStateToProps = (state) => {
     };
 };
 
-const mapDispatchToProps = () => { // dispatch
-    return {
-
-    };
+const mapDispatchToProps = () => {
+    return {};
 };
 
 export default connect(

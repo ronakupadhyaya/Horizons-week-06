@@ -1,7 +1,5 @@
 import React from 'react';
-// import { connect } from 'react-redux';
 import Leaderboard from '../components/leaderboard_components/Leaderboard';
-
 
 class LeaderboardContainer extends React.Component {
     render() {

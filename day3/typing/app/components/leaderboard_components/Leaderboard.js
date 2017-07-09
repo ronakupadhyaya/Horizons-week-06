@@ -1,5 +1,4 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 
@@ -28,7 +27,7 @@ const mapStateToProps = () => {
     return {};
 };
 
-const mapDispatchToProps = () => { // dispatch
+const mapDispatchToProps = () => {
     return {};
 };
 

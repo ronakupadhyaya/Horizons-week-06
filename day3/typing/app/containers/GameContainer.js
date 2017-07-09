@@ -70,7 +70,7 @@ class GameContainer extends React.Component {
             } else {
                 const leaders = JSON.parse(localStorage.getItem('leaders'));
                 const leaderArray = Object.keys(leaders).map(key => leaders[key]);
-                if (leaderArray.length < 3 ||
+                if (leaderArray.length < 10 ||
                     leaderArray.some(player => player.score < this.props.totalScore)) {
                     return (<Redirect to="/register" />);
                 } else {
