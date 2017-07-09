@@ -9,11 +9,9 @@ const WordBox = ({ wordsList, userInput }) => {
       <div className="main">
         <div className="wordbox">
           {wordsList.map((character, index) => {
-              if (index === userInput.length - 1) {
-                  <span className={wordColor}>  {character}  </span>;
-              } else {
-                  <span className="grey">  {character}  </span>;
-              }
+              console.log(character);
+              const color =  (index === userInput.length - 1) ? wordColor : 'inactive';
+              return <span className={color} key={index}>  {character}  </span>;
           }
         )}
         </div>

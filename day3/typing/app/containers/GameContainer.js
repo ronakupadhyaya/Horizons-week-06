@@ -16,6 +16,7 @@ class GameContainer extends React.Component {
                 this.props.onEndGame();
             }, 6000);
         }
+        this.props.onType(input);
     }
 
     render() {
@@ -23,7 +24,7 @@ class GameContainer extends React.Component {
             <div>
                 I am the game container!
                 <WordBox wordsList={this.props.wordsList} userInput={this.props.userInput} />
-                <TextBox onInput={this.onInput} />
+                <TextBox onInput={this.onInput} value={this.props.value} />
                 <InfoBar timer={this.props.timer} />
             </div>
         );
@@ -40,6 +41,8 @@ GameContainer.propTypes = {
     onDecreamentTimer: PropTypes.func,
     timer: PropTypes.number,
     userInput: PropTypes.array,
+    onType: PropTypes.func,
+    value: PropTypes.string,
 };
 
 const mapStateToProps = (state) => {
@@ -47,6 +50,7 @@ const mapStateToProps = (state) => {
         wordsList: state.gameReducer.wordsList,
         timer: state.gameReducer.timer,
         userInput: state.gameReducer.userInput,
+        value: state.gameReducer.value,
     };
 };
 
@@ -55,7 +59,8 @@ const mapDispatchToProps = (dispatch) => {
         // YOUR MAP DISPATCH TO PROPS HERE
         onStartGame: () => dispatch({type: 'START_GAME', }),
         onEndGame: () => dispatch({type: 'END_GAME'}),
-        onDecreamentTimer: () => dispatch({type: 'DECREATEMENT_TIMER'})
+        onDecreamentTimer: () => dispatch({type: 'DECREATEMENT_TIMER'}),
+        onType: (input) => dispatch({type: 'TYPING', payload: input}),
     };
 };
 
