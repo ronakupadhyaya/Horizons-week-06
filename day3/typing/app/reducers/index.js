@@ -1,9 +1,12 @@
-import { routerReducer as routing } from 'react-router-redux';
+// Combine reducers for use by store
+import { routerReducer } from 'react-router-redux';
+import gameReducer from './gameReducer';
 import { combineReducers } from 'redux';
-// import * as types from '../actions/types';
 
+// Combine the routing reducer and game reducer
 const rootReducer = combineReducers({
-    routing
+    routerReducer,
+    gameReducer
 });
 
 export default rootReducer;
