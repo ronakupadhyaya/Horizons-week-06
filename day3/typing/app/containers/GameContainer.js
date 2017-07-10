@@ -18,9 +18,15 @@ class GameContainer extends React.Component {
 
         const lastChar = input[input.length - 1];
         if (lastChar === ' ') {
+            console.log('empty', input + '.');
             this.props.onEmptyType();
         } else {
             this.props.onType(input);
+            const currentWord = this.props.wordsList[this.props.currentIndex[0]];
+            const currentChar = currentWord[this.props.currentIndex[1]];
+            if (lastChar === currentChar) {
+                this.props.onScore();
+            }
         }
     }
 
@@ -28,9 +34,9 @@ class GameContainer extends React.Component {
         return (
             <div>
                 I am the game container!
-                <WordBox wordsList={this.props.wordsList} userInput={this.props.userInput} currentIndex={this.props.currentIndex} />
+                <WordBox wordsList={this.props.wordsList} userInput={this.props.userInput} currentIndex={this.props.currentIndex}/>
                 <TextBox onInput={this.onInput} value={this.props.value} />
-                <InfoBar timer={this.props.timer} />
+                <InfoBar timer={this.props.timer} totalScore={this.props.totalScore} />
             </div>
         );
     }
@@ -50,6 +56,8 @@ GameContainer.propTypes = {
     value: PropTypes.string,
     onEmptyType: PropTypes.func,
     currentIndex: PropTypes.array,
+    onScore: PropTypes.func,
+    totalScore: PropTypes.number,
 };
 
 const mapStateToProps = (state) => {
@@ -59,6 +67,7 @@ const mapStateToProps = (state) => {
         userInput: state.gameReducer.userInput,
         value: state.gameReducer.value,
         currentIndex: state.gameReducer.currentIndex,
+        totalScore: state.gameReducer.totalScore,
     };
 };
 
@@ -68,7 +77,8 @@ const mapDispatchToProps = (dispatch) => {
         onEndGame: () => dispatch({type: 'END_GAME'}),
         onDecreamentTimer: () => dispatch({type: 'DECREATEMENT_TIMER'}),
         onType: (input) => dispatch({type: 'CHAR_ADDED', payload: input}),
-        onEmptyType: () => dispatch({type: 'NEXT_WORD'})
+        onEmptyType: () => dispatch({type: 'NEXT_WORD'}),
+        onScore: () => dispatch({type: 'ADD_SCORE'}),
     };
 };
 

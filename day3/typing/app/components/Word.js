@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Word = ({ userWord, correctWord }) => {
+const Word = ({ userWord, correctWord}) => {
     const style = {
         display: 'inline-block',
         marginRight: '0.7em'
@@ -25,7 +25,7 @@ const Word = ({ userWord, correctWord }) => {
 
 Word.propTypes = {
     userWord: PropTypes.string,
-    correctWord: PropTypes.string
+    correctWord: PropTypes.string,
 };
 
 export default Word;
