@@ -15,8 +15,9 @@ class GameContainer extends React.Component {
             streakCount: 0
         };
         this.onInput = this.onInput.bind(this);
-        this.setScore = this.setScore.bind(this);
-        this.setStreak = this.setStreak.bind(this);
+        this.onTypingMain = this.onTypingMain.bind(this);
+        // this.setScore = this.setScore.bind(this);
+        // this.setStreak = this.setStreak.bind(this);
     }
 
     onInput() {
@@ -29,13 +30,56 @@ class GameContainer extends React.Component {
             }
         }, 1000);
     }
+// let's try again
+    onTypingMain(input) {
+        // dispatch action
+        this.props.onTyping(input);
 
-    setScore(score) {
-        this.setState({ wordCount: score });
+        // Calculate streak
+        // Go through each user input
+        let streakFind = 0;
+        let streakCount = 1;
+        this.props.userInput.forEach((word, index) => {
+            // If there is an actual word (not just empty space)
+            if (!!word.trim()) {
+                // If that word is equal to a corresponding word in the box
+                if (word.trim() === this.props.wordList[index]) {
+                    // Add one to the streak
+                    streakFind++;
+                    // If the streak is now greater, update the streak
+                    if(streakFind > streakCount) {
+                        streakCount = streakFind;
+                    }
+                    // If you the streak gets interupted, set the finder to zero
+                } else {
+                    streakFind = 0;
+                }
+            }
+        });
+
+        // now calculate wordCount
+        // calculate wordCount
+        let wordCount = 0;
+        this.props.wordList.map((word, index) => {
+            if (!!this.props.userInput[index]) {
+                if(word === this.props.userInput[index].trim()) {
+                    wordCount += 1;
+                }
+            }
+        });
+
+        this.setState({
+            streakCount: streakCount,
+            wordCount: wordCount
+        });
     }
-    setStreak(streak) {
-        this.setState({ streakCount: streak });
-    }
+
+    // setScore(score) {
+    //     this.setState({ wordCount: score });
+    // }
+    // setStreak(streak) {
+    //     this.setState({ streakCount: streak });
+    // }
 
     render() {
         return (
@@ -43,12 +87,12 @@ class GameContainer extends React.Component {
                 <WordBox
                   wordList={this.props.wordList}
                   userInput={this.props.userInput}
-                  setScore={this.setScore}
-                  setStreak={this.setStreak}
+                  // setScore={this.setScore}
+                  // setStreak={this.setStreak}
                 />
                 <TextBox
                   onInput={this.onInput}
-                  onTyping={this.props.onTyping}
+                  onTyping={this.onTypingMain}
                 />
                 <InfoBar
                   timer={this.props.timer}
@@ -74,6 +118,12 @@ GameContainer.propTypes = {
     setScore: PropTypes.func,
     setStreak: PropTypes.func,
 };
+
+// do you have slack on your phone?
+//yup phone call through slack, this is weird hahaha jo is staring cause i am
+speaking without
+// audio
+//haha what?
 
 const mapStateToProps = (state) => {
     return {
