@@ -4,11 +4,13 @@ import { combineReducers } from 'redux';
 
 import gameReducer from './gameReducer';
 import timerReducer from './timerReducer';
+import userReducer from './userReducer';
 
 
 const rootReducer = combineReducers({
     wordList: gameReducer,
     timer: timerReducer,
+    userInput: userReducer,
     routing
 });
 

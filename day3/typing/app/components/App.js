@@ -5,8 +5,12 @@ import GameContainer from '../containers/GameContainer';
 const App = () => {
     return (<div>
       { Routes }
-      <h1>Typing Game</h1>
+      <center>
+  <img src="/img/typing.png" style={{'width': '600px', 'padding': '10px'}}/>
+    </center>
+    <center>
       <GameContainer />
+    </center>
     </div>);
 };
 

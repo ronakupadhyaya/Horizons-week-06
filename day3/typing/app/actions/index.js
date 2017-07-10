@@ -12,6 +12,13 @@ export function timer() {
     };
 }
 
+export function typing(letters) {
+    return {
+        type: 'USER_TYPE',
+        letters,
+    };
+}
+
 export function endGame() {
     return {
         type: 'ENDGAME',
