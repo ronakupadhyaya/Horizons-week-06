@@ -6,6 +6,30 @@
 
 // import * as types from '../actions/types';
 
-// const wordLettersReducer =
+const wordLettersReducer = (state = [{letter: 'O', guessed: true}, {letter: 'X', guessed: false}], action) => {
+    switch(action.type) {
+        case 'CREATE_WORD':
+            const wordArray = action.word.split('');
+            const objArray = [];
 
-// export default wordLettersReducer;
+            wordArray.forEach( letter => {
+                objArray.push({
+                    letter: letter,
+                    guessed: false
+                });
+            });
+            return objArray;
+        case 'GOOD_GUESS':
+            const copyState = [...state];
+            copyState.forEach((letterObj) => {
+                if(letterObj.letter === action.letter) {
+                    letterObj.guessed = true;
+                }
+            });
+            return copyState;
+        default:
+            return state;
+    }
+};
+
+export default wordLettersReducer;
