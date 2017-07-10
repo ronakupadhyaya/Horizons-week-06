@@ -1,19 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Word from './word';
 
 const WordBox = ({ wordsList, userInput }) => {
-    const wordColor = userInput[userInput.length - 1] === wordsList[userInput.length - 1]
-    ? 'correct' : 'wrong';
-
+    const boxes = wordsList.map((correctWord, i) => {
+        const userWord = userInput[i];
+        return (<Word key={i} correctWord={correctWord} userWord={userWord} />);
+    });
     return (
       <div className="main">
         <div className="wordbox">
-          {wordsList.map((character, index) => {
-              console.log(character);
-              const color =  (index === userInput.length - 1) ? wordColor : 'inactive';
-              return <span className={color} key={index}>  {character}  </span>;
-          }
-        )}
+          {boxes}
         </div>
       </div>
   );
@@ -22,6 +19,7 @@ const WordBox = ({ wordsList, userInput }) => {
 WordBox.propTypes = {
     wordsList: PropTypes.array,
     userInput: PropTypes.array,
+    currentIndex: PropTypes.array,
 };
 
 export default WordBox;

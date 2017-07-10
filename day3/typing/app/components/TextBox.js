@@ -12,6 +12,7 @@ const TextBox = ({ onInput, value }) => {
 TextBox.propTypes = {
     onInput: PropTypes.func,
     value: PropTypes.string,
+    // handleSubmit: PropTypes.func,
 };
 
 export default TextBox;

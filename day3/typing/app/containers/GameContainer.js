@@ -7,23 +7,28 @@ import InfoBar from '../components/InfoBar';
 
 class GameContainer extends React.Component {
     onInput = (input) => {
-        console.log('INPUT', input);
         if (this.props.timer === 0) {
             this.props.onStartGame();
             const time = setInterval(() => this.props.onDecreamentTimer(), 1000);
             setTimeout(() => {
                 clearInterval(time);
                 this.props.onEndGame();
-            }, 6000);
+            }, 60000);
         }
-        this.props.onType(input);
+
+        const lastChar = input[input.length - 1];
+        if (lastChar === ' ') {
+            this.props.onEmptyType();
+        } else {
+            this.props.onType(input);
+        }
     }
 
     render() {
         return (
             <div>
                 I am the game container!
-                <WordBox wordsList={this.props.wordsList} userInput={this.props.userInput} />
+                <WordBox wordsList={this.props.wordsList} userInput={this.props.userInput} currentIndex={this.props.currentIndex} />
                 <TextBox onInput={this.onInput} value={this.props.value} />
                 <InfoBar timer={this.props.timer} />
             </div>
@@ -43,6 +48,8 @@ GameContainer.propTypes = {
     userInput: PropTypes.array,
     onType: PropTypes.func,
     value: PropTypes.string,
+    onEmptyType: PropTypes.func,
+    currentIndex: PropTypes.array,
 };
 
 const mapStateToProps = (state) => {
@@ -51,16 +58,17 @@ const mapStateToProps = (state) => {
         timer: state.gameReducer.timer,
         userInput: state.gameReducer.userInput,
         value: state.gameReducer.value,
+        currentIndex: state.gameReducer.currentIndex,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        // YOUR MAP DISPATCH TO PROPS HERE
         onStartGame: () => dispatch({type: 'START_GAME', }),
         onEndGame: () => dispatch({type: 'END_GAME'}),
         onDecreamentTimer: () => dispatch({type: 'DECREATEMENT_TIMER'}),
-        onType: (input) => dispatch({type: 'TYPING', payload: input}),
+        onType: (input) => dispatch({type: 'CHAR_ADDED', payload: input}),
+        onEmptyType: () => dispatch({type: 'NEXT_WORD'})
     };
 };
 
