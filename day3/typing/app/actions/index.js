@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import * as types from './types';
 
 export function startGame() {
@@ -15,3 +16,6 @@ export function endGame() {
         type: 'END_GAME'
     };
 }
+=======
+import * as types from './types';
+>>>>>>> 442651ce66adbdb2ac1a491b5a808af3d8ab4e8a
