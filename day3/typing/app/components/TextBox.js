@@ -2,9 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const TextBox = ({ onInput, value }) => {
+    const filterInput = (e) => {
+        if (e.key.length === 1) {
+            onInput(e.target.value + e.key);
+        }
+    };
     return (
-      <div>
-        <input onChange={(event) => onInput(event.target.value)} type="text" className="textbox" value={value} placeholder="Start tying to begin.." />
+      <div style={{ textAlign: 'center' }}>
+        <input onKeyUp={filterInput} type="text" className="textbox" value={value} placeholder="Start tying to begin.." />
       </div>
   );
 };

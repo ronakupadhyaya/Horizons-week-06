@@ -33,7 +33,6 @@ class GameContainer extends React.Component {
     render() {
         return (
             <div>
-                I am the game container!
                 <WordBox wordsList={this.props.wordsList} userInput={this.props.userInput} currentIndex={this.props.currentIndex}/>
                 <TextBox onInput={this.onInput} value={this.props.value} />
                 <InfoBar timer={this.props.timer} totalScore={this.props.totalScore} />
