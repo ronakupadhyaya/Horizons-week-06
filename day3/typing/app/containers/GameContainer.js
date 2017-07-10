@@ -22,11 +22,8 @@ class GameContainer extends React.Component {
         }
         if (char === ' ') {
             this.props.onNextWord();
-        } else if (char.keyCode !== 8) {
-            this.props.userInput.pop();
-            // console.log('container input: ' + input);
-            this.props.userInput.push(input);
-            this.props.onNextChar();
+        } else {
+            this.props.onNextChar(input);
         }
     }
     render() {
@@ -73,7 +70,7 @@ const mapDispatchToProps = (dispatch) => {
         onStart: () => dispatch({type: 'START_GAME'}),
         onDecrement: () => dispatch({type: 'DECREMENT_TIMER'}),
         onEnd: () => dispatch({type: 'END_GAME'}),
-        onNextChar: () => dispatch({type: 'CHAR_ADDED'}),
+        onNextChar: (input) => dispatch({type: 'CHAR_ADDED', input}),
         onNextWord: () => dispatch({type: 'NEXT_WORD'})
     };
 };
