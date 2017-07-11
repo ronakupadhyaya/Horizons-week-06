@@ -37,14 +37,16 @@ const WordBox = ({ wordList, userInput}) => {
                         //     // make this words dif (access by key) the color red
                         //
                         // }
-                        if(i < userInput.length && j < userInput[i].length) {
-                            if(userInput[i][j] === char) {
-                                classname = 'correctChar';
-                                correctLetters += 1;
-                                //   return (<span className="correct">{char}</span>);
-                            } else {
-                                classname = 'wrongChar';
-                                //   return (<span className="wrong">{char}</span>);
+                        if(userInput && userInput[i]) {
+                            if(i < userInput.length && j < userInput[i].length) {
+                                if(userInput[i][j] === char) {
+                                    classname = 'correctChar';
+                                    correctLetters += 1;
+                                    //   return (<span className="correct">{char}</span>);
+                                } else {
+                                    classname = 'wrongChar';
+                                    //   return (<span className="wrong">{char}</span>);
+                                }
                             }
                         }
                         return (<span key={i + '' + j} className={classname}>{char}</span>);

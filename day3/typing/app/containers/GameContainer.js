@@ -7,40 +7,41 @@ import InfoBar from '../components/InfoBar';
 
 class GameContainer extends React.Component {
     countStreak(correctWords) {
-        const totalStreaks = [];
+        const totalStreaks = [0];
         let currentStreak = 0;
-        let prevId = -2;
+        let prevId = -1;
         for (let i = 0; i < correctWords.length; i++) {
+            console.log('curernt streak is: ', currentStreak, 'totalstreaks are: ', totalStreaks);
             const wordDivId = parseInt(correctWords[i].id, 10);
-            console.log(typeof prevId, typeof wordDivId, prevId, wordDivId);
-            if(prevId + 1 !== wordDivId) {
-                console.log('streak is over, pushing to total streaks', totalStreaks, currentStreak);
-                totalStreaks.push(currentStreak);// += 1;
+            // console.log(typeof prevId, typeof wordDivId, prevId, wordDivId);
+            if(i > 0 && prevId + 1 !== wordDivId) {
+                console.log('In countStreak: streak is over, pushing to total streaks: ', 'psuhing currentStreak:', currentStreak, ' new total streak is', totalStreaks);
+                totalStreaks[totalStreaks.length - 1] = currentStreak;// += 1;
                 currentStreak = 1;
+                totalStreaks.push(1);
             } else {
                 currentStreak += 1;
-                console.log('just incremeneted streak', currentStreak);
+                totalStreaks[totalStreaks.length - 1] = currentStreak;
+                console.log('In countStreak: just incremeneted streak', currentStreak);
             }
             prevId = wordDivId;
         }
         console.log(totalStreaks);
-        totalStreaks.splice(0, 1);
+        // totalStreaks.splice(0, 1);
         const streakSum = totalStreaks.reduce((sum, val) => {
-            const points = sum + ((2 * val + 1) / 2 );
+            const points = sum + (( val * (val + 1)) / 2 );
             return points;
         }, 0);
-        // console.log(streakSum);
+        console.log('returning a streaksum of: ', streakSum);
         return streakSum;
     }
 
     onInput(input) {
         const correctLetters = document.getElementsByClassName('correctChar').length;
+        const wrongLetters = document.getElementsByClassName('wrongChar').length;
         const correctWords = document.getElementsByClassName('correctWord');
         const streakSum = this.countStreak(correctWords);
-        this.props.onUpdateScore(this.countStreak(correctWords), 0);
-        // console.log('streaksum in oninput', streakSum);
-        // const streakSum = streakArray.reduce((sum, val) => sum + val, 0);
-        console.log('the current streak is ', streakSum);
+        this.props.onUpdateScore(streakSum, correctLetters + streakSum - wrongLetters);
         if(this.props.userInput.length === 0) {
             this.props.onUserTyping();
             const timeInterval = setInterval(() => {
@@ -52,9 +53,6 @@ class GameContainer extends React.Component {
                 }
             }, 1000);
         }
-        // console.log('number of spans with correct class', document.getElementsByClassName('correct').length);
-        // console.log('TRYONG TO FIND START', this.props.userInput.length);
-        // console.log('userInput', this.props.userInput, ' with current word of length ', input.value.length, 'at index [' + this.props.currentIndex[0], this.props.currentIndex[1] + ']');
         const val = input.value;
         // console.log('onInput current index [' + );
         if(val.length > 0) {
@@ -73,13 +71,13 @@ class GameContainer extends React.Component {
         const correctLetters = document.getElementsByClassName('correctChar').length;
         const correctWords = document.getElementsByClassName('correctWord').length;
         return (
-            <div>
+            <div className="container">
                 <div>{'Correct letters: ' + correctLetters}</div>
                 <div>{'Correct Words: ' + correctWords}</div>
-                I am the game container!
+                <InfoBar timeLeft={this.props.timeLeft} totalScore={this.props.totalScore} streakCount={this.props.streakCount}/>
                 <WordBox wordList={this.props.wordList} userInput={this.props.userInput}/>
                 <TextBox onInput={(input) => this.onInput(input)} onStartTyping={() => this.onUserTyping}/>
-                <InfoBar timeLeft={this.props.timeLeft} totalScore={this.props.totalScore} streakCount={this.props.streakCount}/>
+                <div className="timer">Time Remaining: {this.props.timeLeft} seconds</div>
             </div>
         );
     }

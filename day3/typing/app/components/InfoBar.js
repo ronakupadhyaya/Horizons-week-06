@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 const InfoBar = ({ timeLeft, totalScore, streakCount }) => {
     return (
       <div className="infobar">
-          <div className="score">Score: {totalScore || 0}</div>
-          <div className="timer">Time Remaining: {timeLeft || 0}</div>
-          <div className="wordstreak">Word Streak: {streakCount || 0}</div>
+          <div className="score">Score: {totalScore} points</div>
+          {/* <div className="timer">Time Remaining: {timeLeft || 0}</div> */}
+          <div className="wordstreak">Word Streak: +{streakCount} points</div>
       </div>
   );
 };

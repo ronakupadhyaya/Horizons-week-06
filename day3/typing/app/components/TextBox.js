@@ -9,6 +9,7 @@ const TextBox = ({ onInput }) => {
             type="text"
             ref={node => {userinput = node;}}
             onChange={()=>onInput(userinput)}
+            placeholder="Start typing here"
         />
   );
 };

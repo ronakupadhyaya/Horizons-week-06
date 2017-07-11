@@ -9,23 +9,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         /* YOUR CSS STYLES HERE */
+        #root, .container {
+            height: 100%;
+            width: 100%;
+            /*display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;*/
+            /*padding: 100px 200px 100px 200px;*/
+        }
+
+        .container {
+            padding: 20px 50px 20px 50px;
+            display: flex;
+            flex-direction: column;
+            background-color: #8fcdff;
+        }
         .wordBox{
-            height: 500px;
-            padding: 10px;
+            max-height: 300px;
+            padding: 15px;
+            /*margin: 20px 50px 20px 50px;*/
             width: 80vw;
-            color: gray;
-            border: 1px solid black;
+            color: rgba(136, 135, 135, 0.74);
+            border: 3px solid black;
             overflow: scroll;
+            font-size: 45px;
+            background-color: white;
         }
         .word {
             display: inline-block;
-            margin-right: 4px;
+            margin-right: 5px;
         }
         .infobar{
             color: red;
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 32px;
+        }
+        .infobar div {
+            flex: 1;
         }
         .wrongChar {
             color: red;
+            text-decoration: line-through;
         }
         .correctChar {
             color: green;
@@ -35,6 +62,19 @@
             background-color: yellow;
         }
 
+        .typedInput {
+            border: 3px solid black;
+            border-radius: 5px;
+            height: 25px;
+            padding: 15px;
+            width: 80vw;
+            font-size: 30px;
+            margin-top: 10px;
+        }
+        .timer {
+            align-self: center;
+            font-size: 30px;
+        }
     </style>
 </head>
 
