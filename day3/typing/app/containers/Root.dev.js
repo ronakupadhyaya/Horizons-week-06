@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Provider} from 'react-redux';
-import {Route} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import {ConnectedRouter} from 'react-router-redux';
 
-import App from '../components/App';
+import GameContainer from './GameContainer';
+import TimeUp from './TimeUp';
 import DevTools from './DevTools';
 
 export default function Root({store, history}) {
@@ -12,7 +13,10 @@ export default function Root({store, history}) {
         <Provider store={store}>
             <div>
                 <ConnectedRouter history={history}>
-                    <Route path="/" component={App}/>
+                  <Switch>
+                    <Route exact path="/" component={GameContainer}/>
+                    <Route path="/end" component={TimeUp}/>
+                  </Switch>
                 </ConnectedRouter>
                 <DevTools />
             </div>
