@@ -1,4 +1,4 @@
-const badGuessesReducer = (state = [], action) => {
+const guessedLettersReducer = (state = [], action) => {
     switch(action.type) {
         case 'BAD_GUESS':
         case 'GOOD_GUESS':
@@ -9,4 +9,4 @@ const badGuessesReducer = (state = [], action) => {
     }
 };
 
-export default badGuessesReducer;
+export default guessedLettersReducer;
