@@ -9,7 +9,7 @@ const TextBox = ({ onInput, value }) => {
     };
     return (
       <div style={{ textAlign: 'center' }}>
-        <input onKeyUp={filterInput} type="text" className="textbox" value={value} placeholder="Start tying to begin.." />
+        <input onChange={() => {}} onKeyUp={filterInput} type="text" className="textbox" value={value} placeholder="Start tying to begin.." />
       </div>
   );
 };
@@ -17,7 +17,6 @@ const TextBox = ({ onInput, value }) => {
 TextBox.propTypes = {
     onInput: PropTypes.func,
     value: PropTypes.string,
-    // handleSubmit: PropTypes.func,
 };
 
 export default TextBox;

@@ -12,8 +12,12 @@ class GameContainer extends React.Component {
             const time = setInterval(() => this.props.onDecreamentTimer(), 1000);
             setTimeout(() => {
                 clearInterval(time);
+                // if its end Game
+                this.props.history.push('/score');
+                localStorage.setItem('score', this.props.totalScore);
+                console.log('localStorage', localStorage);
                 this.props.onEndGame();
-            }, 60000);
+            }, 3000);
         }
 
         const lastChar = input[input.length - 1];
@@ -33,6 +37,7 @@ class GameContainer extends React.Component {
     render() {
         return (
             <div>
+                <h1 className="title">Typing Game</h1>
                 <WordBox wordsList={this.props.wordsList} userInput={this.props.userInput} currentIndex={this.props.currentIndex}/>
                 <TextBox onInput={this.onInput} value={this.props.value} />
                 <InfoBar timer={this.props.timer} totalScore={this.props.totalScore} />
@@ -57,6 +62,7 @@ GameContainer.propTypes = {
     currentIndex: PropTypes.array,
     onScore: PropTypes.func,
     totalScore: PropTypes.number,
+    history: PropTypes.object
 };
 
 const mapStateToProps = (state) => {
@@ -77,7 +83,7 @@ const mapDispatchToProps = (dispatch) => {
         onDecreamentTimer: () => dispatch({type: 'DECREATEMENT_TIMER'}),
         onType: (input) => dispatch({type: 'CHAR_ADDED', payload: input}),
         onEmptyType: () => dispatch({type: 'NEXT_WORD'}),
-        onScore: () => dispatch({type: 'ADD_SCORE'}),
+        onScore: () => dispatch({type: 'ADD_SCORE'})
     };
 };
 

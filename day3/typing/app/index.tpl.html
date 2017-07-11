@@ -8,11 +8,17 @@
     <meta name="description" content="React/Redux Typing Game">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+      .title {
+        text-align: center;
+        margin-top: 1em;
+        font-family: 'Arial';
+      }
       .wordbox {
         border: 2px solid gray;
         border-radius: 5px;
         padding: 10px;
-        width: 80vw;
+        width: 60vw;
+        background-color: white;
       }
 
       .inactive {
@@ -37,6 +43,7 @@
       body {
         font-size: 18px;
         font-family: Verdana;
+        background-image: url("http://allswalls.com/images/coffee-splash-wallpaper-1.jpg");
       }
 
       .info {
@@ -50,12 +57,27 @@
       }
 
       .textbox {
-        width: 60vw;
+        width: 45vw;
+        margin-top: 1em;
         height: 3em;
         font-size: 18px;
         border: 2px solid gray;
         border-radius: 5px;
       }
+
+      .button {
+        background-color: #4CAF50;
+        border-radius:5px;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
   </style>
 </head>
 

@@ -1,9 +1,11 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import App from './components/App';
+import GameContainer from './containers/GameContainer';
+import Score from './components/Score';
 
 export default (
 	<Switch>
-		<Route exact path="/" component={App} />
+		<Route exact path="/score" component={Score} />
+		<Route exact path="/" component={GameContainer} />
 	</Switch>
 );

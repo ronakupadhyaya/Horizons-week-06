@@ -32,6 +32,16 @@ const gameReducer = (state = initialState, action) => {
             return Object.assign({}, state, {userInput: userInput2, value: '', currentIndex: currentIndex2});
         case 'ADD_SCORE':
             return Object.assign({}, state, {totalScore: state.totalScore + 1});
+        case 'END_GAME':
+            return state;
+        case 'RESTART_GAME':
+            return Object.assign({}, state, {
+                timer: 0,
+                value: '',
+                userInput: [],
+                currentIndex: [0, 0],
+                totalScore: 0,
+                streakCount: 0});
         default:
             return state;
     }

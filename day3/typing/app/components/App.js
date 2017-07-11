@@ -1,12 +1,12 @@
 import React from 'react';
 import Routes from '../routes';
-import GameContainer from '../containers/GameContainer';
+// import GameContainer from '../containers/GameContainer';
+// <h1 className="title">Typing Game</h1>
+// <GameContainer />
 
 const App = () => {
-    return (<div>
+    return (<div id="root">
       { Routes }
-      <h1>Typing Game</h1>
-      <GameContainer />
     </div>);
 };
 
