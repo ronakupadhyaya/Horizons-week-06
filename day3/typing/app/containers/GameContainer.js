@@ -7,18 +7,25 @@ import Infobar from '../components/Infobar';
 import { UserInputing } from '../actions/index';
 
 class GameContainer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            intervaId: ''
+        };
+    }
     onInput(input) {
         console.log('nnn', input);
         if(this.props.timer === 60) {
             this.props.onStart();
-            this.intervalId = setInterval(()=>{
+            this.setState({intervalId: setInterval(()=>{
                 if(this.props.timer === 0) {
                     this.props.onEnd();
                     clearInterval(this.intervalId);
                 }else{
+                    console.log('naah');
                     this.props.onTick();
                 }
-            }, 1000);
+            }, 1000)});
         }
     }
 

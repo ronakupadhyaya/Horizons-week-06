@@ -8,8 +8,7 @@ const TextBox = ({onType, onUserInput}) => {
           <input type="textarea" style={{width: 700, height: 100 }}
                 // value={''}
                 ref={node => {input = node;}}
-                onChange={() => onType(input.value) }
-                onChange={() => onUserInput(input.value) }
+                onChange={() => {onType(input.value); onUserInput(input.value);}}
                 placeholder="Start typing to begin...."
             />
         </div>

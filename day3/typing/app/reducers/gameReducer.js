@@ -10,6 +10,7 @@ const gameReducer = (state = initialState, action) =>{
         case 'START_GAME':
             return initialState;
         case 'DECREMENT_TIMER':
+            console.log('tickkk');
             const newState = Object.assign({}, state);
             newState.timer = newState.timer - 1;
             return newState;

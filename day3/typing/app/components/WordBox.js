@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 let id = 0;
 const WordBox = ({ wordList, userInput }) => {
     const inputArray = userInput.split(' ');
-    const helperFunc = (ind1, ind2, letter) => {
-        if(!inputArray[ind1][ind2]) {
+    const helperFunc1 = (ind1, ind2, letter) => {
+        if(!inputArray[ind1] || !inputArray[ind1][ind2]) {
             return 'inactive';
         }
         if(inputArray[ind1][ind2] === letter) {
@@ -18,7 +18,7 @@ const WordBox = ({ wordList, userInput }) => {
         <div className="main">
           <div className= "wordbox">
             {wordList.map((word, ind1)=> <span> {word.split('').map((letter, ind2) =>
-            <span key={id++} className= {helperFunc(ind1, ind2, letter)}>{letter}</span> )}</span>
+            <span key={id++} className= {helperFunc1(ind1, ind2, letter)}>{letter}</span> )}</span>
           )
             }
           </div>
