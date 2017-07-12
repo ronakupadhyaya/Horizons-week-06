@@ -5,8 +5,7 @@ const FinalScore = ({ totalScore }) => {
     return (
       <div>
         <h1>Time Up</h1>
-        <h1>Your Score: </h1>
-        {totalScore}
+        <h1>Your Score: {totalScore}</h1>
       </div>
     );
 };

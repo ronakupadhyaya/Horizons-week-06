@@ -36,6 +36,7 @@ const gameReducer = (state = initialState, action) => {
             return state;
         case 'RESTART_GAME':
             return Object.assign({}, state, {
+                wordsList: _.shuffle(tempArr),
                 timer: 0,
                 value: '',
                 userInput: [],

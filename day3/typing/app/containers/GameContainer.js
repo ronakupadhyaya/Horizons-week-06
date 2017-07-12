@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import WordBox from '../components/WordBox';
 import TextBox from '../components/TextBox';
 import InfoBar from '../components/InfoBar';
+// import _ from 'underscore';
 
 class GameContainer extends React.Component {
+
     onInput = (input) => {
         if (this.props.timer === 0) {
             this.props.onStartGame();
@@ -14,10 +16,21 @@ class GameContainer extends React.Component {
                 clearInterval(time);
                 // if its end Game
                 this.props.history.push('/score');
-                localStorage.setItem('score', this.props.totalScore);
+
+                const cache = localStorage.getItem('score');
+                const initialScore = cache ? JSON.parse(cache) : {};
+                const score = [...Object.values(initialScore), {'score': this.props.totalScore}]
+                                .sort((a, b) => b.score - a.score)
+                                .filter((v, i) => i < 10)
+                                .reduce((acc, scoreObj, index) => {
+                                    acc[index + 1] = scoreObj;
+                                    return acc;
+                                }, {});
+
+                localStorage.setItem('score', JSON.stringify(score));
                 console.log('localStorage', localStorage);
                 this.props.onEndGame();
-            }, 3000);
+            }, 1000);
         }
 
         const lastChar = input[input.length - 1];
