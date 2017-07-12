@@ -1,6 +1,5 @@
 // Action Creators
 
-// import * as types from './types';
 export function serveBadGuess(inputLetter) {
     return {
         type: 'BAD_GUESS',
@@ -13,9 +12,9 @@ export function serveGoodGuess(inputLetter) {
         letter: inputLetter
     };
 }
-export function serveNewGame(inputWord) {
+export function serveNewGame(inputLanguage) {
     return {
         type: 'NEW_GAME',
-        word: inputWord
+        language: inputLanguage
     };
 }

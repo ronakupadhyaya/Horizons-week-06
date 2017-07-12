@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import badGuessesReducer from './badGuessesReducer';
 import wordLettersReducer from './wordLettersReducer';
 import guessedLetterReducer from './guessedLetterReducer';
+// import gameSettingsReducer from './gameSettingsReducer';
 
 /*
   combineReducers lets you meld several reducers into one.
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     badGuesses: badGuessesReducer,
     wordLetters: wordLettersReducer,
     guessedLetters: guessedLetterReducer,
+    // gameSettings: gameSettingsReducer,
     routing: routerReducer // this reducer is used by React Router in Redux
 });
 
