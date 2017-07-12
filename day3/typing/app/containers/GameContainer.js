@@ -15,8 +15,6 @@ class GameContainer extends React.Component {
             setTimeout(() => {
                 clearInterval(time);
                 // if its end Game
-                this.props.history.push('/score');
-
                 const cache = localStorage.getItem('score');
                 const initialScore = cache ? JSON.parse(cache) : {};
                 const score = [...Object.values(initialScore), {'score': this.props.totalScore}]
@@ -26,11 +24,17 @@ class GameContainer extends React.Component {
                                     acc[index + 1] = scoreObj;
                                     return acc;
                                 }, {});
+                Object.values(score).map((item) => {
+                    if (item.score === this.props.totalScore) {
+                        console.log('hi');
+                        this.props.history.push('/register');
+                    }
+                });
 
                 localStorage.setItem('score', JSON.stringify(score));
                 console.log('localStorage', localStorage);
                 this.props.onEndGame();
-            }, 1000);
+            }, 2000);
         }
 
         const lastChar = input[input.length - 1];
