@@ -7,7 +7,7 @@ const LeaderBoard = (props) => {
     };
 
     return (
-      <form>
+      <form style={{display: 'inline-block', marginLeft: 23}}>
         <input onClick={handleSubmit} type="submit" value="View Leader Board" className="button"/>
       </form>
     );
