@@ -14,8 +14,10 @@ class TimeUp extends Component {
         return (
           <div>
             <FinalScore totalScore={this.props.totalScore}/>
+            <div style={{textAlign: 'center', marginTop: 50}}>
             <PlayGame history={this.props.history} handlePlayGame={this.handlePlayGame}/>
-            <LeaderBoard />
+            <LeaderBoard history={this.props.history} />
+            </div>
           </div>
         );
     }

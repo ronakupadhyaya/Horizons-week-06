@@ -7,7 +7,7 @@ const PlayGame = (props) => {
         props.history.push('/');
     };
     return (
-      <input onClick={handleSubmit} type="button" value="Play Game" className="button"/>
+      <input onClick={handleSubmit} type="button" value="Play Again" className="button"/>
     );
 };
 

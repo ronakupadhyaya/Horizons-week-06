@@ -11,6 +11,7 @@ const initialState = {
     currentIndex: [0, 0],
     totalScore: 0,
     streakCount: 0,
+    username: ''
 };
 
 const gameReducer = (state = initialState, action) => {
@@ -43,6 +44,8 @@ const gameReducer = (state = initialState, action) => {
                 currentIndex: [0, 0],
                 totalScore: 0,
                 streakCount: 0});
+        case 'SET_USERNAME':
+            return Object.assign({}, state, { username: action.payload });
         default:
             return state;
     }

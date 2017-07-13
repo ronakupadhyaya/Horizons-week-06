@@ -4,40 +4,42 @@ import PropTypes from 'prop-types';
 import InitialsInput from '../components/InitialsInput';
 import SubmitButton from '../components/SubmitButton';
 
-class RegisterContainer extends Component {
+class Register extends Component {
     initInput(input) {
-        const scores = JSON.parse(localStorage.getItem('score'));
-        Object.values(scores).map((item) => {
-            if (item.score === this.props.totalScore) {
-                item.name = input;
-            }
-        });
-        localStorage.setItem('score', JSON.stringify(scores));
+        this.props.setUsername(input);
     }
 
     render() {
         return (
           <div>
-          <InitialsInput initInput={this.initInput} value={this.props.value}/>
-          <SubmitButton/>
+          <InitialsInput initInput={this.initInput.bind(this)} username={this.props.username}/>
+          <SubmitButton setUsername={this.props.setUsername} username={this.props.username} totalScore={this.props.totalScore} history={this.props.history}/>
           </div>
         );
     }
 }
 
-RegisterContainer.propTypes = {
+Register.propTypes = {
     history: PropTypes.object,
     submitInit: PropTypes.func,
     initInput: PropTypes.func,
     totalScore: PropTypes.number,
-    value: PropTypes.string,
+    username: PropTypes.string,
+    setUsername: PropTypes.func
 };
 
 const mapStateToProps = (state) => {
     return {
         totalScore: state.gameReducer.totalScore,
         value: state.gameReducer.value,
+        username: state.gameReducer.username
     };
 };
 
-export default connect(mapStateToProps)(RegisterContainer);
+const mapDispatchToProps = dispatch => {
+    return {
+        setUsername: (u) => dispatch({type: 'SET_USERNAME', payload: u})
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const FinalScore = ({ totalScore }) => {
     return (
-      <div>
+      <div style={{textAlign: 'center', marginTop: 70}}>
         <h1>Time Up</h1>
         <h1>Your Score: {totalScore}</h1>
       </div>
