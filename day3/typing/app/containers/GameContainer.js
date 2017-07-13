@@ -37,7 +37,7 @@ class GameContainer extends React.Component {
 
                 localStorage.setItem('score', JSON.stringify(score));
                 this.props.onEndGame();
-            }, 2000);
+            }, 60000);
         }
 
         const lastChar = input[input.length - 1];

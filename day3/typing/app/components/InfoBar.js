@@ -13,7 +13,6 @@ const InfoBar = ({ timer, totalScore }) => {
     return (
       <div style={style}>
         <div className="info">Time Remaining: {timer}</div>
-        <div className="info">Word Streak: </div>
         <div className="info">Score: {totalScore}</div>
       </div>
     );
