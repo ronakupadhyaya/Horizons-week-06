@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 import GameContainer from './GameContainer';
 import LeaderboardContainer from './LeaderboardContainer';
+import RegisterContainer from './RegisterContainer';
 import TimeUp from './TimeUp';
 
 export default function Root({store, history}) {
@@ -16,6 +17,7 @@ export default function Root({store, history}) {
                         <Route exact path="/" component={GameContainer} />
                         <Route exact path="/end" component={TimeUp} />
                         <Route exact path="/leaderboard" component={LeaderboardContainer} />
+                        <Route exact path="/register" component={RegisterContainer} />
                     </Switch>
                 </ConnectedRouter>
             </div>

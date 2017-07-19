@@ -11,7 +11,7 @@ const App = () =>
             <Link to="/">Game</Link>
             <Link to="/about">About</Link>
             <Route path="/about" exact="true" component={() => <About />} />
-            <Link to="/new"></Link>
+            <Link to="/new">New</Link>
         </span>
 
     </div>;
