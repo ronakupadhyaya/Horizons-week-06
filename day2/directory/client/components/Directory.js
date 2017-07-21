@@ -22,9 +22,10 @@ const pplToFullLink = person => ({
 
 class Directory extends React.Component {
   render() {
+    console.log("here");
     return (
       <div>
-        <h1>Horizons Directory</h1>
+        <h1>Horizons Directory!!!</h1>
 
 
 

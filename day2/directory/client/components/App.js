@@ -6,6 +6,7 @@ import Directory from './Directory';
 
 class App extends React.Component {
   render() {
+    console.log("direc", Directory);
     return (
       <BrowserRouter>
         <div>
@@ -13,7 +14,8 @@ class App extends React.Component {
           {/* In a Switch, only the 1st matched route renders.*/}
           <Switch>
             {/* Your routes here */}
-
+            <Route exact path='/' component={Home}/>
+            <Route path='/directory' component={Directory}/>
 
             {/* A route with no path is matched unconditionally.*/}
             <Route render={() => <h1>404</h1>} />
