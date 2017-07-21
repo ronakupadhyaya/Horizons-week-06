@@ -75,8 +75,8 @@ If you hadn't realized, everything currently in the app is static. To prove it, 
 The app being static at the moment comes from the fact that the current `mapStateToProps` and `mapDispatchToProps` functions in `GameContainer` are total duds. They ignore the store and pass in hardcoded props. To get our functionality, we will need these to pull meaningfully from state, but first there will have to be some meaningful state. We're going to have to start at the beginning of the Redux data flow storybook, which goes:
 
     1. Some interaction/event in the app causes an action to be dispatched.
-    1. That action shows up at the reducer, which then spits out a new state.
-    1. Connected components (containers) learn of the state change and rerender.
+    2. That action shows up at the reducer, which then spits out a new state.
+    3. Connected components (containers) learn of the state change and rerender.
 
 So it makes sense to start with dispatching. Normally, dispatching an action does nothing unless some reducer changes state and some component reads from that state. Having to do all these things before you can see what you're doing is not ideal for development, so often you'll set up some kind of tool to debug your Redux while you're writing it. In this case, the doohickey on the right of the running app is one such tool already in place for you. If you successfully dispatch an action, you should see it appear in that tool, along with the new state afterwards (which will be uninteresting in this step).
 
