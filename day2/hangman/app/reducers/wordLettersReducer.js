@@ -5,7 +5,30 @@
 /* "guessed": a boolean */
 
 // import * as types from '../actions/types';
+const word = [
+    {letter: 'H', guessed: false},
+    {letter: 'O', guessed: false},
+    {letter: 'R', guessed: false},
+    {letter: 'I', guessed: false},
+    {letter: 'Z', guessed: false},
+    {letter: 'O', guessed: false},
+    {letter: 'N', guessed: false},
+    {letter: 'S', guessed: false},
+];
 
-// const wordLettersReducer =
+const wordLettersReducer = (state = word, action) => {
+    switch(action.type) {
+        case 'GOOD_GUESS':
+            const newState = [...state];
+            newState.forEach(letter => {
+                if (letter.letter.toUpperCase() === action.letter.toUpperCase()) {
+                    letter.guessed = true;
+                }
+            });
+            return newState;
+        default:
+            return state;
+    }
+};
 
-// export default wordLettersReducer;
+export default wordLettersReducer;
