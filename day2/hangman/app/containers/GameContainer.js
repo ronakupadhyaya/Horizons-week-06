@@ -10,14 +10,16 @@ import { onGoodGuessClick } from '../actions/types';
 const GameContainer = ({ badGuesses, wordLetters, guessedLetters, onBadGuess, onGoodGuess }) => {
     let input;
     const letterInAnswer = letter => wordLetters.some(
-       letterObj => letterObj.letter === letter);
+       letterObj => letterObj.letter.toUpperCase() === letter);
     /* the ref node thing in the code below is another way
     to handle input in React Forms */
+    // const word = this.props.match.params.chosenWord;
     return (
         <div>
+
             <Man badGuesses={badGuesses} />
             <Board wordLetters={wordLetters} />
-            <div>Guessed Letters: {guessedLetters}</div>
+            <div>Guessed Letters: {guessedLetters} {word}</div>
             <input type="text"
                 value={''}
                 ref={node => {input = node;}}

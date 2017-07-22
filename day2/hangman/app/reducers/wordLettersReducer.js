@@ -5,16 +5,11 @@
 /* "guessed": a boolean */
 
 // import * as types from '../actions/types';
-const word = [
-    {letter: 'H', guessed: false},
-    {letter: 'O', guessed: false},
-    {letter: 'R', guessed: false},
-    {letter: 'I', guessed: false},
-    {letter: 'Z', guessed: false},
-    {letter: 'O', guessed: false},
-    {letter: 'N', guessed: false},
-    {letter: 'S', guessed: false},
-];
+// const word = this.props.match.params.chosenWord.map(item => {
+//     return {letter: item, guessed: false};
+// });
+
+const word = [{letter: 'a', guessed: false}];
 
 const wordLettersReducer = (state = word, action) => {
     switch(action.type) {
