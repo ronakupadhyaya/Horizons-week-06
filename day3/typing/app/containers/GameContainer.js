@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import InfoBar from '../components/InfoBar';
+import TextBox from '../components/TextBox';
+import WordBox from '../components/WordBox';
 
 class GameContainer extends React.Component {
     onInput(input) {
@@ -10,6 +13,9 @@ class GameContainer extends React.Component {
     render() {
         return (
             <div>
+              <WordBox/>
+              <TextBox/>
+              <InfoBar time={1} score={0} multiplier={0}/>
                 I am the game container!
                 {
                     // YOUR GAME COMPONENT HERE
@@ -27,13 +33,13 @@ GameContainer.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        // YOUR MAP STATE TO PROPS HERE
+        wordList: state.gameReducer
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        // YOUR MAP DISPATCH TO PROPS HERE
+        // onStart: dispatch(startGame)
     };
 };
 

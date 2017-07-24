@@ -7,13 +7,38 @@
     <title>React/Redux Typing Game</title>
     <meta name="description" content="React/Redux Typing Game">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <style>
-        /* YOUR CSS STYLES HERE */
+        .container {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .wordBox {
+            border: 2px solid gray;
+            border-radius: 5px;
+            padding: 10px;
+            width: 80vw;
+        }
+
+        .correct {
+            background-color: #08a400;
+        }
+
+        .wrong {
+            background-color: #f90000;
+            text-decoration: line-through;
+        }
     </style>
 </head>
 
 <body class="view-login">
     <div id="root"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </body>
 
 </html>
