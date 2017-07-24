@@ -2,11 +2,13 @@ import words from '../dictionary'
 import _ from 'underscore'
 
 var shuffleWords = _.shuffle(words);
-var hundredWords = shuffleWords.slice(0, 100);
+var wordList = shuffleWords.slice(0, 100);
 
-const gameReducer = (state = hundredWords, action) {
+const gameReducer = (state = wordList, action) {
   switch(action.type) {
     case " "
       return ;
   }
 }
+
+export default gameReducer

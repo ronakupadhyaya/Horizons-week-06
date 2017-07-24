@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { gameReducer } from '../reducers/gameReducer'
 
 class GameContainer extends React.Component {
     onInput(input) {
@@ -28,6 +29,10 @@ GameContainer.propTypes = {
 const mapStateToProps = (state) => {
     return {
         // YOUR MAP STATE TO PROPS HERE
+        // Object.assign({}, state, {
+        //   wordList: state.wordList
+        // })
+        wordList: state
     };
 };
 
