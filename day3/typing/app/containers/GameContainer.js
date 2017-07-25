@@ -3,7 +3,11 @@ import React from 'react';
 import WordBox from '../components/WordBox.js';
 import TextBox from '../components/TextBox.js';
 import InfoBar from '../components/InfoBar.js';
+import PlayGameButton from '../components/PlayGameButton.js';
+import ViewLeaderboardButton from '../components/ViewLeaderboardButton';
+import FinalScore from '../components/FinalScore.js';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 let noDeleteOrBackspace = true;
 let counter = 0;
@@ -100,7 +104,6 @@ class GameContainer extends React.Component {
             }
         }
     }
-
     checkKeyFunc(evt) {
         if (evt.keyCode === 8) {
             noDeleteOrBackspace = false;
@@ -112,16 +115,34 @@ class GameContainer extends React.Component {
     }
 
     render() {
+        const score = (this.getScore()[0] + this.props.streakCount) - this.getScore()[1];
         if (this.props.timer <= 0) {
             clearInterval(this.props.pid);
+            this.props.endGame((this.getScore()[0] + this.props.streakCount) - this.getScore()[1]);
+            return (
+            <center>
+              <div>
+                <h1>Time's up!</h1>
+                <FinalScore score={this.props.endScore}/>
+                <PlayGameButton playAgain={this.props.playAgain}/>
+                <ViewLeaderboardButton />
+                <br/>
+                {this.props.onLeaderboard ? <Link to="/addleaderboard">Add to leaderboard</Link> : ''}
+              </div>
+            </center>
+          );
+            // return timeup
+        }
+        if (this.props.wordList.length === 0) {
+            this.props.getWords();
         }
         return (
-          <div>
-              <WordBox format={this.format} userInput={this.props.userInput} wordList={this.props.wordList}/>
-              <InfoBar score={(this.getScore()[0] + this.props.streakCount) - this.getScore()[1]} streak={this.props.streakCount} timer={this.props.timer}/>
-              <TextBox checkKey={this.checkKeyFunc} theInput={this.props.input} onInput={this.onInputFunc}/>
-          </div>
-        );
+        <div>
+            <WordBox format={this.format} userInput={this.props.userInput} wordList={this.props.wordList}/>
+            <InfoBar score={score} streak={this.props.streakCount} timer={this.props.timer}/>
+            <TextBox checkKey={this.checkKeyFunc} theInput={this.props.input} onInput={this.onInputFunc}/>
+        </div>
+      );
     }
 }
 
@@ -140,20 +161,25 @@ GameContainer.propTypes = {
     inputBox: PropTypes.func,
     charAdded: PropTypes.func,
     userInput: PropTypes.array,
-    streakCount: PropTypes.number
+    streakCount: PropTypes.number,
+    endGame: PropTypes.func,
+    playAgain: PropTypes.func,
+    endScore: PropTypes.number,
+    onLeaderboard: PropTypes.boolean
 };
 
 const mapStateToProps = (state) => {
     return {
         // YOUR MAP STATE TO PROPS HERE
         wordList: state.user.wordList,
-        pid: state.timer.pid,
-        timer: state.timer.timer,
-        totalScore: state.user.totalScore,
+        pid: state.user.pid,
+        timer: state.user.timer,
         streakCount: state.user.streakCount,
         letter: state.user.letter,
         input: state.user.inputBox, // what is currently in the input box
-        userInput: state.user.userInput // the words that the user has entered
+        userInput: state.user.userInput, // the words that the user has entered
+        endScore: state.user.endScore,
+        onLeaderboard: state.user.onLeaderboard
     };
 };
 
@@ -163,10 +189,11 @@ const mapDispatchToProps = (dispatch) => {
         getWords: () => dispatch({type: 'GET_WORDS'}),
         startGame: (pid) => dispatch({type: 'START_GAME', pid: pid}),
         decrementTimer: () => dispatch({type: 'DECREMENT_TIMER'}),
-        endGame: () => dispatch({type: 'END_GAME'}),
+        endGame: (endScore) => dispatch({type: 'END_GAME', endScore: endScore}),
         charAdded: (char) => dispatch({type: 'CHAR_ADDED', char: char}),
         nextWord: () => dispatch({type: 'NEXT_WORD'}),
-        inputBox: (input) => dispatch({type: 'INPUT_BOX', inputBox: input})
+        inputBox: (input) => dispatch({type: 'INPUT_BOX', inputBox: input}),
+        playAgain: () => dispatch({type: 'PLAY_AGAIN'})
     };
 };
 
