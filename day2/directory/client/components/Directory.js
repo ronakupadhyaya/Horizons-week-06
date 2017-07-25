@@ -25,7 +25,17 @@ class Directory extends React.Component {
     return (
       <div>
         <h1>Horizons Directory</h1>
-            <LinkList links={ppl.map(pplToFullLink)} />
+            <Route path="/directory" exact={true} render={(props) =>
+                <LinkList links={ppl.map(pplToFullLink)} />}
+            />
+            <Route path="/directory/:fName/:lName" exact={true} component={Person}/>
+            <Route path="/directory/:fName" exact={true} render={(props) =>
+                <LinkList
+                  links={ppl
+                    .filter(p => p.fName === props.match.params.fName)
+                    .map(pplToFullLink)}
+                />
+            }/>
       </div>
     );
   }
@@ -34,15 +44,17 @@ class Directory extends React.Component {
 class LinkList extends React.Component {
   render() {
     return (
-        <ul>
-          {this.props.links.map(link => (
-            <li key={link.key}>
-              <Link to={link.to}>{link.text}</Link>
-            </li>
-          ))}
-          <Route path={'/directory/:fName/:lName'} component={Person}/>
-          <Route path="/directory/:anything" render={() => <Link to={'/directory'}>Back to Listing</Link>}/>
-        </ul>
+        <div>
+            <ul>
+              {this.props.links.map(link => (
+                <li key={link.key}>
+                  <Link to={link.to}>{link.text}</Link>
+                </li>
+              ))}
+            </ul>
+            <Route path="/directory/:anything" render={() => <Link to={'/directory'}>Back to Listing</Link>}/>
+
+        </div>
     );
   }
 };
@@ -62,14 +74,8 @@ class Person extends React.Component {
         <h3>{person.email}</h3>
 
         Not the {`${person.fName}`} you're looking for? {' '}
-        <Link to={"/directory/"+person.fName}>Try this.</Link>
-        <Route path={"/directory/:fName"} render={(props) =>
-            <LinkList
-              links={ppl
-                .filter(p => p.fName === props.match.params.fName)
-                .map(pplToFullLink)}
-            />}/>
-
+        <Link to={"/directory/"+person.fName}>Try this.</Link><br/>
+        <Route path="/directory/:anything" render={() => <Link to={'/directory'}>Back to Listing</Link>}/>
 
       </div>
     ) : (

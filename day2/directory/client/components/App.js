@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 
 import Home from './Home';
 import Directory from './Directory';
+import Person from './Directory';
 
 class App extends React.Component {
   render() {
