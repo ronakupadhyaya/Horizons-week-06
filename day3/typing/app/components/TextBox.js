@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class TextBox extends React.Component {
     constructor(props) {
@@ -7,12 +8,15 @@ class TextBox extends React.Component {
 
     render() {
         return (
-        <form>
-          <input className="form-control" type="text" />
-          <input type="submit" value="Submit"/>
+        <form onSubmit={(event) => (event.preventDefault())}>
+          <input className="form-control" type="text" onChange={(event) => this.props.inputx(event.target.value)}/>
         </form>
       );
     }
 }
+
+TextBox.propTypes = {
+    inputx: PropTypes.func
+};
 
 export default TextBox;
