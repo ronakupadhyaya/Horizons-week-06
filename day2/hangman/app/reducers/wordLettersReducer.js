@@ -6,6 +6,20 @@
 
 // import * as types from '../actions/types';
 
-// const wordLettersReducer =
+const word = [{letter: 'a', guessed: false}];
 
-// export default wordLettersReducer;
+const wordLettersReducer = (state = word, action) => {
+    switch(action.type) {
+        case 'GOOD_GUESS':
+            const newState = [...state];
+            newState.forEach(letter => {
+                if (letter.letter.toUpperCase() === action.letter.toUpperCase()) {
+                    letter.guessed = true;
+                }
+            });
+            return newState;
+        default: return state;
+    }
+};
+
+export default wordLettersReducer;
