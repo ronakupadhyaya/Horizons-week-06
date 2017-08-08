@@ -7,6 +7,9 @@ import InfoBar from '../components/InfoBar';
 
 class GameContainer extends React.Component {
     countStreak(correctWords) {
+        const correctLetters = document.getElementsByClassName('correctChar').length;
+        const wrongLetters = document.getElementsByClassName('wrongChar').length;
+        // const correctWords = document.getElementsByClassName('correctWord');
         const totalStreaks = [0];
         let currentStreak = 0;
         let prevId = -1;
@@ -27,21 +30,22 @@ class GameContainer extends React.Component {
             prevId = wordDivId;
         }
         console.log(totalStreaks);
+        return totalStreaks;
         // totalStreaks.splice(0, 1);
-        const streakSum = totalStreaks.reduce((sum, val) => {
-            const points = sum + (( val * (val + 1)) / 2 );
-            return points;
-        }, 0);
-        console.log('returning a streaksum of: ', streakSum);
-        return streakSum;
+        // const streakSum = totalStreaks.reduce((sum, val) => {
+        //     const points = sum + (( val * (val + 1)) / 2 );
+        //     return points;
+        // }, 0);
+        // console.log('returning a streaksum of: ', streakSum);
+        // return streakSum;
     }
 
     onInput(input) {
         const correctLetters = document.getElementsByClassName('correctChar').length;
         const wrongLetters = document.getElementsByClassName('wrongChar').length;
         const correctWords = document.getElementsByClassName('correctWord');
-        const streakSum = this.countStreak(correctWords);
-        this.props.onUpdateScore(streakSum, correctLetters + streakSum - wrongLetters);
+        const streaks = this.countStreak(correctWords);
+        this.props.onUpdateScore(streaks, correctLetters, wrongLetters);
         if(this.props.userInput.length === 0) {
             this.props.onUserTyping();
             const timeInterval = setInterval(() => {
@@ -131,8 +135,8 @@ const mapDispatchToProps = (dispatch) => {
         onNextWord: (inputBox) => {
             dispatch({type: 'NEXT_WORD', inputBox: inputBox});
         },
-        onUpdateScore: (streak, score) => {
-            dispatch({type: 'CHANGE_SCORE', streak: streak, score: score});
+        onUpdateScore: (streak, correctLetters, wrongLetters) => {
+            dispatch({type: 'CHANGE_SCORE', streak: streak, correctLetters: correctLetters, wrongLetters: wrongLetters});
         }
     };
 };
