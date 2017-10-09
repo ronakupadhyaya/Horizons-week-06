@@ -1,18 +1,12 @@
 # React/Redux Typing Game
-The goal of this exercise is to write a typing game using React/Redux. The instructions will be very barebones, so you will have the freedom to design the app & add additional features to make it your own. This folder is a React/Redux template similar to the one you worked on for yesterday's exercises, so you should be familiar with its' structure.
-
-List of __REQUIRED__ components:
-
-1. Character Highlighting (Correct/Incorrect)
-1. Timer
-1. Leaderboard
-
+The goal of this exercise is to write a typing game using React/Redux. Feel free to ignore all of these instructions and use the screenshots to guide your way. This folder is a React/Redux template similar to the one you worked on for yesterday's exercises, so you should be familiar with its' structure.
 
 ## Part 1: Setup & Start Game
 
 Currently if the user navigates to `index.html` the `app/components/App.js` component is displayed. For Part 1 you will write code to set-up the game and to start the gameplay.
 
 **Give some background on when to create a new reducere**
+
 1. Create a new reducer to keep track of your game state in `reducers/gameReducer.js` and add it to `reducers/index.js`
     1. Import words from `app/dictionary.js`
     1. Use [`_.shuffle`](http://underscorejs.org/#shuffle) from the Underscore.js library to randomize the loaded words
@@ -34,24 +28,43 @@ When the user first navigates you should now see something similar to the follow
 
 
 ## Part 2: Highlight Letters & Mistakes
-In order to implement character highlighting functionality, we would like to store information about each character within our state. In your state, lets have our `wordList` be an array of arrays. The inner arrays correspond to a word and contain character/letter objects representing a letter in that given word.
+In order to implement character highlighting functionality, we would like to store information about each character within our state. In your state, lets have our `wordList` be an array of arrays. The inner arrays correspond to a word and contain character/letter objects representing a letter in that given word. For example,
+at the beginning of the game, the words `['I', 'am', 'Pam']` would be represented
+as:
+
 ```JavaScript
-wordList: [
-    [{letter: 'I', status: 'pending'}],
-    [{letter: 'a', status: 'pending'}, {letter: 'm', status: 'pending'}],
-    [{letter: 'P', status: 'pending'},{letter: 'a', status: 'pending'},{letter: 'm', status: 'pending'}]
-]
+{
+    wordList: [
+        [{letter: 'I', status: 'pending'}],
+        [
+            {letter: 'a', status: 'pending'},
+            {letter: 'm', status: 'pending'}
+        ],
+        [
+            {letter: 'P', status: 'pending'},
+            {letter: 'a', status: 'pending'},
+            {letter: 'm', status: 'pending'}
+        ]
+    ]
+}
 ```
-Each character/letter will correspond to a character object with the properties:
-- letter: This will hold the letter value that should be displayed
-- state:  This will be either `pending`, `correct`, `incorrect`. Characters in the 'pending' state are those that have not been typed yet and will be displayed in gray. Characters in the 'correct' or 'incorrect' state will be the characters the player has correctly/incorrectly typed and should be highlighted in blue and red respectively.
+
+Each character/letter corresponds to a character object with the properties:
+
+- `letter`: This will hold the letter value that should be displayed
+- `status`:  This will be either `pending`, `correct`, `incorrect`. Characters in the 'pending' state are those that have not been typed yet and will be displayed in gray. Characters in the 'correct' or 'incorrect' state will be the characters the player has correctly/incorrectly typed and should be highlighted in blue and red respectively.
 
 <!-- ### Typing - TextBox Component -->
-1. Update the way our `WordBox` component is rendered
+Update the way our `WordBox` component is rendered:
+
     - Now that each character in our `wordList` prop is represented by an object `{letter: 'a', status: 'pending'}`, we must style each character span our `WordBox` renders to be the color corresponding to its `status`
 
-__Checkpoint__ After you have done this, lets check to make sure characters appear in the correct color. If you change the characters' initial status in our reducer's initial state to `correct`, does every character in our `WordBox` appear to be highlighted in blue? What about if we change its initial status to `incorrect`?
+### Goal
 
+Make sure characters appear in the correct color by changing the characters' initial `status` to `correct` or `incorrect`. Correct letters should be highlighted blue
+and incorrect letters should be highlighted red.
+
+## Part 3: Typing
 
 1. Create a `TextBox` component for user input
 1. Update `GameContainer` and pass `this.onInput()` to `TextBox` as a prop, call this function in `TextBox` when user types
@@ -63,9 +76,11 @@ __Checkpoint__ After you have done this, lets check to make sure characters appe
         - <details>
         <summary>Hint</summary>
         <div>
+
         ```javascript
             dispatch({type: 'CHAR_ADDED', word: [user input], isCorrect: [true or false]});
         ```
+
         </div>
         </details>
         - You should add/replace the word at `userInput[word#]` with the new word. Remember, our word number is the value stored at index 0 of our `currentIndex` array. (word# = `currentIndex[0]`)
@@ -92,14 +107,19 @@ When you start typing, you should see letters correctly typed letters highlighte
 
 
 
-### Part 3: Timing
+### Part 4: Timing
 Let's add timing functionality to this game. We need to add a timer that will begin counting once the user starts typing, and will stop once the game has ended (once the user has typed all words in the box).
-
+-reducer when char added action is triggered should update cahr status, update index, update score
 1. Create a `InfoBar` component to display the timer. Add `currentTime` to your initial state in your reducer and give it the initial value `-1`, Have `InfoBar` receive a prop `currentTime` and display it bellow the `TextBox`. If the `currentTime` is -1, lets just display a `-` in place of the number of seconds to indicate the game has yet to start.  **Screenshot of timer only**
 1. Update `mapDispatchToProps()` and create three actions `START_GAME`, `INCREMENT_TIMER`, and `END_GAME`.
-1. Once a user begins typing a `START_GAME` action is dispatched. The action will initiate a `setInterval` that in turn dispatches the `INCREMENT_TIMER` action every 1000ms. Additionally, the `setInterval` should dispatch an `END_GAME` action once all the words have been typed.
-    - We can tell when a user has first began typing by checking the length of our `userInput` prop in our `GameContainer`. We already have a function `onInput(input)` that will get called for every typing event in our TextBox, so all we need to do is check to see if the length of `userInput` is 0 and then we will know that this is the first call to `onInput` and so our game has begun.
-    - Remember that `setInterval()` returns an id for that specific timer.  Store this timer under `this.interval` so you can clear it later
+1. Update the `onInput()` function in `GameContainer` with:
+    1. Dispatch a `START_GAME` action when the game beings.
+    We can tell when a user has first began typing by checking our `currentIndex` prop in our `GameContainer`. We already have a function `onInput(input)` that will get called for every typing event in our TextBox, so all we need to do is check to see if our  `currentIndex` is `[0,0]` and then we will know that this is the first call to `onInput` and so our game has begun.
+    1. Use `setInterval` inside `onInput()` to dispatch an `INCREMENT_TIMER` action every 1000ms. Additionally, the `setInterval` should dispatch an `END_GAME` action once all the words have been typed.
+    1. Save the id that `setInterval()` returns under variable `interval` so you
+    can clear it later when the game ends
+    (i.e. the timer has run out).
+
     <details>
     <summary>Hint</summary>
         ```javascript
@@ -113,7 +133,7 @@ Let's add timing functionality to this game. We need to add a timer that will be
         ```
     </details>
 
-## Part 4: Scoring
+## Part 5: Scoring
 1. Update `InfoBar` component to display the total score (initially 0)
 1. Add the following to our state:
     - `totalScore`: # of matching letters - # of mismatching letters
@@ -124,7 +144,7 @@ Let's add timing functionality to this game. We need to add a timer that will be
 <!-- ![](./img/6_streak.png) -->
 
 
-## Part 5: Game Over
+## Part 6: Game Over
 
 When the `setInterval` dispatches an `END_GAME` action end the game and display a Game over page. `Game over! Final Time: [time in seconds] Score: [total score]`
 
@@ -140,7 +160,7 @@ Your finished __Game Over!__ page should look something like the following.
 
 ![](./img/3_timeup.png)
 
-## Part 6: Leaderboard
+## BONUS: Part 7: Leaderboard
 If your `totalScore` was in the Top 10, the `END_GAME` action asks you for your 3-character initials and adds you to the Leaderboard. __Note__ you can use `localStorage` to keep track of top 10 user scores (by putting them in an Object like below). Since `localStorage` only works with Strings, you will have to use `JSON.parse` and `JSON.stringify` to store Objects.
 
 ```js
@@ -162,7 +182,7 @@ If your `totalScore` was in the Top 10, the `END_GAME` action asks you for your 
 1. When the `SubmitButton` is pressed, add the initials & `totalScore` to localStorage (while also removing the tenth place user if one exists). Then navigate the user to the Leaderboard route
     ![](./img/4_congratulations.png)
 1. Create a `Leaderboard` container which has a `Board` component and a `PlayGameButton` component, and also create a corresponding route for the Leaderboard
-1. The `Board` component retrieves the Top 10 scores from `localStorage` and displays them
+1. The `Board` component retrieves the Top 10 scores from `localStorage` and displays them - rtrieve in comonent did mount from local storage into state,
 1. The `PlayGameButton` fires a `RESTART_GAME` action (whose behavior was described in an earlier part)
 
 ### Goal
@@ -171,7 +191,7 @@ Your completed leaderboard should look a little something like the following ima
 ![](./img/5_leaderboard.png)
 
 
-## BONUS: Streaks
+## BONUS: Part 8: Streaks
 1. Update `InfoBar` the current streak bonus (all initially 0)
 1. Add the following to our state:
     - `streakCount`: the current streak bonus
