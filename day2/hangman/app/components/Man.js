@@ -1,7 +1,6 @@
 import React from 'react';
 import imgUrls from '../data/data';
 import PropTypes from 'prop-types';
-
 const Man = ({ badGuesses }) => {
   return (
     <div>

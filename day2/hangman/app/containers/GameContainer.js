@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import Man from '../components/Man';
 import Board from '../components/Board';
 
-const GameContainer = ({ badGuesses, wordLetters, onBadGuess }) => {
+const GameContainer = ({ badGuesses, wordLetters, onBadGuess, onGoodGuess }) => {
   let input;
-  // const letterInAnswer = letter => wordLetters.some(
-  //    letterObj => letterObj.letter === letter);
+  const letterInAnswer = letter => wordLetters.some(
+    letterObj => letterObj.letter === letter);
 
   /* the ref node thing in the code below is another way
   to handle input in React Forms */
@@ -18,7 +18,7 @@ const GameContainer = ({ badGuesses, wordLetters, onBadGuess }) => {
       <input type="text"
         value={''}
         ref={node => {input = node;}}
-        onChange={() => onBadGuess(input.value) }
+        onChange={() => (letterInAnswer(input.value) ? onGoodGuess(input.value) : onBadGuess(input.value)) }
       />
     </div>
   );
@@ -27,22 +27,14 @@ const GameContainer = ({ badGuesses, wordLetters, onBadGuess }) => {
 GameContainer.propTypes = {
   badGuesses: PropTypes.number,
   wordLetters: PropTypes.array,
-  onBadGuess: PropTypes.func
+  onBadGuess: PropTypes.func,
+  onGoodGuess: PropTypes.func
 };
 
 const mapStateToProps = ( state ) => {
   return {
     badGuesses: state.badGuesses,
-    wordLetters: [
-      {letter: 'H', guessed: true},
-      {letter: 'O', guessed: false},
-      {letter: 'R', guessed: false},
-      {letter: 'I', guessed: false},
-      {letter: 'Z', guessed: true},
-      {letter: 'O', guessed: false},
-      {letter: 'N', guessed: true},
-      {letter: 'S', guessed: false}
-    ]
+    wordLetters: state.wordLetters
   };
 };
 
@@ -51,6 +43,12 @@ const mapDispatchToProps = (dispatch) => {
     onBadGuess: (inputLetter) => {
       dispatch({
         type: 'BAD_GUESS',
+        letter: inputLetter
+      });
+    },
+    onGoodGuess: (inputLetter) => {
+      dispatch({
+        type: 'GOOD_GUESS',
         letter: inputLetter
       });
     }
