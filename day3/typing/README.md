@@ -13,12 +13,12 @@ Currently if the user navigates to `index.html` the `app/components/App.js` comp
 1. Edit `containers/GameContainer.js`
     1. Update `mapStateToProps()` and map `wordList` to your props
 1. Create a `WordBox` component and add it to `GameContainer`, it will receive `wordList` via props. Your WordBox component is responsible for rendering a div containing each word in its `wordList`prop.
-    1. [Sample CSS/HTML for your `WordBox` component](https://codepen.io/horizons/pen/QgVmmm?editors=1100)
     1. Put each character inside of its own `<span>` so that characters can be differentiated from each other later on
         
         *Hint* Use a nested map such that the outer map will map every word into a div, and the inner map will map each individual character of every word into a span.
     1. Put your CSS in `app/index.tpl.html` where it says `YOUR CSS STYLES HERE`
 
+If you need help styling, you can use this [sample CSS/HTML for your `WordBox` component](https://codepen.io/horizons/pen/QgVmmm?editors=1100)
 
 ### Goal
 
