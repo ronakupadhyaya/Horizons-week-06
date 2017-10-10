@@ -75,15 +75,15 @@ and incorrect letters should be highlighted red.
 1. Dispatch the following actions from `GameContainer`'s `onInput()` function:
     1. __IF__ a new non-whitespace character is entered, compare the user's input against our `wordList` at the `currentIndex` and dispatch a `CHAR_ADDED` action w/the new word and a boolean as the payload.
         - <details>
-        <summary>Hint</summary>
-        <div>
+            <summary>Hint</summary>
+            <div>
 
-        ```javascript
+            ```javascript
             dispatch({type: 'CHAR_ADDED', word: [user input], isCorrect: [true or false]});
-        ```
+            ```
 
-        </div>
-        </details>
+            </div>
+            </details>
         - You should add/replace the word at `userInput[word#]` with the new word. Remember, our word number is the value stored at index 0 of our `currentIndex` array. (word# = `currentIndex[0]`)
         - Update the character's `status` from `pending`  to either `correct` or `incorrect` depending on `action.isCorrect`
     1. __IF__ a whitespace character is entered dispatch a `NEXT_WORD` action
