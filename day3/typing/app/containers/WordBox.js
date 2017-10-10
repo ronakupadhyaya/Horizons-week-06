@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 function WordBox({words}) {
     return (
-        <div>
+        <div className="word-box">
             { words.join(' ') }
         </div>
     );
