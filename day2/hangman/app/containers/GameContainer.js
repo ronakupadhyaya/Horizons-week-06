@@ -30,9 +30,9 @@ GameContainer.propTypes = {
     onBadGuess: PropTypes.func
 };
 
-const mapStateToProps = (/* state */) => {
+const mapStateToProps = (state) => {
     return {
-        badGuesses: 0,
+        badGuesses: state.badGuesses,
         wordLetters: [
             {letter: 'H', guessed: true},
             {letter: 'O', guessed: false},
