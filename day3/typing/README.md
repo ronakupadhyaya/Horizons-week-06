@@ -107,12 +107,12 @@ You should now see a box full of words where every letter is gray.
 1. Add the following to our Redux state:
     - `currentIndex` (initially `[0,0]`): an array of 2 numbers that point to our current location in the array in the format `[word #, char #]` - remember that since strings are Arrays in JavaScript we can use Array notation to access characters.
     - `userInput` (initially `''`): a string that controls the contents of the `TextBox` element
-1. Create a `TextBox` component that contains an `<input type="text />` element for input, this should receive its `value` from Redux state `userInput`
+1. Create a `TextBox` component that contains an `<input type="text" />` element for input, this should receive its `value` from Redux state `userInput`.
 1. Update `GameContainer` and pass `this.onInput()` to `TextBox` as a prop, and use the `onKeyPress` event handler for the `<input type="text">` to call `onInput()` with the new letter that was typed in.
 
     [Example usage of onKeyPress to control input](https://codepen.io/horizons/pen/RLydVR?editors=0010)
 
-1. Dispatch the following actions from `GameContainer`'s `onInput()` function:
+1. Inside `onInput()` do:
     1. __IF__ a new non-whitespace character is entered:
         - Dispatch a `CHAR_ADDED` event with the new character (i.e. letter) that was just typed.
 
@@ -126,12 +126,37 @@ You should now see a box full of words where every letter is gray.
 
             </div>
             </details>
-        - When you receive a `CHAR_ADDED` action in your reducer, compare the new letter against our `wordList` at the `currentIndex`.
-          Update the `status` of the corresponding letter in the `wordList` array to indicate `correct` or `incorrect`.
+        - When you receive a `CHAR_ADDED` action in your reducer, compare the
+        new letter against our `wordList` at the `currentIndex`.
+        Update the `status` of the corresponding letter in the `wordList`
+        array to indicate `correct` or `incorrect`.
 
-          Update `currentIndex` to to move to the **next letter.**
+            You can make a copy of the `wordList` state with this function and
+            mutate (i.e. modify) it safely.
 
-          Update `userInput` by adding the newly typed letter to the end of the string.
+            ```javascript
+            function cloneWordList(wordList) {
+                return wordList.map(word =>
+                      word.map(letterObj =>
+                          Object.assign({}, letterObj)));
+            }
+            ```
+
+            <details><summary>
+            Hint
+            </summary><p>
+
+            Once you copy the word list you can find the object that describes
+            the current letter with:
+
+            ```javascript
+            wordList[this.currentIndex[0]][this.currentIndex[1]]
+            ```
+
+            </p></details>
+
+        - Update `currentIndex` to to move to the **next letter.**
+        - Update `userInput` by adding the newly typed letter to the end of the string.
     1. __IF__ a whitespace character is entered:
         - Dispatch a `NEXT_WORD` action.
         - When you receive a `NEXT_WORD` action in your reducer, clear contents of `userInput`.
