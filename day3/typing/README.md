@@ -195,7 +195,7 @@ ended (once the user has typed all words in the box).
 
 1. Add `timeLeft` to your initial state in your reducer and give it the initial value `60`.
 1. Create a `InfoBar` component to display the timer. Have `InfoBar` receive a prop `timeLeft` and display it bellow the `TextBox`.
-1. Update `mapDispatchToProps()` and create three actions `START_GAME`, `INCREMENT_TIMER`, and `END_GAME`.
+1. Update `mapDispatchToProps()` and create three actions `START_GAME`, `DECREMENT_TIMER`, and `END_GAME`.
 1. Update the `onInput()` function in `GameContainer` with:
     1. Dispatch a `START_GAME` action when the game beings.
 
@@ -208,7 +208,7 @@ ended (once the user has typed all words in the box).
 
         </p></details>
 
-    1. Use `setInterval` inside `onInput()` to dispatch an `INCREMENT_TIMER` action every 1000ms.
+    1. Use `setInterval` inside `onInput()` to dispatch an `DECREMENT_TIMER` action every 1000ms.
 
         The `setInterval` should dispatch an `END_GAME` action
         once all the words have been typed.
@@ -222,7 +222,7 @@ ended (once the user has typed all words in the box).
 
         ```javascript
         this.interval = setInterval(() => {
-            //dispatch INCREMENT_TIMER action
+            //dispatch DECREMENT_TIMER action
             if (time has run out) {
                 //dispatch END_GAME action
                 clearInterval(this.interval);
@@ -235,6 +235,11 @@ ended (once the user has typed all words in the box).
 
         `DECREMENT_TIMER` should decrease `timeLeft` by 1.
 
+        `START_GAME` should put new set of random words in `wordList`,
+        reset `currentIndex`, `userInput`.
+
+        `END_GAME` should reset `currentIndex` and `userInput`.
+
 ## Goal
 
 When you start typing, you should see the timer change for every second passed.
@@ -242,6 +247,7 @@ When you start typing, you should see the timer change for every second passed.
 ![](./img/4timing.png)
 
 ## Part 5: Scoring
+
 1. Update `InfoBar` component to display the total score (initially 0)
 1. Add the following to our state:
     - `totalScore`: # of matching letters - # of mismatching letters
