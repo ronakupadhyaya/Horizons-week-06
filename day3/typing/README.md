@@ -100,10 +100,7 @@ status `{letter: 'x', status: 'pending'}`.
 
 ### Goal
 
-Make sure characters appear in the correct color by changing the characters'
-initial `status` to `correct` or `incorrect`. Correct letters should be
-highlighted blue and incorrect letters should be highlighted red.
-
+You should now see a box full of words where every letter is gray.
 
 ## Part 3: Typing
 
