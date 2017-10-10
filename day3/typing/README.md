@@ -182,12 +182,10 @@ If you need help styling your application you can use this [sample HTML/CSS for 
 
 ### Goal
 
-When you start typing, you should see letters correctly typed letters highlighted in blue and incorrectly typed letters highlighted in red.
+When you start typing, you should see letters correctly typed letters
+highlighted in blue and incorrectly typed letters highlighted in red.
 
 ![](./img/3typing.png)
-
-
-
 
 ### Part 4: Timing
 
