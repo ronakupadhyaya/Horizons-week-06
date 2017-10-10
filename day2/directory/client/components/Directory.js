@@ -1,6 +1,6 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
-
+import {  Switch, Route, Link } from 'react-router-dom';
+import {parse} from 'qs';
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
   { "fName": "Nihar", "lName": "Harhar", "number": "(421)-666-2022", "email": "puppysmacker94@hotmail.com" },
@@ -26,9 +26,61 @@ class Directory extends React.Component {
       <div>
         <h1>Horizons Directory</h1>
 
+        <Route exact path="/directory" render={({location}) => {
+          var location = parse(location.search.substr(1));
+          if(location){
+            var newArr = [...ppl];
+            var links;
+            for(var key in location){
+              if(key === 'areacode'){
+                links = newArr.filter(p => p["number"].slice(1, 4) === location[key]);
+              }  else{
+                links = newArr.filter(p => p[key] === location[key]);
 
+              }
+              newArr = links;
+            }
+            return <LinkList links={newArr.map(pplToFullLink)} />
+          }
+          return <LinkList links={ppl.map(pplToFullLink)} />
 
+        }} />
 
+        <Route exact path="/directory/:fName" render={({match}) => {
+            console.log("HIm", match);
+            return(
+              <LinkList
+                links={ppl
+                  .filter(p => p.fName === match.params.fName)
+                  .map(pplToFullLink)}
+              />
+            )
+          }
+        } />
+
+        <Route path="/directory/:anything" render={() => (<Link to="/directory"> Back to Listings </Link>)} />
+        <Switch>
+        <Route exact path="/directory/surname/:lName" render={({match}) => {
+          return(
+            <LinkList
+              links={ppl
+                .filter(p => p.lName === match.params.lName)
+                .map(pplToFullLink)}
+            />
+          )
+        }} />
+        <Route exact path="/directory/areacode/:areacode" render={({match}) => {
+
+          return(
+            <LinkList
+              links={ppl
+                .filter(p => p.number.slice(1,4) === match.params.areacode)
+                .map(pplToFullLink)}
+            />
+          )
+        }} />
+          <Route exact path="/directory/:fName/:lName" component={Person} />
+        </Switch>
       </div>
     );
   }
@@ -63,7 +115,8 @@ class Person extends React.Component {
         <h3>{person.email}</h3>
 
         Not the {`${person.fName}`} you're looking for? {' '}
-        Too bad!!!
+        <Link to={'/directory/' + person.fName}> Check others here </Link>
+
       </div>
     ) : (
       <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
