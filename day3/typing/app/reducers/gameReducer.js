@@ -7,8 +7,13 @@ const initialState =  {
     currentIndex: [0, 0],
     gameStarted: false,
     currentTime: 0,
-    score: 0
+    score: 0,
+    endGameDialogOpen: true
 };
+
+function cloneWordList(wordList) {
+    return wordList.map(word => word.map((o) => Object.assign({}, o)));
+}
 
 function calcScore(wordList) {
     return _.flatten(wordList).reduce((acc, {status}) => {
@@ -24,13 +29,21 @@ function calcScore(wordList) {
 
 export default function(state = initialState, action) {
     switch (action.type) {
+        case 'CLOSE_DIALOG':
+            return Object.assign({},
+                state,
+                {
+                    endGameDialogOpen: false,
+                    wordList: []
+                });
         case 'END_GAME':
             return Object.assign({},
                 state,
                 {
                     userInput: '',
                     gameStarted: false,
-                    currentTime: 0
+                    currentTime: 0,
+                    endGameDialogOpen: true
                 });
         case 'START_GAME':
             return Object.assign({},
@@ -44,7 +57,7 @@ export default function(state = initialState, action) {
                     currentIndex: [0, 0],
                     userInput: '',
                     gameStarted: true,
-                    currentTime: 5
+                    currentTime: 60
                 });
         case 'CHAR_ADDED':
             const typedLetter = action.letter;
