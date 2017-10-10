@@ -89,9 +89,13 @@ and incorrect letters should be highlighted red.
     1. __IF__ a whitespace character is entered dispatch a `NEXT_WORD` action
         - clear the `<input>` element in your `TextBox` component
         - increment `currentIndex` accordingly. We want to increment the `word #` index and set the `char #` index back to zero.
-        <details>
-        Add 1 to `currentIndex[0]` and set `currentIndex[1]` back to zero.
-        </details>
+            
+            <details>
+            <summary>Hint</summary>
+            <div>
+            Add 1 to `currentIndex[0]` and set `currentIndex[1]` back to zero.
+            </div>
+            </details>
 
 
 __Note:__ The user __SHOULD NOT__ be able to press the DELETE/BACKSPACE key to undo mistakes in this game
@@ -211,11 +215,11 @@ Your completed leaderboard should look a little something like the following ima
 The streak is the total number of words the player gets correct in a row (1 word = 1 point ; 2 words = 1 + 2 points ; 3 words = 1 + 2 + 3 points...). These points are awarded as bonus _on top of_ the points received for character matching. So for instance if a user correctly matched the words `"horizons is amazing"` they would get a total of `(8+1) + (2+2) + (7+3) = 23` points. The following is an example of a streak. __Note__ that a streak is not added to the total score until a mistake has been made to reset the streak or the game has ended.
 
 
-## Bonus
+## Done!
+
 Congratulations! You've finished the React/Redux typing game. Here are a few bonus features you can implement to make it extra special.
 
 - Keep track of speed (words/min) and create a graph of typing speed over time
 - Multiplayer Mode
     - The same set of words are given to each player & the player w/the highest points wins
     - Sudden Death: First player to make a mistake loses
-- Cool CSS Animations
