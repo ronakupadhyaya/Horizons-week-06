@@ -96,7 +96,7 @@ and incorrect letters should be highlighted red.
 
 __Note:__ The user __SHOULD NOT__ be able to press the DELETE/BACKSPACE key to undo mistakes in this game
 
-[sample HTML/CSS for `WordBox` and `TextBox`](https://codepen.io/horizons/pen/Pjdepe?editors=1100)
+[Sample HTML/CSS for `WordBox` and `TextBox`](https://codepen.io/horizons/pen/Pjdepe?editors=1100)
 
 
 ### Goal
@@ -109,37 +109,38 @@ When you start typing, you should see letters correctly typed letters highlighte
 
 
 ### Part 4: Timing
+
 Let's add timing functionality to this game. We need to add a timer that will begin counting once the user starts typing, and will stop once the game has ended (once the user has typed all words in the box).
 -reducer when char added action is triggered should update cahr status, update index, update score
-1. Create a `InfoBar` component to display the timer. Add `currentTime` to your initial state in your reducer and give it the initial value `-1`, Have `InfoBar` receive a prop `currentTime` and display it bellow the `TextBox`. If the `currentTime` is -1, lets just display a `-` in place of the number of seconds to indicate the game has yet to start.  **Screenshot of timer only**
+1. Create a `InfoBar` component to display the timer. Add `currentTime` to your initial state in your reducer and give it the initial value `-1`, Have `InfoBar` receive a prop `currentTime` and display it bellow the `TextBox`. If the `currentTime` is -1, lets just display a `-` in place of the number of seconds to indicate the game has yet to start.
 1. Update `mapDispatchToProps()` and create three actions `START_GAME`, `INCREMENT_TIMER`, and `END_GAME`.
 1. Update the `onInput()` function in `GameContainer` with:
     1. Dispatch a `START_GAME` action when the game beings.
     We can tell when a user has first began typing by checking our `currentIndex` prop in our `GameContainer`. We already have a function `onInput(input)` that will get called for every typing event in our TextBox, so all we need to do is check to see if our  `currentIndex` is `[0,0]` and then we will know that this is the first call to `onInput` and so our game has begun.
     1. Use `setInterval` inside `onInput()` to dispatch an `INCREMENT_TIMER` action every 1000ms. Additionally, the `setInterval` should dispatch an `END_GAME` action once all the words have been typed.
     1. Save the id that `setInterval()` returns under variable `interval` so you
-    can clear it later when the game ends
-    (i.e. the timer has run out).
+        can clear it later when the game ends
+        (i.e. the timer has run out).
 
-    <details>
-    <summary>Hint</summary>
+        <details>
+        <summary>Hint</summary>
+    
         ```javascript
         let interval = setInterval(() => {
-                    //dispatch INCREMENT_TIMER action
-                    if (user has completed typing all the words) {
-                        //dispatch END_GAME action
-                        clearInterval(interval);
-                    }
-                }, 1000);
+            //dispatch INCREMENT_TIMER action
+            if (user has completed typing all the words) {
+                //dispatch END_GAME action
+                clearInterval(interval);
+            }
+        }, 1000);
         ```
-    </details>
-
-
+        </details>
 
 ## Goal
-When you start typing, you should see the timer change for every second passed.
-![](./img/4timing.png)
 
+When you start typing, you should see the timer change for every second passed.
+
+![](./img/4timing.png)
 
 ## Part 5: Scoring
 1. Update `InfoBar` component to display the total score (initially 0)
