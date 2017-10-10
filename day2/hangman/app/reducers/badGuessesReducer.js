@@ -7,6 +7,8 @@ const badGuessesReducer = function badGuessesReducer(state = 0, action) {
   switch (action.type) {
     case 'BAD_GUESS':
       return state + 1;
+    case 'NEW_WORD':
+      return 0;
     default:
       return state;
   }

@@ -17,16 +17,28 @@ const initialState = [
   {letter: 'S', guessed: false}
 ];
 
-const wordLettersReducer = function badGuessesReducer(state = initialState, action) {
+const wordLettersReducer = function wordLettersReducer(state = initialState, action) {
   switch (action.type) {
     case 'GOOD_GUESS':
       return state.map((letterObj)=> {
         let guessed = letterObj.guessed;
-        if(letterObj.letter === action.letter) {
+        if(letterObj.letter.toLowerCase() === action.letter.toLowerCase()) {
           guessed = true;
         }
         return Object.assign({}, letterObj, {guessed});
       });
+    case 'NEW_WORD':
+      let newWord = action.newWord;
+      const allowed = /^[a-zA-Z]+$/;
+      if(!newWord.match(allowed)) {
+        return initialState;
+      }
+      newWord = newWord.toLowerCase().split('');
+      const newState = newWord.map((letter)=>({
+        letter,
+        guessed: false
+      }));
+      return newState;
     default:
       return state;
   }

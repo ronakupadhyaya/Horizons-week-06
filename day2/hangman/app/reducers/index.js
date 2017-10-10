@@ -2,6 +2,7 @@ import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
 import badGuessesReducer from './badGuessesReducer';
 import wordLettersReducer from './wordLettersReducer';
+import getLettersReducer from './getLettersReducer';
 
 /*
 combineReducers lets you meld several reducers into one.
@@ -16,6 +17,7 @@ routing: STATE FROM ROUTER REDUCER (you don't care about this)
 const rootReducer = combineReducers({
   badGuesses: badGuessesReducer,
   wordLetters: wordLettersReducer,
+  allGuesses: getLettersReducer,
   routing: routerReducer // this reducer is used by React Router in Redux
 });
 
