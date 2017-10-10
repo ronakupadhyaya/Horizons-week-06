@@ -40,7 +40,11 @@ When the user first navigates you should now see something similar to the follow
 ## Part 2: Highlight Letters & Mistakes
 
 Now let's update our state so we can distinguish between letters that have
-been typed correctly and incorrectly.
+been typed correctly and incorrectly. Each character/letter correspond to an
+object that has the keys:
+
+- `letter`: This will hold the letter value that should be displayed
+- `status`:  This will be either `pending`, `correct`, `incorrect`. Characters in the 'pending' state are those that have not been typed yet and will be displayed in gray. Characters in the 'correct' or 'incorrect' state will be the characters the player has correctly/incorrectly typed and should be highlighted in blue and red respectively.
 
 1. Change your initial state to
 
@@ -62,10 +66,7 @@ been typed correctly and incorrectly.
     ```
 
 1. This state represents the words `['I', 'am', 'Pam']`. Update your
-    `WordList` component `render` function to properly handle this state.
-    You should see:
-
-    ![](./img/highlightingtest.png)
+`WordList` component `render` function to properly handle this state.
 
     <details><summary>
     Hint
@@ -76,19 +77,32 @@ been typed correctly and incorrectly.
     ![Part 2 render function screenshot](img/part2_render.png)
 
     </p></details>
+1. Update your CSS so that pending letters are gray, correct letters are
+blue and incorrect letters are red.
 
-Each character/letter corresponds to a character object with the properties:
+    You should see:
 
-- `letter`: This will hold the letter value that should be displayed
-- `status`:  This will be either `pending`, `correct`, `incorrect`. Characters in the 'pending' state are those that have not been typed yet and will be displayed in gray. Characters in the 'correct' or 'incorrect' state will be the characters the player has correctly/incorrectly typed and should be highlighted in blue and red respectively.
+    ![](./img/highlightingtest.png)
+1. Change your initial state to read from `app/dictionary.js` again but this
+time automatically convert the word array into properly formatted state
+where each letter is replaced with an object that contains the letter and its
+status `{letter: 'x', status: 'pending'}`.
 
-Update the way our `WordBox` component is rendered:
-- Now that each character in our `wordList` prop is represented by an object `{letter: 'a', status: 'pending'}`, we must style each character span our `WordBox` renders to be the color corresponding to its `status`
+    <details><summary>
+    Hint
+    </summary><p>
+
+    You can use a nested for loop to convert the words array into state.
+
+    ![Part 2 state conversion screenshot](img/part2_convert.png)
+
+    </p></details>
 
 ### Goal
 
-Make sure characters appear in the correct color by changing the characters' initial `status` to `correct` or `incorrect`. Correct letters should be highlighted blue
-and incorrect letters should be highlighted red.
+Make sure characters appear in the correct color by changing the characters'
+initial `status` to `correct` or `incorrect`. Correct letters should be
+highlighted blue and incorrect letters should be highlighted red.
 
 
 ## Part 3: Typing
