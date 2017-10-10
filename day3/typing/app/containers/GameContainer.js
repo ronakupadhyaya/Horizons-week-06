@@ -6,10 +6,6 @@ import TextBox from './TextBox';
 import InfoBar from './InfoBar';
 
 class GameContainer extends React.Component {
-    componentDidMount() {
-        this.props.start();
-    }
-
     render() {
         return (
             <div className="game">
@@ -32,7 +28,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        start: () => dispatch({type: 'START'})
     };
 };
 

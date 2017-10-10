@@ -5,12 +5,13 @@ const initialState =  {
     wordList: [],
     userInput: '',
     currentIndex: [0, 0],
+    gameStarted: false,
     currentTime: 0
 };
 
 export default function(state = initialState, action) {
     switch (action.type) {
-        case 'START':
+        case 'START_GAME':
             return Object.assign({},
                 state,
                 {
@@ -21,6 +22,7 @@ export default function(state = initialState, action) {
                     )),
                     currentIndex: [0, 0],
                     userInput: '',
+                    gameStarted: true,
                     currentTime: 60
                 });
         case 'CHAR_ADDED':
