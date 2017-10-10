@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import WordBox from './WordBox';
+import TextBox from './TextBox';
 
 class GameContainer extends React.Component {
     componentDidMount() {
@@ -12,6 +13,7 @@ class GameContainer extends React.Component {
         return (
             <div className="game">
                 <WordBox />
+                <TextBox />
             </div>
         );
     }

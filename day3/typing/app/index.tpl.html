@@ -12,7 +12,7 @@
         font-family: verdana, sans-serif;
     }
 
-    .app {
+    .app, .game {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -23,6 +23,28 @@
         border: 2px solid black;
         border-radius: 5px;
         padding: 10px;
+        margin-bottom: 15px;
+    }
+
+    .word-box .pending {
+        color: gray;
+    }
+
+    .text-box {
+        width: 55vw;
+        border: 2px solid gray;
+        border-radius: 5px;
+    }
+
+    .text-box input:focus {
+        border: none;
+    }
+
+    .text-box input {
+        border: none;
+        width: 100%;
+        margin: 0;
+        padding: 0;
     }
     </style>
 </head>
