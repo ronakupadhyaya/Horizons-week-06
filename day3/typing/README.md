@@ -251,30 +251,40 @@ When you start typing, you should see the timer change for every second passed.
 1. Update `InfoBar` component to display the total score (initially 0)
 1. Add the following to our state:
     - `totalScore`: # of matching letters - # of mismatching letters
-1. Calculate `totalScore`. We already  compare `wordList` and `input` in our `onInput` function in our `GameContainer`.  We are going to want to dispatch an action(s) to either increment or decrement `totalScore` in our state.  We will leave it to you to decide the necessary actions to make these changes.
-1. When the game is over, you should either alert the user or display a message saying
+1. Update your reducer to recalculate `totalScore` as the game is played.
 
+    When we receive a `CHAR_ADDED` event, we already know if the typed letter
+    was correct or incorrect. Update `totalScore` accordingly.
+
+## Goal
+
+You should see a score that updates as the game is played.
 
 ![](./img/scoring6.png)
 
-
 ## Part 6: Game Over
 
-When the `setInterval` dispatches an `END_GAME` action end the game and display a Game over page. `Game over! Final Time: [time in seconds] Score: [total score]`
+When the `setInterval` dispatches an `END_GAME` display a dialog informing
+the user of their score at the end of the game.
 
-<!-- 1. When `END_GAME` is dispatched update `totalScore` by adding `streakCount` and `totalScore` -->
-1. Create a `GameOver` container which contains `FinalScore`, `PlayGameButton`, and `ViewLeaderboardButton` components
-1. Create a route for this page of your App
-1. Display `totalScore` and `timeLeft` in the `FinalScore` component
-1. Clicking the `PlayGameButton` should dispatch a `RESTART_GAME` action, which resets the values in state (i.e. set `currentIndex` to `[0,0]`, `totalScore` to `0`, etc...) and navigates you back to the default route where you should see the `GameContainer`
-1. Clicking the `ViewLeaderboardButton` navigates you to the route you create in the next part for the Leaderboard
+1. Add a new key `gameOver` to your initial state and set it to `false` by default.
+1. Create a `GameOver` container which displays the current score and
+has a button that says `Play Game` button.
+1. In your `GameContainer` only `GameOver` if `gameOver` is true in your
+Redux state.
+1. Clicking the `Play Game` button should dispatch a `RESTART_GAME` action,
+which resets the values in state (i.e. set `gameOver` to false, `currentIndex` to `[0,0]`,
+`totalScore` to `0`, etc.)
+1. Update your `END_GAME` action to set `gameOver` to be `true`.
 
 ### Goal
+
 Your finished __Game Over!__ page should look something like the following.
 
 ![](./img/3_timeup.png)
 
 ## BONUS: Part 7: Leaderboard
+
 If your `totalScore` was in the Top 10, the `END_GAME` action asks you for your 3-character initials and adds you to the Leaderboard. __Note__ you can use `localStorage` to keep track of top 10 user scores (by putting them in an Object like below). Since `localStorage` only works with Strings, you will have to use `JSON.parse` and `JSON.stringify` to store Objects.
 
 ```js
