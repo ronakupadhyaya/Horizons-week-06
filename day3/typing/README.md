@@ -189,15 +189,31 @@ highlighted in blue and incorrectly typed letters highlighted in red.
 
 ### Part 4: Timing
 
-Let's add timing functionality to this game. We need to add a timer that will begin counting once the user starts typing, and will stop once the game has ended (once the user has typed all words in the box).
--reducer when char added action is triggered should update cahr status, update index, update score
-1. Create a `InfoBar` component to display the timer. Add `currentTime` to your initial state in your reducer and give it the initial value `-1`, Have `InfoBar` receive a prop `currentTime` and display it bellow the `TextBox`. If the `currentTime` is -1, lets just display a `-` in place of the number of seconds to indicate the game has yet to start.
+Let's add timing functionality to this game. We need to add a timer that will
+begin counting once the user starts typing, and will stop once the game has
+ended (once the user has typed all words in the box).
+
+1. Add `timeLeft` to your initial state in your reducer and give it the initial value `60`.
+1. Create a `InfoBar` component to display the timer. Have `InfoBar` receive a prop `timeLeft` and display it bellow the `TextBox`.
 1. Update `mapDispatchToProps()` and create three actions `START_GAME`, `INCREMENT_TIMER`, and `END_GAME`.
 1. Update the `onInput()` function in `GameContainer` with:
     1. Dispatch a `START_GAME` action when the game beings.
-    We can tell when a user has first began typing by checking our `currentIndex` prop in our `GameContainer`. We already have a function `onInput(input)` that will get called for every typing event in our TextBox, so all we need to do is check to see if our  `currentIndex` is `[0,0]` and then we will know that this is the first call to `onInput` and so our game has begun.
-    1. Use `setInterval` inside `onInput()` to dispatch an `INCREMENT_TIMER` action every 1000ms. Additionally, the `setInterval` should dispatch an `END_GAME` action once all the words have been typed.
-    1. Save the id that `setInterval()` returns under variable `interval` so you
+
+        <details><summary>
+        Hint
+        </summary><p>
+
+        The game begins when the user types in to the textbox for the first time.
+        At the beginning of the game `currentIndex` will be `[0, 0]`.
+
+        </p></details>
+
+    1. Use `setInterval` inside `onInput()` to dispatch an `INCREMENT_TIMER` action every 1000ms.
+
+        The `setInterval` should dispatch an `END_GAME` action
+        once all the words have been typed.
+
+        Save the id that `setInterval()` returns `this.interval` so you
         can clear it later when the game ends
         (i.e. the timer has run out).
 
@@ -205,15 +221,19 @@ Let's add timing functionality to this game. We need to add a timer that will be
         <summary>Hint</summary>
 
         ```javascript
-        let interval = setInterval(() => {
+        this.interval = setInterval(() => {
             //dispatch INCREMENT_TIMER action
-            if (user has completed typing all the words) {
+            if (time has run out) {
                 //dispatch END_GAME action
-                clearInterval(interval);
+                clearInterval(this.interval);
             }
         }, 1000);
         ```
         </details>
+    1. Handle the `DECREMENT_TIMER`, `START_GAME` and `END_GAME` actions in
+    your reducer.
+
+        `DECREMENT_TIMER` should decrease `timeLeft` by 1.
 
 ## Goal
 
@@ -239,7 +259,7 @@ When the `setInterval` dispatches an `END_GAME` action end the game and display 
 <!-- 1. When `END_GAME` is dispatched update `totalScore` by adding `streakCount` and `totalScore` -->
 1. Create a `GameOver` container which contains `FinalScore`, `PlayGameButton`, and `ViewLeaderboardButton` components
 1. Create a route for this page of your App
-1. Display `totalScore` and `currentTime` in the `FinalScore` component
+1. Display `totalScore` and `timeLeft` in the `FinalScore` component
 1. Clicking the `PlayGameButton` should dispatch a `RESTART_GAME` action, which resets the values in state (i.e. set `currentIndex` to `[0,0]`, `totalScore` to `0`, etc...) and navigates you back to the default route where you should see the `GameContainer`
 1. Clicking the `ViewLeaderboardButton` navigates you to the route you create in the next part for the Leaderboard
 
