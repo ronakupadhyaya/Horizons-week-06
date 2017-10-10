@@ -1,8 +1,9 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
+import { Route, Link, Switch } from 'react-router-dom';
 
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
+  { "fName": "Andrew", "lName": "Kardashian", "number": "(630)-452-1830", "email": "ammy2015@mymail.pomona.edu" },
   { "fName": "Nihar", "lName": "Harhar", "number": "(421)-666-2022", "email": "puppysmacker94@hotmail.com" },
   { "fName": "Nihar", "lName": "Kardashian", "number": "(608)-633-1254", "email": "kanyebae@tidal.com" },
   { "fName": "Graham", "lName": "Smith", "number": "(610)-256-6599", "email": "graham@joinhorizons.com" },
@@ -10,7 +11,8 @@ const ppl = [
   { "fName": "Graham", "lName": "Master", "number": "(612)-284-3678", "email": "senseibaybay@aol.com" },
   { "fName": "Graham", "lName": "Cracker", "number": "(616)-824-0567", "email": "cinnamonbear@yahoo.com" },
   { "fName": "Darwish", "lName": "Gani", "number": "(774)-123-6477", "email": "darwish@joinhorizons.com" },
-  { "fName": "Darwish", "lName": "Gandhi", "number": "(124)-233-6755", "email": "saltypeace@india.gov" }
+  { "fName": "Darwish", "lName": "Gandhi", "number": "(124)-233-6755", "email": "saltypeace@india.gov" },
+  { "fName": "Jo", "lName": "Huang", "number": "(630)-773-6755", "email": "chinesebae@gmail.com" }
 
 ];
 
@@ -25,10 +27,29 @@ class Directory extends React.Component {
     return (
       <div>
         <h1>Horizons Directory</h1>
-
-
-
-
+        <Route exact path="/directory" render={() => <LinkList links={ppl.map(pplToFullLink)}/>}/>
+        <Route exact path='/directory/:fName' render={({ match }) => (
+          <LinkList links={ppl
+            .filter(p => p.fName === match.params.fName)
+            .map(pplToFullLink)
+          }/>
+        )}/>
+        <Switch>
+          <Route exact path='/directory/areacode/:area' render={({ match }) => (
+            <LinkList links={ppl
+              .filter(p => p.number.substring(1,4) === match.params.area)
+              .map(pplToFullLink)
+            }/>
+          )}/>
+          <Route exact path='/directory/surname/:lName' render={({ match }) => (
+            <LinkList links={ppl
+              .filter(p => p.lName === match.params.lName)
+              .map(pplToFullLink)
+            }/>
+          )}/>
+          <Route exact path='/directory/:fName/:lName' component={Person}/>
+        </Switch>
+        <Route path='/directory/:anything' render={() => <Link to='/directory'>Back to listings</Link>}/>
       </div>
     );
   }
@@ -63,7 +84,17 @@ class Person extends React.Component {
         <h3>{person.email}</h3>
 
         Not the {`${person.fName}`} you're looking for? {' '}
-        Too bad!!!
+        <Link to={'/directory/' + person.fName}>Find others.</Link>
+
+        <br></br>
+
+        Not the {`${person.lName}`} you're looking for? {' '}
+        <Link to={'/directory/surname/' + person.lName}>Find others.</Link>
+
+        <br></br>
+
+        Want more people with {`${person.fName}`}'s area code? {' '}
+        <Link to={'/directory/areacode/' + person.number.substring(1,4)}>Find others.</Link>
       </div>
     ) : (
       <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
