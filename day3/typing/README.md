@@ -38,26 +38,44 @@ When the user first navigates you should now see something similar to the follow
 
 
 ## Part 2: Highlight Letters & Mistakes
-In order to implement character highlighting functionality, we would like to store information about each character within our state. In your state, lets have our `wordList` be an array of arrays. The inner arrays correspond to a word and contain character/letter objects representing a letter in that given word. For example,
-at the beginning of the game, the words `['I', 'am', 'Pam']` would be represented
-as:
 
-```JavaScript
-{
-    wordList: [
-        [{letter: 'I', status: 'pending'}],
-        [
-            {letter: 'a', status: 'pending'},
-            {letter: 'm', status: 'pending'}
-        ],
-        [
-            {letter: 'P', status: 'pending'},
-            {letter: 'a', status: 'pending'},
-            {letter: 'm', status: 'pending'}
+Now let's update our state so we can distinguish between letters that have
+been typed correctly and incorrectly.
+
+1. Change your initial state to
+
+    ```javascript
+    {
+        wordList: [
+            [{letter: 'I', status: 'correct'}],
+            [
+                {letter: 'a', status: 'incorrect'},
+                {letter: 'm', status: 'correct'}
+            ],
+            [
+                {letter: 'P', status: 'correct'},
+                {letter: 'a', status: 'pending'},
+                {letter: 'm', status: 'pending'}
+            ]
         ]
-    ]
-}
-```
+    }
+    ```
+
+1. This state represents the words `['I', 'am', 'Pam']`. Update your
+    `WordList` component `render` function to properly handle this state.
+    You should see:
+
+    ![](./img/highlightingtest.png)
+
+    <details><summary>
+    Hint
+    </summary><p>
+
+    You can use a nested for-loop to display state from nested arrays.
+
+    ![Part 2 render function screenshot](img/part2_render.png)
+
+    </p></details>
 
 Each character/letter corresponds to a character object with the properties:
 
@@ -72,7 +90,6 @@ Update the way our `WordBox` component is rendered:
 Make sure characters appear in the correct color by changing the characters' initial `status` to `correct` or `incorrect`. Correct letters should be highlighted blue
 and incorrect letters should be highlighted red.
 
-![](./img/highlightingtest.png)
 
 ## Part 3: Typing
 
