@@ -8,19 +8,19 @@ import App from '../components/App';
 import DevTools from './DevTools';
 
 export default function Root({store, history}) {
-    return (
-        <Provider store={store}>
-            <div>
-                <ConnectedRouter history={history}>
-                    <Route path="/" component={App}/>
-                </ConnectedRouter>
-                <DevTools />
-            </div>
-        </Provider>
-    );
+  return (
+    <Provider store={store}>
+      <div>
+        <ConnectedRouter history={history}>
+          <Route path="/" component={App}/>
+        </ConnectedRouter>
+        <DevTools/>
+      </div>
+    </Provider>
+  );
 }
 
 Root.propTypes = {
-    store: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired
+  store: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
