@@ -11,10 +11,6 @@ const initialState =  {
     endGameDialogOpen: true
 };
 
-function cloneWordList(wordList) {
-    return wordList.map(word => word.map((o) => Object.assign({}, o)));
-}
-
 function calcScore(wordList) {
     return _.flatten(wordList).reduce((acc, {status}) => {
         if (status === 'correct') {

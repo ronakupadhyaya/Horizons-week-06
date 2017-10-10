@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import WordBox from './WordBox';
@@ -25,19 +24,12 @@ class GameContainer extends React.Component {
     }
 }
 
-GameContainer.propTypes = {
-};
-
 const mapStateToProps = (state) => {
     return {
         endGameDialogOpen: state.game.endGameDialogOpen
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
-};
-
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
 )(GameContainer);
