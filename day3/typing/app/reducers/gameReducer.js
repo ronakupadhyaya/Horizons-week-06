@@ -4,13 +4,13 @@ import _ from 'underscore';
 const initialState =  {
     wordList: [],
     userInput: '',
-    currentIndex: [0, 0]
+    currentIndex: [0, 0],
+    currentTime: 0
 };
 
 export default function(state = initialState, action) {
     switch (action.type) {
         case 'START':
-            console.log('START');
             return Object.assign({},
                 state,
                 {
@@ -20,7 +20,8 @@ export default function(state = initialState, action) {
                         ))
                     )),
                     currentIndex: [0, 0],
-                    userInput: ''
+                    userInput: '',
+                    currentTime: 60
                 });
         case 'CHAR_ADDED':
             const typedLetter = action.letter;

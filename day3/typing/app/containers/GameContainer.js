@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import WordBox from './WordBox';
 import TextBox from './TextBox';
+import InfoBar from './InfoBar';
 
 class GameContainer extends React.Component {
     componentDidMount() {
@@ -14,6 +15,7 @@ class GameContainer extends React.Component {
             <div className="game">
                 <WordBox />
                 <TextBox />
+                <InfoBar />
             </div>
         );
     }
