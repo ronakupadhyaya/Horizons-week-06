@@ -93,7 +93,9 @@ and incorrect letters should be highlighted red.
             <details>
             <summary>Hint</summary>
             <div>
+
             Add 1 to `currentIndex[0]` and set `currentIndex[1]` back to zero.
+
             </div>
             </details>
 
