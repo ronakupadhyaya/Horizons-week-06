@@ -23,13 +23,25 @@ export default function(state = initialState, action) {
                     userInput: ''
                 });
         case 'CHAR_ADDED':
-            const { letter } = action;
-            // const curLetter = state.words[state.currentIndex[0]][state.currentIndex[1]];
+            const typedLetter = action.letter;
             return Object.assign({},
                 state,
                 {
+                    wordList: state.wordList.map((word, i) => (
+                        word.map(({letter, status}, j) => {
+                            if (state.currentIndex[0] === i && state.currentIndex[1] === j) {
+                                // found the current letter, update status
+                                return {
+                                    letter,
+                                    status: typedLetter === letter ? 'correct' : 'incorrect'
+                                };
+                            }
+                            // return other letters as is
+                            return {letter, status};
+                        })
+                    )),
                     currentIndex: [state.currentIndex[0], state.currentIndex[1] + 1],
-                    userInput: state.userInput + letter
+                    userInput: state.userInput + typedLetter
                 });
         case 'NEXT_WORD':
             return Object.assign({},
