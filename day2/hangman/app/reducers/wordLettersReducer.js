@@ -16,6 +16,11 @@ const initialWord = [
 ];
 const wordLettersReducer = function wordLettersReducer(state = initialWord, action) {
   switch (action.type) {
+    case 'NEW_WORD':
+      // console.log(action.word);
+      return action.word.split('').map(letter => {
+        return {guessed: false, letter: letter};
+      });
     case 'GOOD_GUESS':
       return state.map(letterObj => {
         if (letterObj.letter === action.letter) {
