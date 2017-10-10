@@ -54,7 +54,6 @@ Each character/letter corresponds to a character object with the properties:
 - `letter`: This will hold the letter value that should be displayed
 - `status`:  This will be either `pending`, `correct`, `incorrect`. Characters in the 'pending' state are those that have not been typed yet and will be displayed in gray. Characters in the 'correct' or 'incorrect' state will be the characters the player has correctly/incorrectly typed and should be highlighted in blue and red respectively.
 
-<!-- ### Typing - TextBox Component -->
 Update the way our `WordBox` component is rendered:
 - Now that each character in our `wordList` prop is represented by an object `{letter: 'a', status: 'pending'}`, we must style each character span our `WordBox` renders to be the color corresponding to its `status`
 
@@ -67,42 +66,55 @@ and incorrect letters should be highlighted red.
 
 ## Part 3: Typing
 
-1. Create a `TextBox` component for user input
-1. Update `GameContainer` and pass `this.onInput()` to `TextBox` as a prop, call this function in `TextBox` when user types
-    - Using the `onChange` property for the `<input>` element in the `TextBox` component we will implement character highlight functionality. We will implement this functionality by adding an array (called `userInput`) for inputted words to our state, and comparing it against our `wordList`.
-1. Add the following to our state:
+1. Add the following to our Redux state:
     - `currentIndex` (initially `[0,0]`): an array of 2 numbers that point to our current location in the array in the format `[word #, char #]` - remember that since strings are Arrays in JavaScript we can use Array notation to access characters.
+    - `userInput` (initially `''`): a string that controls the contents of the `TextBox` element
+1. Create a `TextBox` component that contains an `<input type="text />` element for input, this should receive its `value` from Redux state `userInput`
+1. Update `GameContainer` and pass `this.onInput()` to `TextBox` as a prop, and use the `onKeyPress` event handler for the `<input type="text">` to call `onInput()` with the new letter that was typed in.
+        
+    [Example usage of onKeyPress to control input](https://codepen.io/horizons/pen/RLydVR?editors=0010)
+
 1. Dispatch the following actions from `GameContainer`'s `onInput()` function:
-    1. __IF__ a new non-whitespace character is entered, compare the user's input against our `wordList` at the `currentIndex` and dispatch a `CHAR_ADDED` action w/the new word and a boolean as the payload.
-        - <details>
+    1. __IF__ a new non-whitespace character is entered:
+        - Dispatch a `CHAR_ADDED` event with the new character (i.e. letter) that was just typed.
+    
+            <details>
             <summary>Hint</summary>
             <div>
 
             ```javascript
-            dispatch({type: 'CHAR_ADDED', word: [user input], isCorrect: [true or false]});
+            dispatch({type: 'CHAR_ADDED', letter: 'x'});
             ```
 
             </div>
             </details>
-        - You should add/replace the word at `userInput[word#]` with the new word. Remember, our word number is the value stored at index 0 of our `currentIndex` array. (word# = `currentIndex[0]`)
-        - Update the character's `status` from `pending`  to either `correct` or `incorrect` depending on `action.isCorrect`
-    1. __IF__ a whitespace character is entered dispatch a `NEXT_WORD` action
-        - clear the `<input>` element in your `TextBox` component
-        - increment `currentIndex` accordingly. We want to increment the `word #` index and set the `char #` index back to zero.
+        - When you receive a `CHAR_ADDED` action in your reducer, compare the new letter against our `wordList` at the `currentIndex`.
+          Update the `status` of the corresponding letter in the `wordList` array to indicate `correct` or `incorrect`.
+          
+          Update `currentIndex` to to move to the **next letter.**
+          
+          Update `userInput` by adding the newly typed letter to the end of the string.
+    1. __IF__ a whitespace character is entered:
+        - Dispatch a `NEXT_WORD` action.
+        - When you receive a `NEXT_WORD` action in your reducer, clear contents of `userInput`.
+        
+            Update `currentIndex` to move to the **next word.**
             
             <details>
             <summary>Hint</summary>
             <div>
 
+            We want to increment the `word #` index and set the `char #` index back to zero.
             Add 1 to `currentIndex[0]` and set `currentIndex[1]` back to zero.
 
             </div>
             </details>
+            
 
 
 __Note:__ The user __SHOULD NOT__ be able to press the DELETE/BACKSPACE key to undo mistakes in this game
 
-[Sample HTML/CSS for `WordBox` and `TextBox`](https://codepen.io/horizons/pen/Pjdepe?editors=1100)
+If you need help styling your application you can use this [sample HTML/CSS for `WordBox` and `TextBox`](https://codepen.io/horizons/pen/Pjdepe?editors=1100)
 
 
 ### Goal
