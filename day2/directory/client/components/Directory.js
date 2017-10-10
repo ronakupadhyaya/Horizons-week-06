@@ -1,5 +1,6 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
+import { Route, Link, Switch } from 'react-router-dom';
+import { parse } from 'qs';
 
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
@@ -15,9 +16,9 @@ const ppl = [
 ];
 
 const pplToFullLink = person => ({
-    to: `/directory/${person.fName}/${person.lName}`,
-    text: `${person.fName} ${person.lName}`,
-    key: person.number
+  to: `/directory/${person.fName}/${person.lName}`,
+  text: `${person.fName} ${person.lName}`,
+  key: person.number,
 });
 
 class Directory extends React.Component {
@@ -25,14 +26,56 @@ class Directory extends React.Component {
     return (
       <div>
         <h1>Horizons Directory</h1>
+        <Switch>
+          <Route path={'/directory/surname/:lName'}
+            render={(props) =>
+              (<LinkList links={ppl
+                .filter(p => p.lName === props.match.params.lName)
+                .map(pplToFullLink)}/>)
+            } />
 
+          <Route path={'/directory/areacode/:area'}
+            render={(props) =>
+              (<LinkList links={ppl
+                .filter(p => p.number.slice(1,4) === props.match.params.area)
+                .map(pplToFullLink)}/>)
+            } />
 
+          <Route path={'/directory/:fName/:lName'}
+            component={Person} />
 
+          <Route path={'/directory/:fName'}
+          render={(props) =>
+            (<LinkList links={ppl
+              .filter(p => p.fName === props.match.params.fName)
+              .map(pplToFullLink)}/>)
+          } />
 
+          <Route path={'/directory'}
+          render={(props) => {
+            const query = parse(props.location.search.substr(1));
+            let toRender = [...ppl];
+            if(query.fname) {
+              toRender = toRender.filter(p => p.fName === query.fname);
+            }
+            if(query.area) {
+              toRender = toRender.filter(p => p.number.slice(1, 4) === query.area);
+            }
+            return (<LinkList
+              links={toRender.map(pplToFullLink)}
+            />);
+          }
+          } />
+        </Switch>
+
+        <Route path={'/directory/:any'} render={() =>
+             <Link to='/directory'>
+                 Return to directory
+             </Link>} />
       </div>
     );
   }
-};
+}
 
 class LinkList extends React.Component {
   render() {
@@ -46,7 +89,7 @@ class LinkList extends React.Component {
         </ul>
     );
   }
-};
+}
 
 class Person extends React.Component {
   render() {
@@ -62,8 +105,7 @@ class Person extends React.Component {
         <h3>{person.number}</h3>
         <h3>{person.email}</h3>
 
-        Not the {`${person.fName}`} you're looking for? {' '}
-        Too bad!!!
+        <Link to={'/directory/'+person.fName}> {`Find other ${person.fName}'s`} </Link>
       </div>
     ) : (
       <h2>No {`${person.fName} ${person.lName}`} was found.</h2>

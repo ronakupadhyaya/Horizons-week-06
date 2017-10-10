@@ -9,6 +9,7 @@
   "dependencies": {
     "compression": "^1.6.2",
     "express": "^4.15.3",
+    "qs": "^6.5.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-router-dom": "^4.1.1"
