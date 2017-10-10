@@ -17,35 +17,34 @@ const ppl = [
 ];
 
 const pplToFullLink = person => ({
-    to: `/directory?fName=${person.fName}&lName=${person.lName}`,
-    text: `${person.fName} ${person.lName}`,
-    key: person.number
+  to: `/directory?fName=${person.fName}&lName=${person.lName}`,
+  text: `${person.fName} ${person.lName}`,
+  key: person.number
 });
 
 class Directory extends React.Component {
 
-    componentWillMount(){
-        this.query = parse(this.props.location.search.substr(1));
-    }
+  componentWillMount() {
+    this.query = parse(this.props.location.search.substr(1));
+  }
 
-    componentWillReceiveProps(nextProps){
-        if (nextProps.id === this.props.id)
-        {this.query = parse(nextProps.location.search.substr(1));}
-    }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.id === this.props.id) { this.query = parse(nextProps.location.search.substr(1)); }
+  }
 
-    displayFunc(){
-        if (this.query.fName && this.query.lName){
-            return <Person query={this.query}/>
-        } else if (this.query.fName) {
-            return <LinkList links={ppl.filter((elem) => elem.fName === this.query.fName).map((person) => pplToFullLink(person))}/>
-        } else if (this.query.lName){
-            return <LinkList links={ppl.filter((elem) => elem.lName === this.query.lName).map((person) => pplToFullLink(person))}/>
-        } else if (this.query.area){
-            return <LinkList links={ppl.filter((elem) => elem.number.substring(1, 4) === this.query.area).map((person) => pplToFullLink(person))}/>
-        } else {
-            return <LinkList links={ppl.map((person) => pplToFullLink(person))}/>
-        }
+  displayFunc() {
+    if (this.query.fName && this.query.lName) {
+      return <Person query={this.query} />
+    } else if (this.query.fName) {
+      return <LinkList links={ppl.filter((elem) => elem.fName === this.query.fName).map((person) => pplToFullLink(person))} />
+    } else if (this.query.lName) {
+      return <LinkList links={ppl.filter((elem) => elem.lName === this.query.lName).map((person) => pplToFullLink(person))} />
+    } else if (this.query.area) {
+      return <LinkList links={ppl.filter((elem) => elem.number.substring(1, 4) === this.query.area).map((person) => pplToFullLink(person))} />
+    } else {
+      return <LinkList links={ppl.map((person) => pplToFullLink(person))} />
     }
+  }
 
   render() {
     return (
@@ -60,13 +59,13 @@ class Directory extends React.Component {
 class LinkList extends React.Component {
   render() {
     return (
-        <ul>
-          {this.props.links.map(link => (
-            <li key={link.key}>
-              <Link to={link.to}>{link.text}</Link>
-            </li>
-          ))}
-        </ul>
+      <ul>
+        {this.props.links.map(link => (
+          <li key={link.key}>
+            <Link to={link.to}>{link.text}</Link>
+          </li>
+        ))}
+      </ul>
     );
   }
 };
@@ -86,14 +85,14 @@ class Person extends React.Component {
         <h3>{person.email}</h3>
 
         Not the {`${person.fName}`} you're looking for? {' '}
-        <Link to={"/directory?fName=" + person.fName}>Find others</Link><br/>
+        <Link to={"/directory?fName=" + person.fName}>Find others</Link><br />
         <Link to="/directory">Back to listings</Link>
       </div>
     ) : (
-      <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
-    )
+        <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
+      )
   }
 }
 
 
-export {Directory, Person};
+export { Directory, Person };
