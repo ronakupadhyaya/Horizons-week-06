@@ -12,11 +12,21 @@ Currently if the user navigates to `index.html` the `app/components/App.js` comp
     1. Get the first **100 words** from this list and add them to your initial state under `wordList`
 1. Edit `containers/GameContainer.js`
     1. Update `mapStateToProps()` and map `wordList` to your props
-1. Create a `WordBox` component and add it to `GameContainer`, it will receive `wordList` via props. Your WordBox component is responsible for rendering a div containing each word in its `wordList`prop.
-    1. Put each character inside of its own `<span>` so that characters can be differentiated from each other later on
-        
-        *Hint* Use a nested map such that the outer map will map every word into a div, and the inner map will map each individual character of every word into a span.
-    1. Put your CSS in `app/index.tpl.html` where it says `YOUR CSS STYLES HERE`
+1. Create a `WordBox` component and add it to `GameContainer`, it will receive
+`wordList` via props. Your WordBox component is responsible for rendering a div
+containing each word in its `wordList` prop.
+
+    <details><summary>
+    Hint
+    </summary><p>
+
+    Use `Array.prototype.join()` to put a single space between each word.
+
+    ![Render function screenshot](img/part1_render.png)
+
+    </p></details>
+
+1. Put your CSS in `app/index.tpl.html` where it says `YOUR CSS STYLES HERE`
 
 If you need help styling, you can use this [sample CSS/HTML for your `WordBox` component](https://codepen.io/horizons/pen/QgVmmm?editors=1100)
 
@@ -71,13 +81,13 @@ and incorrect letters should be highlighted red.
     - `userInput` (initially `''`): a string that controls the contents of the `TextBox` element
 1. Create a `TextBox` component that contains an `<input type="text />` element for input, this should receive its `value` from Redux state `userInput`
 1. Update `GameContainer` and pass `this.onInput()` to `TextBox` as a prop, and use the `onKeyPress` event handler for the `<input type="text">` to call `onInput()` with the new letter that was typed in.
-        
+
     [Example usage of onKeyPress to control input](https://codepen.io/horizons/pen/RLydVR?editors=0010)
 
 1. Dispatch the following actions from `GameContainer`'s `onInput()` function:
     1. __IF__ a new non-whitespace character is entered:
         - Dispatch a `CHAR_ADDED` event with the new character (i.e. letter) that was just typed.
-    
+
             <details>
             <summary>Hint</summary>
             <div>
@@ -90,16 +100,16 @@ and incorrect letters should be highlighted red.
             </details>
         - When you receive a `CHAR_ADDED` action in your reducer, compare the new letter against our `wordList` at the `currentIndex`.
           Update the `status` of the corresponding letter in the `wordList` array to indicate `correct` or `incorrect`.
-          
+
           Update `currentIndex` to to move to the **next letter.**
-          
+
           Update `userInput` by adding the newly typed letter to the end of the string.
     1. __IF__ a whitespace character is entered:
         - Dispatch a `NEXT_WORD` action.
         - When you receive a `NEXT_WORD` action in your reducer, clear contents of `userInput`.
-        
+
             Update `currentIndex` to move to the **next word.**
-            
+
             <details>
             <summary>Hint</summary>
             <div>
@@ -109,7 +119,7 @@ and incorrect letters should be highlighted red.
 
             </div>
             </details>
-            
+
 
 
 __Note:__ The user __SHOULD NOT__ be able to press the DELETE/BACKSPACE key to undo mistakes in this game
@@ -142,7 +152,7 @@ Let's add timing functionality to this game. We need to add a timer that will be
 
         <details>
         <summary>Hint</summary>
-    
+
         ```javascript
         let interval = setInterval(() => {
             //dispatch INCREMENT_TIMER action
