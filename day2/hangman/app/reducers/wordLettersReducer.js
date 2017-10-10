@@ -6,6 +6,38 @@
 
 // import * as types from '../actions/types';
 
-// const wordLettersReducer =
+const word = 'SPONGEBOB';
 
-// export default wordLettersReducer;
+function wordToState(string) {
+    const stringSplit = string.split('');
+    const ret = [];
+    stringSplit.forEach( (char) => {
+        const charObj = {
+            letter: char,
+            guessed: false,
+        };
+        ret.push(charObj);
+    } );
+    return ret;
+}
+
+const wordLettersReducer = (state = wordToState(word), action) => {
+    switch(action.type) {
+        case 'SET_WORD': {
+            return wordToState(action.word);
+        }
+        case 'GOOD_GUESS': {
+            return state.map( (letter) => {
+                if(letter.letter === action.letter) {
+                    return Object.assign({}, letter, {guessed: true});
+                }
+                return Object.assign({}, letter);
+            });
+        }
+        default: {
+            return state;
+        }
+    }
+};
+
+export default wordLettersReducer;
