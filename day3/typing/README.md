@@ -5,7 +5,6 @@ The goal of this exercise is to write a typing game using React/Redux. Feel free
 
 Currently if the user navigates to `index.html` the `app/components/App.js` component is displayed. For Part 1 you will write code to set-up the game and to start the gameplay.
 
-**Give some background on when to create a new reducere**
 
 1. Create a new reducer to keep track of your game state in `reducers/gameReducer.js` and add it to `reducers/index.js`
     1. Import words from `app/dictionary.js`
@@ -24,7 +23,7 @@ Currently if the user navigates to `index.html` the `app/components/App.js` comp
 
 When the user first navigates you should now see something similar to the following image.
 
-![](./img/1_start.png)
+![](./img/setup.png)
 
 
 ## Part 2: Highlight Letters & Mistakes
@@ -56,13 +55,14 @@ Each character/letter corresponds to a character object with the properties:
 
 <!-- ### Typing - TextBox Component -->
 Update the way our `WordBox` component is rendered:
-
-    - Now that each character in our `wordList` prop is represented by an object `{letter: 'a', status: 'pending'}`, we must style each character span our `WordBox` renders to be the color corresponding to its `status`
+- Now that each character in our `wordList` prop is represented by an object `{letter: 'a', status: 'pending'}`, we must style each character span our `WordBox` renders to be the color corresponding to its `status`
 
 ### Goal
 
 Make sure characters appear in the correct color by changing the characters' initial `status` to `correct` or `incorrect`. Correct letters should be highlighted blue
 and incorrect letters should be highlighted red.
+
+![](./img/highlightingtest.png)
 
 ## Part 3: Typing
 
@@ -101,8 +101,8 @@ __Note:__ The user __SHOULD NOT__ be able to press the DELETE/BACKSPACE key to u
 ### Goal
 
 When you start typing, you should see letters correctly typed letters highlighted in blue and incorrectly typed letters highlighted in red.
-> SCREENSHOT
-![](./img/1_start.png)
+
+![](./img/3typing.png)
 
 
 
@@ -133,6 +133,13 @@ Let's add timing functionality to this game. We need to add a timer that will be
         ```
     </details>
 
+
+
+## Goal
+When you start typing, you should see the timer change for every second passed.
+![](./img/4timing.png)
+
+
 ## Part 5: Scoring
 1. Update `InfoBar` component to display the total score (initially 0)
 1. Add the following to our state:
@@ -141,7 +148,7 @@ Let's add timing functionality to this game. We need to add a timer that will be
 1. When the game is over, you should either alert the user or display a message saying
 
 
-<!-- ![](./img/6_streak.png) -->
+![](./img/scoring6.png)
 
 
 ## Part 6: Game Over
