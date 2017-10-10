@@ -6,11 +6,32 @@ const initialState =  {
     userInput: '',
     currentIndex: [0, 0],
     gameStarted: false,
-    currentTime: 0
+    currentTime: 0,
+    score: 0
 };
+
+function calcScore(wordList) {
+    return _.flatten(wordList).reduce((acc, {status}) => {
+        if (status === 'correct') {
+            return acc + 1;
+        }
+        if (status === 'incorrect') {
+            return acc - 1;
+        }
+        return acc;
+    }, 0);
+}
 
 export default function(state = initialState, action) {
     switch (action.type) {
+        case 'END_GAME':
+            return Object.assign({},
+                state,
+                {
+                    userInput: '',
+                    gameStarted: false,
+                    currentTime: 0
+                });
         case 'START_GAME':
             return Object.assign({},
                 state,
@@ -23,28 +44,36 @@ export default function(state = initialState, action) {
                     currentIndex: [0, 0],
                     userInput: '',
                     gameStarted: true,
-                    currentTime: 60
+                    currentTime: 5
                 });
         case 'CHAR_ADDED':
             const typedLetter = action.letter;
+            const wordList = state.wordList.map((word, i) => (
+                word.map(({letter, status}, j) => {
+                    if (state.currentIndex[0] === i && state.currentIndex[1] === j) {
+                        // found the current letter, update status
+                        return {
+                            letter,
+                            status: typedLetter === letter ? 'correct' : 'incorrect'
+                        };
+                    }
+                    // return other letters as is
+                    return {letter, status};
+                })
+            ));
             return Object.assign({},
                 state,
                 {
-                    wordList: state.wordList.map((word, i) => (
-                        word.map(({letter, status}, j) => {
-                            if (state.currentIndex[0] === i && state.currentIndex[1] === j) {
-                                // found the current letter, update status
-                                return {
-                                    letter,
-                                    status: typedLetter === letter ? 'correct' : 'incorrect'
-                                };
-                            }
-                            // return other letters as is
-                            return {letter, status};
-                        })
-                    )),
+                    wordList: wordList,
                     currentIndex: [state.currentIndex[0], state.currentIndex[1] + 1],
-                    userInput: state.userInput + typedLetter
+                    userInput: state.userInput + typedLetter,
+                    score: calcScore(wordList)
+                });
+        case 'INCREMENT_TIMER':
+            return Object.assign({},
+                state,
+                {
+                    currentTime: state.currentTime - 1
                 });
         case 'NEXT_WORD':
             return Object.assign({},

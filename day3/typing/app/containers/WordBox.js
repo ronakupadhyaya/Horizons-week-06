@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 function WordBox({words}) {
-    console.log(words);
     return (
         <div className="word-box">
             {
