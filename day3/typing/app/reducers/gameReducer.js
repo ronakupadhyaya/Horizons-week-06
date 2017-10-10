@@ -22,7 +22,7 @@ export default function(state = initialState, action) {
                     currentIndex: [0, 0],
                     userInput: ''
                 });
-        case 'NEXT_CHAR':
+        case 'CHAR_ADDED':
             const { letter } = action;
             // const curLetter = state.words[state.currentIndex[0]][state.currentIndex[1]];
             return Object.assign({},
@@ -30,6 +30,13 @@ export default function(state = initialState, action) {
                 {
                     currentIndex: [state.currentIndex[0], state.currentIndex[1] + 1],
                     userInput: state.userInput + letter
+                });
+        case 'NEXT_WORD':
+            return Object.assign({},
+                state,
+                {
+                    currentIndex: [state.currentIndex[0] + 1, 0],
+                    userInput: ''
                 });
         default:
             return state;
