@@ -1,5 +1,5 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
+import {  Route,  Link, Switch } from 'react-router-dom';
 
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
@@ -14,27 +14,43 @@ const ppl = [
 
 ];
 
-const pplToFullLink = person => ({
+const pplToFullLink = person => {
+  console.log("WORD",props.location.search);
+  return {
     to: `/directory/${person.fName}/${person.lName}`,
     text: `${person.fName} ${person.lName}`,
     key: person.number
-});
+}};
 
 class Directory extends React.Component {
   render() {
     return (
       <div>
         <h1>Horizons Directory</h1>
-
-
-
-
+        <Switch>
+        <Route path='/directory' exact={true} render={()=>(
+          <LinkList links={ppl.map(pplToFullLink)} root={true}/>
+        )}/>
+        <Route path='/directory/:fName' exact={true} render={(props)=>(
+          <LinkList links={ppl.filter(p=>p.fName===props.match.params.fName).map(pplToFullLink)}/>
+        )}/>
+        <Route path='/directory/surname/:lName' exact={true} render={(props)=>(
+          <LinkList links={ppl.filter(p=>p.lName===props.match.params.lName).map(pplToFullLink)}/>
+        )}/>
+        <Route path='/directory/areacode/:num' exact={true} render={(props)=>(
+          <LinkList links={ppl.filter(p=>p.number.slice(1,4)===props.match.params.num).map(pplToFullLink)}/>
+        )}/>
+        <Route path='/directory/:fName/:lName' component={Person}/>
+      </Switch>
       </div>
     );
   }
 };
 
 class LinkList extends React.Component {
+  constructor(props){
+    super(props)
+  }
   render() {
     return (
         <ul>
@@ -43,6 +59,7 @@ class LinkList extends React.Component {
               <Link to={link.to}>{link.text}</Link>
             </li>
           ))}
+          {(this.props.root!==true)?<Link to='/directory'>Full Directory</Link>:<p/>}
         </ul>
     );
   }
@@ -64,9 +81,16 @@ class Person extends React.Component {
 
         Not the {`${person.fName}`} you're looking for? {' '}
         Too bad!!!
+        <br/><Link to={'/directory/'+person.fName}>All {person.fName}s</Link>
+        <br/><Link to={'/directory/surname/'+person.lName}>All {person.lName}s</Link>
+        <br/><Link to={'/directory/areacode/'+person.number.slice(1,4)}>All in areacode</Link>
+        <br/><Link to='/directory'>Back to directory</Link>
       </div>
     ) : (
-      <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
+      <div>
+        <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
+        <br/><Link to='/directory'>Back to directory</Link>
+      </div>
     )
   }
 }
