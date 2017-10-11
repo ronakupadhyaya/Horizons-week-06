@@ -7,7 +7,15 @@ class Home extends React.Component {
       <div>
         <h1>Welcome to the Andros's React Portfolio</h1>
         <h2>Click the link below to go to each project.</h2>
+        <div>
         <Link to="/directory"> Go to Directory project </Link>
+        </div>
+        <div>
+        <Link to="/chicken"> Go to chicken contest </Link>
+        </div>
+        <div>
+        <Link to="/hangman"> Go to Hangman </Link>
+        </div>
       </div>
     )
   }

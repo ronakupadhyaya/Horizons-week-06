@@ -1,0 +1,11 @@
+a{
+  margin: 10px;
+  padding: 10px;
+  background-color: black;
+  color: white;
+}
+
+* {
+  line-height: 40px;
+  font-family: sans;
+}
