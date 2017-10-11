@@ -1,5 +1,5 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
+import { Route, Link, Switch } from 'react-router-dom';
 
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
@@ -25,9 +25,46 @@ class Directory extends React.Component {
     return (
       <div>
         <h1>Horizons Directory</h1>
+          <Route exact={true} path = "/directory" render={() => <LinkList links={ppl.map(pplToFullLink)} />} />
+          <Route
+            exact={true}
+            path = {"/directory/:fName"}
+            render={({ match }) => {
+              console.log(match.params.fName);
+              return (<LinkList
+              links={
+                ppl.filter(p => p.fName === match.params.fName).map(pplToFullLink)
+              } />)}
+            }
+          />
+        <Switch>
+          <Route
+            exact={true}
+            path = {"/directory/areacode/:areaCode"}
+            render={({ match }) => {
+              console.log(match.params.lName);
+              return (<LinkList
+              links={
+                ppl.filter(p => p.number.slice(1,4) === match.params.areaCode).map(pplToFullLink)
+              } />)}
+            }
+          />
+          <Route
+            exact={true}
+            path = {"/directory/surname/:lName"}
+            render={({ match }) => {
+              console.log(match.params.lName);
+              return (<LinkList
+              links={
+                ppl.filter(p => p.lName === match.params.lName).map(pplToFullLink)
+              } />)}
+            }
+          />
+          <Route path={this.props.match.url + "/:fName/:lName"} component={Person} />
 
 
-
+        </Switch>
+          <Route exact={true} path ={this.props.match.url + "/:fName/:lName"} render={() => <Link to="/directory"> Back to Listings </Link>}/>
 
       </div>
     );
@@ -49,6 +86,7 @@ class LinkList extends React.Component {
 };
 
 class Person extends React.Component {
+
   render() {
     // Array.prototype.find returns the first item satisfying the fn
     const person = ppl.find(p => (
@@ -56,6 +94,7 @@ class Person extends React.Component {
       p.lName === this.props.match.params.lName
     ));
 
+    console.log(this.props.match.url);
     return person ? (
       <div>
         <h2>{`${person.fName} ${person.lName}`}</h2>
@@ -63,7 +102,11 @@ class Person extends React.Component {
         <h3>{person.email}</h3>
 
         Not the {`${person.fName}`} you're looking for? {' '}
-        Too bad!!!
+        <Route
+          exact={true}
+          path={"/directory/:fName/:lName"}
+          render={()=> <Link to={"/directory/" + this.props.match.params.fName}>Find Others</Link>}
+        />
       </div>
     ) : (
       <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
