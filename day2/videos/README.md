@@ -44,7 +44,7 @@ Then, using `Route`s with `render`s, render the correct image when the user visi
 
 ### [Watch Me](https://vimeo.com/224247460)
 
-### [Example 3 - Very Important and Serious Contest](https://codepen.io/josephch405/pen/qjYVYj)
+### [Example 3 - Very Important and Serious Contest](https://codepen.io/smitgw11/pen/ZXRbYo)
 
 To Properly demonstrate the prowess of our TAs, we are organizing a Chicken Leg eating contest.
 

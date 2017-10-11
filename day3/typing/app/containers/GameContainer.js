@@ -20,9 +20,6 @@ class GameContainer extends React.Component {
 }
 
 GameContainer.propTypes = {
-    badGuesses: PropTypes.number,
-    wordLetters: PropTypes.array,
-    onInput: PropTypes.func
 };
 
 const mapStateToProps = (state) => {
