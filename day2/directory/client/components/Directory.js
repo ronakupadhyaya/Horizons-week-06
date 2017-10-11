@@ -1,5 +1,5 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
+import { Route, Switch, Link  } from 'react-router-dom';
 
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
@@ -25,9 +25,19 @@ class Directory extends React.Component {
     return (
       <div>
         <h1>Horizons Directory</h1>
-
-
-
+        <Switch>
+          <Route exact={true} path="/directory" render={() => <LinkList links={ppl.map(pplToFullLink)} />}/>
+          <Route path='/directory/surname/:lName' render={({match}) => (<LinkList
+              links={ppl.filter(p => p.lName === match.params.lName).map(pplToFullLink)}
+            />)}/>
+          <Route path='/directory/areacode/:areacode' render={({match}) => (<LinkList
+              links={ppl.filter(p => p.number.slice(1,4) === match.params.areacode).map(pplToFullLink)}
+            />)}/>/>
+          <Route exact={true} path='/directory/:fName' render={({match}) => (<LinkList
+              links={ppl.filter(p => p.fName === match.params.fName).map(pplToFullLink)}
+            />)}/>  #B
+          <Route path='/directory/:fName/:lName' component={Person}/>
+        </Switch>
 
       </div>
     );
@@ -62,8 +72,8 @@ class Person extends React.Component {
         <h3>{person.number}</h3>
         <h3>{person.email}</h3>
 
-        Not the {`${person.fName}`} you're looking for? {' '}
-        Too bad!!!
+        Not the {`${person.fName}`} youre looking for?
+        <Link to={"/directory/" + person.fName}>Find others.</Link>
       </div>
     ) : (
       <h2>No {`${person.fName} ${person.lName}`} was found.</h2>

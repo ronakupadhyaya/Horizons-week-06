@@ -3,6 +3,17 @@
 
 // import * as types from '../actions/types';
 
-// const badGuessesReducer =
+const badGuessesReducer = (state = 0, action) => {
+    switch(action.type) {
+        case 'BAD_GUESS':
+            const newState = state + 1;
+            return newState;
+        case 'RESET':
+            const diffState = 0;
+            return diffState;
+        default:
+            return state;
+    }
+};
 
-// export default badGuessesReducer;
+export default badGuessesReducer;

@@ -5,6 +5,7 @@ import {Route} from 'react-router-dom';
 import {ConnectedRouter} from 'react-router-redux';
 
 import App from '../components/App';
+import About from '../components/About';
 import DevTools from './DevTools';
 
 export default function Root({store, history}) {
@@ -12,7 +13,10 @@ export default function Root({store, history}) {
         <Provider store={store}>
             <div>
                 <ConnectedRouter history={history}>
-                    <Route path="/" component={App}/>
+                <div>
+                    <Route path="/" exact component={App}/>
+                    <Route path="/about" component={About}/>
+                </div>
                 </ConnectedRouter>
                 <DevTools />
             </div>
