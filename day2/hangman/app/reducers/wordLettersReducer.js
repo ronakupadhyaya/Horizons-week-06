@@ -6,6 +6,29 @@
 
 // import * as types from '../actions/types';
 
-// const wordLettersReducer =
+const wordLettersReducer = (state = [
+    {letter: 'H', guessed: false},
+    {letter: 'O', guessed: false},
+    {letter: 'R', guessed: false},
+    {letter: 'I', guessed: false},
+    {letter: 'Z', guessed: false},
+    {letter: 'O', guessed: false},
+    {letter: 'N', guessed: false},
+    {letter: 'S', guessed: false}
+], action) => {
+    const stateCopy = state.slice();
+    switch(action.type) {
+        case 'GOOD_GUESS':
+            stateCopy.map((obj) => {
+                if(obj.letter === action.letter) {
+                    obj.guessed = true;
+                }
+                return obj;
+            });
+            return stateCopy;
+        default:
+            return state;
+    }
+};
 
-// export default wordLettersReducer;
+export default wordLettersReducer;
