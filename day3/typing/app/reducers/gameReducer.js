@@ -1,5 +1,6 @@
 import words from '../dictionary';
 import _ from 'underscore';
+import * as types from '../actions/types';
 
 const createWordList = () => {
     const sample = _.sample(words, 100);
@@ -15,11 +16,11 @@ const createWordList = () => {
 
 const gameReducer = (state = createWordList(), action) => {
     switch (action.type) {
-        case 'RESET_GAME':
+        case types.actionStartGame:
             return createWordList();
-        case 'APPEND_LETTER':
-            const newState = state.map((word, i) => {
-                return word.map((letter, j) => {
+        case types.actionAppendLetter:
+            const newState = state.map((word) => {
+                return word.map((letter) => {
                     return Object.assign({}, letter);
                 });
             });

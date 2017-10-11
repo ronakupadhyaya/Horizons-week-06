@@ -1,20 +1,20 @@
-// import * as types from './types';
+import * as types from './types';
 
 const createResetAction = () => {
     return {
-        type: 'RESET_GAME'
+        type: types.actionStartGame
     };
 };
 
 const createInputAction = (letter, wordList, currentIndex) => {
     if (letter === ' ') {
         return {
-            type: 'SKIP'
+            type: types.actionSkip
         };
     }
     const currentLetter = wordList[currentIndex[0]][currentIndex[1]].letter;
     return {
-        type: 'APPEND_LETTER',
+        type: types.actionAppendLetter,
         letter: letter,
         advance: currentIndex[1] !== wordList[currentIndex[0]].length - 1,
         correct: currentLetter === letter,
@@ -22,7 +22,20 @@ const createInputAction = (letter, wordList, currentIndex) => {
     };
 };
 
+const createTimerAction = (actionType, id) => {
+    if (actionType === 'startTimer') {
+        return {
+            type: types.actionStartTimer,
+            id: id
+        };
+    }
+    return {
+        type: types.actionDecrementTimer
+    };
+};
+
 export {
     createResetAction,
-    createInputAction
+    createInputAction,
+    createTimerAction
 };

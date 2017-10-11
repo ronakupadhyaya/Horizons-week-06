@@ -1,15 +1,14 @@
 import * as types from '../actions/types';
 
-const inputReducer = (state = '', action) => {
+const scoreReducer = (state = 0, action) => {
     switch (action.type) {
         case types.actionStartGame:
-        case types.actionSkip:
-            return '';
+            return 0;
         case types.actionAppendLetter:
-            return state + action.letter;
+            return state + (action.correct ? 1 : -1);
         default:
             return state;
     }
 };
 
-export default inputReducer;
+export default scoreReducer;
