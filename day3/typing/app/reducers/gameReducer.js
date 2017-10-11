@@ -8,7 +8,7 @@ const initialState =  {
     gameStarted: false,
     currentTime: 0,
     score: 0,
-    endGameDialogOpen: true
+    endGameDialogOpen: false
 };
 
 function calcScore(wordList) {
