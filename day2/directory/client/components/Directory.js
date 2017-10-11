@@ -1,5 +1,6 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
+import { Route, Link, Switch } from 'react-router-dom';
+import { parse } from 'qs';
 
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
@@ -25,27 +26,61 @@ class Directory extends React.Component {
     return (
       <div>
         <h1>Horizons Directory</h1>
-
-
-
-
+        <Route exact={true} path='/directory' component={Form} />
+        <Switch>
+          <Route path='/directory/:fName/:lName' component={Person} />
+          <Route path='/directory' component={LinkList} />
+        </Switch>
+        <Route path='/directory/:anything' render={() => <Link to='/directory'>Back to Listings</Link>} />
       </div>
     );
   }
 };
 
-class LinkList extends React.Component {
-  render() {
-    return (
-        <ul>
-          {this.props.links.map(link => (
-            <li key={link.key}>
-              <Link to={link.to}>{link.text}</Link>
-            </li>
-          ))}
-        </ul>
-    );
-  }
+const Form = () => (
+  <form style={{margin: '10px'}}>
+    <h3>Filter</h3>
+    First Name: <input style={{margin: '0 20px 0 0'}} type='text' name='fName' />
+    Last Name: <input style={{margin: '0 20px 0 0'}} type='text' name='lName' />
+    Area Code: <input style={{margin: '0 20px 0 0'}} type='text' name='areacode' />
+    <input type='submit' value='Filter' />
+  </form>
+)
+
+const LinkList = ({ location }) => {
+  //convert query to object
+  const query = parse(location.search.slice(1));
+  console.log('QUERY', query);
+
+  //assigning ppl to temp variable
+  let links = ppl.slice();
+
+  //filtering the people
+  Object.keys(query).forEach(key => {
+    switch (key) {
+      case 'fName':
+        links = links.filter(p => (p.fName === (query[key] || p.fName)));
+        break;
+      case 'lName':
+        links = links.filter(p => (p.lName === (query[key] || p.lName)));
+        break;
+      case 'areacode':
+        links = links.filter(p => (p.number.slice(1, 4) === (query[key] || p.number.slice(1, 4))));
+        break;
+    }
+  })
+
+  // convertying people to full links
+  links = links.map(pplToFullLink)
+  return (
+    <ul>
+      {links.map(link => (
+        <li key={link.key}>
+          <Link to={link.to}>{link.text}</Link>
+        </li>
+      ))}
+    </ul>
+  );
 };
 
 class Person extends React.Component {
@@ -63,7 +98,7 @@ class Person extends React.Component {
         <h3>{person.email}</h3>
 
         Not the {`${person.fName}`} you're looking for? {' '}
-        Too bad!!!
+        <Link to={`/directory/${person.fName}`}>Find Others</Link>
       </div>
     ) : (
       <h2>No {`${person.fName} ${person.lName}`} was found.</h2>
