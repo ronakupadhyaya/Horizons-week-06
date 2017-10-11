@@ -1,54 +1,50 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import Man from '../components/Man';
+// import Man from '../components/Man';
 import Board from '../components/Board';
+// import {goodGuessesAction, badGuessesAction} from '../actions/index';
 
-const GameContainer = ({ badGuesses, wordLetters, onInput }) => {
+const GameContainer = ({wordLetters, onGoodGuess, onBadGuess }) => {
     let input;
-    // const letterInAnswer = letter => wordLetters.some(
-    //    letterObj => letterObj.letter === letter);
+    const letterInAnswer = letter => wordLetters.some(
+       letterObj => letterObj.letter === letter);
 
     /* the ref node thing in the code below is another way
     to handle input in React Forms */
     return (
         <div>
-            <Man badGuesses={badGuesses} />
             <Board wordLetters={wordLetters} />
             <input type="text"
                 value={''}
                 ref={node => {input = node;}}
-                onChange={() => onInput(input.value) }
+                onChange={() => letterInAnswer(input.value) ? onGoodGuess(input.value) : onBadGuess(input.value) }
             />
         </div>
     );
 };
 
 GameContainer.propTypes = {
+    goodGuesses: PropTypes.number,
     badGuesses: PropTypes.number,
     wordLetters: PropTypes.array,
-    onInput: PropTypes.func
+    onBadGuess: PropTypes.func,
+    onGoodGuess: PropTypes.func,
 };
 
-const mapStateToProps = (/* state */) => {
+const mapStateToProps = (state) => {
     return {
-        badGuesses: 0,
-        wordLetters: [
-            {letter: 'H', guessed: true},
-            {letter: 'O', guessed: false},
-            {letter: 'R', guessed: false},
-            {letter: 'I', guessed: false},
-            {letter: 'Z', guessed: true},
-            {letter: 'O', guessed: false},
-            {letter: 'N', guessed: true},
-            {letter: 'S', guessed: false}
-        ]
+        goodGuesses: state.goodGuesses,
+        badGuesses: state.badGuesses,
+        wordLetters: state.wordLetters,
     };
 };
 
-const mapDispatchToProps = (/* dispatch */) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        onInput: (inputLetter) => alert(inputLetter)
+      //  onBadGuess: (inputLetter) => alert(inputLetter)
+        onGoodGuess: (inputLetter) => dispatch({type: 'GOOD_GUESS', inputLetter}),
+        onBadGuess: (inputLetter) => dispatch({type: 'BAD_GUESS', inputLetter})
     };
 };
 
