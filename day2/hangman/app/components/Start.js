@@ -3,25 +3,20 @@ import {Link} from 'react-router-dom';
 import {Route} from 'react-router-dom';
 
 const Start = ({}) => {
-	let input;
+    let input;
 
-	render() {
-		return (
+
+
+    return (
 			<div>
 				<form onSubmit={}>
-					<label>
-						Word:
-					</label>
-					<input type="text" value={} />
-					<input type="submit" value="Submit" />
+					<input type="text"
+						value={''}
+						ref={node => {input = node;}}
+						onChange={() =>  }
+					/>
 				</form>
-				<input type="text"
-					value={''}
-					ref={node => {input = node;}}
-					onSubmit={() => letterInAnswer(input.value) ? onGoodGuess(input.value) : onBadGuess(input.value) }
 
-				/>
 			</div>
 		);
 	}
-}
