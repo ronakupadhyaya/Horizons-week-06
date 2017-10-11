@@ -1,37 +1,42 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import actionCreators from '../actions/index';
+import Game from '../components/Game';
 
 class GameContainer extends React.Component {
-    onInput(input) {
-        // YOUR ON INPUT FUNCTION HERE
-    }
-
-    render() {
-        return (
-            <div>
-                I am the game container!
-                {
-                    // YOUR GAME COMPONENT HERE
-                }
-            </div>
-        );
-    }
+  render() {
+    return (
+          <div className="container game-container">
+              <Game words={this.props.words} />
+              <div className="row text-center">
+                <input type="submit"
+                  className="btn btn-success startButton"
+                  onClick={() => this.props.onStartClick()}
+                  value="Start Game"/>
+              </div>
+          </div>
+      );
+  }
 }
 
 GameContainer.propTypes = {
+  words: PropTypes.array,
+  onStartClick: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {
-    return {
-        // YOUR MAP STATE TO PROPS HERE
-    };
+  return {
+    words: state.words,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        // YOUR MAP DISPATCH TO PROPS HERE
-    };
+  return {
+    onStartClick: () => {
+      dispatch(actionCreators.startGame());
+    },
+  };
 };
 
 export default connect(
