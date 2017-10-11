@@ -6,6 +6,7 @@
 
 // import * as types from '../actions/types';
 
+<<<<<<< HEAD
 const wordLettersReducer = (state = [
     {letter: 'H', guessed: true},
     {letter: 'O', guessed: false},
@@ -32,4 +33,20 @@ const wordLettersReducer = (state = [
     }
 };
 
+=======
+const wordLettersReducer = (state = [], action) => {
+    switch(action.type) {
+        case 'CREATE':
+            return action.word.split('').map(each => ({letter: each, guessed: false}));
+        case 'GOOD_GUESS':
+            const newState = state.slice();
+            return newState.map(each => ({letter: each.letter, guessed: (each.letter === action.letter ? true : each.guessed)
+            }));
+
+        default:
+            return state;
+    }
+};
+
+>>>>>>> origin/obadiar
 export default wordLettersReducer;

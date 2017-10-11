@@ -3,11 +3,6 @@ import { combineReducers } from 'redux';
 import badGuessesReducer from './badGuessesReducer';
 import wordLettersReducer from './wordLettersReducer';
 import guessedLettersReducer from './guessedLettersReducer';
-<<<<<<< HEAD
-=======
-import setWordReducer from './setWordReducer';
->>>>>>> origin/obadiar
-
 /*
   combineReducers lets you meld several reducers into one.
   So calling combineReducers after having uncommented the below
@@ -19,17 +14,10 @@ import setWordReducer from './setWordReducer';
     }
 */
 const rootReducer = combineReducers({
-    badGuesses: badGuessesReducer,
-    guessedLetters: guessedLettersReducer,
-    wordLetters: wordLettersReducer,
-<<<<<<< HEAD
-    guessedLetters: guessedLettersReducer,
-  /*
-  */
-=======
-    setWord: setWordReducer,
->>>>>>> origin/obadiar
-    routing: routerReducer // this reducer is used by React Router in Redux
+  badGuesses: badGuessesReducer,
+  guessedLetters: guessedLettersReducer,
+  wordLetters: wordLettersReducer,
+  routing: routerReducer // this reducer is used by React Router in Redux
 });
 
 export default rootReducer;

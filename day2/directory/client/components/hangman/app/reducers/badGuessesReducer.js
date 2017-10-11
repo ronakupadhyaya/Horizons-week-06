@@ -5,11 +5,8 @@
 
 const badGuessesReducer = (state = 0, action) => {
     switch (action.type) {
-<<<<<<< HEAD
-=======
         case 'CREATE':
             return 0;
->>>>>>> origin/obadiar
         case 'BAD_GUESS':
             return state + 1;
         default:
