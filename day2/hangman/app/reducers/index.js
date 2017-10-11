@@ -1,3 +1,7 @@
+import badGuessesReducer from './badGuessesReducer';
+import wordLettersReducer from './wordLettersReducer';
+import guessedLettersReducer from './guessedLettersReducer';
+import createNewWordReducer from './createNewWordReducer';
 import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
 // import badGuessesReducer from './badGuessesReducer';
@@ -14,10 +18,11 @@ import { combineReducers } from 'redux';
     }
 */
 const rootReducer = combineReducers({
-  /*
+
     badGuesses: badGuessesReducer,
     wordLetters: wordLettersReducer,
-  */
+    guessedLetters: guessedLettersReducer,
+    newWord: createNewWordReducer,
     routing: routerReducer // this reducer is used by React Router in Redux
 });
 
