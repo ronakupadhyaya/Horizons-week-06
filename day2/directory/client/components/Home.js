@@ -6,10 +6,8 @@ class Home extends React.Component {
     return (
       <div>
         <h1>Welcome to the Horizons Portfolio</h1>
-        <h2>Featuring Directory, Hangman, and Chicken Contest</h2>
+        <h2>Featuring Directory, Chicken Contest, Hangman</h2>
         {<Link to='/directory'>Directory</Link>} 
-        <br></br>
-        {<Link to='/hangman'>Hangman</Link>}
       </div>
     )
   }
