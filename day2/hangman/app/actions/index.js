@@ -1,3 +1,5 @@
-// Action Creators
-
-// import * as types from './types';
+export function badGuess() {
+    return{
+        type: 'BAD_GUESS'
+    };
+}
