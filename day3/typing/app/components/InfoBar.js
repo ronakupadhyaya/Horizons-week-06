@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const InfoBar = ({timeLeft, score, startGame}) => {
+const InfoBar = ({timeLeft, score, startGame, streak}) => {
     return(
       <div>
         <p>Time left: {timeLeft}</p>
         <p> Score: {score} </p>
+        <p> Streak: {streak} </p>
         <button onClick={() => {startGame();}}> Start Game </button>
       </div>
     );
@@ -14,7 +15,8 @@ const InfoBar = ({timeLeft, score, startGame}) => {
 InfoBar.propTypes = {
     timeLeft: PropTypes.number,
     score: PropTypes.number,
-    startGame: PropTypes.func
+    startGame: PropTypes.func,
+    streak: PropTypes.number
 };
 
 export default InfoBar;

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { routerMiddleware, push } from 'react-router-redux';
 
 class GameOver extends Component {
     constructor(props) {
@@ -11,7 +13,12 @@ class GameOver extends Component {
         this.handleInputchange = this.handleInputchange.bind(this);
         this.submitChange = this.submitChange.bind(this);
     }
-
+    componentDidMount() {
+        console.log('Got in?', this.props.showLeaderBoard);
+        if(this.props.showLeaderBoard) {
+            console.log('props', this.props);
+        }
+    }
     handleInputchange(event) {
         this.setState({initials: event.target.value});
     }
@@ -20,6 +27,10 @@ class GameOver extends Component {
         this.props.enterLeaderBoard(this.props.topTen, this.state.initials, this.props.score);
     }
     render() {
+        if(this.props.showLeaderBoard) {
+            console.log('dispatch');
+            this.props.onNavigateTo('/leaderboard');
+        }
         const {score, topTen} = this.props;
         if(topTen) {
             return (
@@ -45,19 +56,23 @@ GameOver.propTypes = {
     restartGame: PropTypes.func,
     topTen: PropTypes.number,
     place: PropTypes.number,
-    enterLeaderBoard: PropTypes.func
+    enterLeaderBoard: PropTypes.func,
+    showLeaderBoard: PropTypes.bool,
+    onNavigateTo: PropTypes.func
 };
 const mapStateToProps = (state) => {
     return{
         score: state.gameState.score,
-        topTen: state.gameState.topTen
+        topTen: state.gameState.topTen,
+        showLeaderBoard: state.gameState.showLeaderBoard
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return{
         restartGame: () => dispatch({type: 'RESTART_GAME'}),
-        enterLeaderBoard: (place, initials, score) => dispatch({type: 'NEW_LEADER', place, initials, score})
+        enterLeaderBoard: (place, initials, score) => dispatch({type: 'NEW_LEADER', place, initials, score}),
+        onNavigateTo: (dest) => dispatch(push(dest))
     };
 };
 

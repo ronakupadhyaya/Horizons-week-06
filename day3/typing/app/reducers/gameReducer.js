@@ -9,6 +9,7 @@ const defaultState = {
     score: 0,
     gameOver: false,
     topTen: 0,
+    streak: 0,
     showLeaderBoard: false
 };
 function cloneWordList(wordList) {
@@ -45,21 +46,38 @@ const gameReducer = (state = defaultState, action) => {
             const anotherArray = cloneWordList(state.wordList);
             const compareLetter = anotherArray[currentWord][currentLetter];
             let newScore = newState.score;
+            let newStreak = newState.streak;
             if(action.letter === compareLetter.letter) {
                 anotherArray[currentWord][currentLetter].status = 'correct';
                 newScore = newScore + 1;
             } else{
                 anotherArray[currentWord][currentLetter].status = 'incorrect';
                 newScore = newScore - 1;
+                newStreak = 0;
             }
             const newIndexArr = [...state.currentIndex];
             newIndexArr[1] = newIndexArr[1] + 1;
-            return {...state, wordList: anotherArray, currentIndex: newIndexArr, userInput: state.userInput + action.letter, score: newScore};
+            return {...state, wordList: anotherArray, currentIndex: newIndexArr, userInput: state.userInput + action.letter, score: newScore, streak: newStreak};
         case 'NEXT_WORD':
             const newIndex = [...state.currentIndex];
+            // check through every word in current word;
+            let anotherStreak = state.streak;
+            let anotherScore = state.score;
+            const nowWord = state.wordList[newIndex[0]];
+            let allCorrect = true;
+            for(let i = 0; i < nowWord.length; i++) {
+                if(nowWord[i].status === 'incorrect') {
+                    allCorrect = false;
+                }
+            }
+
+            if(allCorrect)  {
+                anotherStreak = anotherStreak + 1;
+                anotherScore = anotherScore + anotherStreak;
+            }
             newIndex[0] = newIndex[0] + 1;
             newIndex[1] = 0;
-            return {...state, currentIndex: newIndex, userInput: state.userInput + ' '};
+            return {...state, currentIndex: newIndex, userInput: state.userInput + ' ', streak: anotherStreak, score: anotherScore};
         case 'DECREMENT_TIMER':
             return {...state, timeLeft: state.timeLeft - 1};
         case 'END_GAME':
@@ -77,6 +95,7 @@ const gameReducer = (state = defaultState, action) => {
             newLeaderboard[action.place].name = action.initials;
             newLeaderboard[action.place].score = action.score;
             localStorage.setItem('leaderboard', JSON.stringify(newLeaderboard));
+            console.log('NEW?');
             return {...state, showLeaderBoard: true};
         default:
             return state;

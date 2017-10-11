@@ -25,7 +25,7 @@ class GameContainer extends React.Component {
             this.props.nextWord();
         }
         if(this.props.currentIndex[0] === 0 && this.props.currentIndex[1] === 0) {
-            let timeLeft = 10;
+            let timeLeft = this.props.timeLeft;
             counter++;
             const gameOver = this.props.endGame;
             this.interval = setInterval(() => {
@@ -68,7 +68,7 @@ class GameContainer extends React.Component {
             }
             output.push(<span> </span>);
         }
-        const {userInput, timeLeft, score, startGame, gameOver} = this.props;
+        const {userInput, timeLeft, score, startGame, gameOver, streak} = this.props;
         if(gameOver) {
             return (
               <GameOver />
@@ -80,7 +80,7 @@ class GameContainer extends React.Component {
 
                     <WordBox wordList={output} />
                     <TextBox userInput={userInput} onInput = {this.onInput} />
-                    <InfoBar timeLeft={timeLeft} startGame={startGame} gameOver={gameOver} score={score}/>
+                    <InfoBar timeLeft={timeLeft} startGame={startGame} gameOver={gameOver} score={score} streak={streak}/>
             </div>
         );
     }
@@ -97,7 +97,8 @@ GameContainer.propTypes = {
     endGame: PropTypes.func,
     decrementTimer: PropTypes.func,
     score: PropTypes.number,
-    gameOver: PropTypes.bool
+    gameOver: PropTypes.bool,
+    streak: PropTypes.number
 };
 
 const mapStateToProps = (state) => {
@@ -107,7 +108,8 @@ const mapStateToProps = (state) => {
         currentIndex: state.gameState.currentIndex,
         timeLeft: state.gameState.timeLeft,
         score: state.gameState.score,
-        gameOver: state.gameState.gameOver
+        gameOver: state.gameState.gameOver,
+        streak: state.gameState.streak
     };
 };
 
