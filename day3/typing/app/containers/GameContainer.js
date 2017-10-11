@@ -3,20 +3,46 @@ import React from 'react';
 import { connect } from 'react-redux';
 import WordBox from '../components/WordBox';
 import TextBox from '../components/TextBox';
+import InfoBar from '../components/InfoBar';
+import GameOver from '../containers/GameOver';
 class GameContainer extends React.Component {
     constructor(props) {
         super(props);
-        this.props.createGame();
+        // this.props.createGame();
         this.onInput = this.onInput.bind(this);
     }
 
     onInput(input) {
         // YOUR ON INPUT FUNCTION HERE
         const letter = String.fromCharCode(input);
+        let counter = 0;
+        const decrementTimer = this.props.decrementTimer;
+
+        const currentWord = this.props.currentIndex[0];
         if(letter !== ' ') {
             this.props.addChar(letter);
         } else{
             this.props.nextWord();
+        }
+        if(this.props.currentIndex[0] === 0 && this.props.currentIndex[1] === 0) {
+            let timeLeft = 10;
+            counter++;
+            const gameOver = this.props.endGame;
+            this.interval = setInterval(() => {
+                decrementTimer();
+
+                timeLeft--;
+                console.log('timeLeft', timeLeft);
+                if(timeLeft <= 0) {
+                    console.log('what');
+                    clearInterval(this.interval);
+                    gameOver();
+                }
+                if(currentWord === 100) {
+                    clearInterval(this.interval);
+                    gameOver();
+                }
+            }, 1000);
         }
     }
 
@@ -42,14 +68,19 @@ class GameContainer extends React.Component {
             }
             output.push(<span> </span>);
         }
-        const {userInput} = this.props;
+        const {userInput, timeLeft, score, startGame, gameOver} = this.props;
+        if(gameOver) {
+            return (
+              <GameOver />
+            );
+        }
         return (
             <div>
                 I am the game container!
 
                     <WordBox wordList={output} />
                     <TextBox userInput={userInput} onInput = {this.onInput} />
-
+                    <InfoBar timeLeft={timeLeft} startGame={startGame} gameOver={gameOver} score={score}/>
             </div>
         );
     }
@@ -57,28 +88,37 @@ class GameContainer extends React.Component {
 
 GameContainer.propTypes = {
     wordList: PropTypes.array,
-    createGame: PropTypes.func,
     userInput: PropTypes.string,
     addChar: PropTypes.func,
     currentIndex: PropTypes.array,
-    nextWord: PropTypes.func
+    nextWord: PropTypes.func,
+    timeLeft: PropTypes.number,
+    startGame: PropTypes.func,
+    endGame: PropTypes.func,
+    decrementTimer: PropTypes.func,
+    score: PropTypes.number,
+    gameOver: PropTypes.bool
 };
 
 const mapStateToProps = (state) => {
-    console.log('STATE', state);
     return {
         wordList: state.gameState.wordList,
         userInput: state.gameState.userInput,
-        currentIndex: state.gameState.currentIndex
+        currentIndex: state.gameState.currentIndex,
+        timeLeft: state.gameState.timeLeft,
+        score: state.gameState.score,
+        gameOver: state.gameState.gameOver
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         // YOUR MAP DISPATCH TO PROPS HERE
-        createGame: () => dispatch({type: 'CREATE_GAME'}),
         addChar: (char) => dispatch({type: 'CHAR_ADDED', letter: char}),
-        nextWord: () => dispatch({type: 'NEXT_WORD'})
+        nextWord: () => dispatch({type: 'NEXT_WORD'}),
+        startGame: () => dispatch({type: 'START_GAME'}),
+        decrementTimer: () => dispatch({type: 'DECREMENT_TIMER'}),
+        endGame: () => dispatch({type: 'END_GAME'})
     };
 };
 
