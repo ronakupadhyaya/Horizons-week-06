@@ -3,10 +3,15 @@ import PropTypes from 'prop-types';
 
 const WordBox = ({ wordList }) => {
     return (
-        <div>
+        <div style={{width: '60%'}}>
             {
-              wordList.map(word => word.map(letter => <span
-                  className={letter.status}>{letter.letter}</span>))
+                wordList.map((word) => {
+                    return (
+                        <span>
+                            {word.map((letter) => (<span className={letter.status}>{letter.letter}</span>))}
+                            <span> </span>
+                        </span>
+              );})
             }
         </div>
     );
