@@ -22,11 +22,16 @@ const createInputAction = (letter, wordList, currentIndex) => {
     };
 };
 
-const createTimerAction = (actionType, id) => {
+const createTimerAction = (actionType, id, counter) => {
     if (actionType === 'startTimer') {
         return {
             type: types.actionStartTimer,
             id: id
+        };
+    }
+    if (counter === 0) {
+        return {
+            type: types.actionEndGame
         };
     }
     return {

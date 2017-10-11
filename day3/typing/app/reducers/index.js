@@ -5,6 +5,7 @@ import indexReducer from './indexReducer';
 import inputReducer from './inputReducer';
 import timerReducer from './timerReducer';
 import scoreReducer from './scoreReducer';
+import gameOverReducer from './gameOverReducer';
 // import * as types from '../actions/types';
 
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     wordList: gameReducer,
     timeLeft: timerReducer,
     score: scoreReducer,
+    gameOver: gameOverReducer,
     routing
 });
 

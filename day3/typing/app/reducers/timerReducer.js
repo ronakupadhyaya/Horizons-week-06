@@ -1,6 +1,6 @@
 import * as types from '../actions/types';
 
-const GAME_LENGTH = 60;
+const GAME_LENGTH = 1;
 
 const timerReducer = (state = [GAME_LENGTH, null], action) => {
     switch (action.type) {
@@ -12,8 +12,9 @@ const timerReducer = (state = [GAME_LENGTH, null], action) => {
             }
             return [GAME_LENGTH, null];
         case types.actionDecrementTimer:
-            if (!(state[0] - 1)) {
+            if (!(state[0])) {
                 clearInterval(state[1]);
+                return state;
             }
             return [state[0] - 1, state[1]];
         default:

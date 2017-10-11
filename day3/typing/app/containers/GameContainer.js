@@ -2,18 +2,23 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import WordBox from '../components/WordBox';
+import GameOverContainer from './GameOverContainer';
 import { createResetAction, createInputAction, createTimerAction } from '../actions/index';
 
-const GameContainer = ({ onReset, wordList, currentIndex, inputHandler, userInput, timeLeft, score }) => {
-    // onInput(input)
+const GameContainer = ({ onReset, wordList, currentIndex, inputHandler, userInput, timeLeft, score, gameOver }) => {
     let input;
     return (
         <div>
-            <button type="button" onClick={() => onReset()}>Restart Game!</button>
-            <br /><span> {timeLeft[0]}</span>
-            <WordBox wordList={wordList} />
-            <input type="text" value={userInput} ref={node => { input = node; }} onChange={() => inputHandler(input.value.substr(-1), wordList, currentIndex, timeLeft)} />
-            <span>Score: {score}</span>
+            {gameOver ?
+                <GameOverContainer score={score} onClick={() => onReset()} /> :
+                <div>
+                    <button type="button" onClick={() => onReset()}>Restart Game!</button>
+                    <br /> <span> {timeLeft[0]}</span>
+                    <WordBox wordList={wordList} />
+                    <input type="text" value={userInput} ref={node => { input = node; }} onChange={() => inputHandler(input.value.substr(-1), wordList, currentIndex, timeLeft)} />
+                    <span>Score: {score}</span>
+                </div>
+            }
         </div>
     );
 };
@@ -25,7 +30,8 @@ GameContainer.propTypes = {
     inputHandler: PropTypes.func,
     userInput: PropTypes.string,
     timeLeft: PropTypes.array,
-    score: PropTypes.number
+    score: PropTypes.number,
+    gameOver: PropTypes.bool
 };
 
 const mapStateToProps = (state) => {
@@ -35,7 +41,8 @@ const mapStateToProps = (state) => {
         currentIndex: state.currentIndex,
         userInput: state.userInput,
         timeLeft: state.timeLeft,
-        score: state.score
+        score: state.score,
+        gameOver: state.gameOver
     };
 };
 
@@ -48,7 +55,8 @@ const mapDispatchToProps = (dispatch) => {
         inputHandler: (letter, wordList, currentIndex, timeLeft) => {
             dispatch(createInputAction(letter, wordList, currentIndex));
             if (!timeLeft[1]) {
-                const tempId = setInterval(() => dispatch(createTimerAction('decrement')), 1000);
+                let counter = timeLeft[0];
+                const tempId = setInterval(() => dispatch(createTimerAction('decrement', null, counter--)), 1000);
                 dispatch(createTimerAction('startTimer', tempId));
             }
         }
