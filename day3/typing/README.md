@@ -12,11 +12,21 @@ Currently if the user navigates to `index.html` the `app/components/App.js` comp
     1. Get the first **100 words** from this list and add them to your initial state under `wordList`
 1. Edit `containers/GameContainer.js`
     1. Update `mapStateToProps()` and map `wordList` to your props
-1. Create a `WordBox` component and add it to `GameContainer`, it will receive `wordList` via props. Your WordBox component is responsible for rendering a div containing each word in its `wordList`prop.
-    1. Put each character inside of its own `<span>` so that characters can be differentiated from each other later on
-        
-        *Hint* Use a nested map such that the outer map will map every word into a div, and the inner map will map each individual character of every word into a span.
-    1. Put your CSS in `app/index.tpl.html` where it says `YOUR CSS STYLES HERE`
+1. Create a `WordBox` component and add it to `GameContainer`, it will receive
+`wordList` via props. Your WordBox component is responsible for rendering a div
+containing each word in its `wordList` prop.
+
+    <details><summary>
+    Hint
+    </summary><p>
+
+    Use `Array.prototype.join()` to put a single space between each word.
+
+    ![Render function screenshot](img/part1_render.png)
+
+    </p></details>
+
+1. Put your CSS in `app/index.tpl.html` where it says `YOUR CSS STYLES HERE`
 
 If you need help styling, you can use this [sample CSS/HTML for your `WordBox` component](https://codepen.io/horizons/pen/QgVmmm?editors=1100)
 
@@ -28,56 +38,84 @@ When the user first navigates you should now see something similar to the follow
 
 
 ## Part 2: Highlight Letters & Mistakes
-In order to implement character highlighting functionality, we would like to store information about each character within our state. In your state, lets have our `wordList` be an array of arrays. The inner arrays correspond to a word and contain character/letter objects representing a letter in that given word. For example,
-at the beginning of the game, the words `['I', 'am', 'Pam']` would be represented
-as:
 
-```JavaScript
-{
-    wordList: [
-        [{letter: 'I', status: 'pending'}],
-        [
-            {letter: 'a', status: 'pending'},
-            {letter: 'm', status: 'pending'}
-        ],
-        [
-            {letter: 'P', status: 'pending'},
-            {letter: 'a', status: 'pending'},
-            {letter: 'm', status: 'pending'}
-        ]
-    ]
-}
-```
-
-Each character/letter corresponds to a character object with the properties:
+Now let's update our state so we can distinguish between letters that have
+been typed correctly and incorrectly. Each character/letter correspond to an
+object that has the keys:
 
 - `letter`: This will hold the letter value that should be displayed
 - `status`:  This will be either `pending`, `correct`, `incorrect`. Characters in the 'pending' state are those that have not been typed yet and will be displayed in gray. Characters in the 'correct' or 'incorrect' state will be the characters the player has correctly/incorrectly typed and should be highlighted in blue and red respectively.
 
-Update the way our `WordBox` component is rendered:
-- Now that each character in our `wordList` prop is represented by an object `{letter: 'a', status: 'pending'}`, we must style each character span our `WordBox` renders to be the color corresponding to its `status`
+1. Change your initial state to
+
+    ```javascript
+    {
+        wordList: [
+            [{letter: 'I', status: 'correct'}],
+            [
+                {letter: 'a', status: 'incorrect'},
+                {letter: 'm', status: 'correct'}
+            ],
+            [
+                {letter: 'P', status: 'correct'},
+                {letter: 'a', status: 'pending'},
+                {letter: 'm', status: 'pending'}
+            ]
+        ]
+    }
+    ```
+
+1. This state represents the words `['I', 'am', 'Pam']`. Update your
+`WordList` component `render` function to properly handle this state.
+
+    <details><summary>
+    Hint
+    </summary><p>
+
+    You can use a nested for-loop to display state from nested arrays.
+
+    ![Part 2 render function screenshot](img/part2_render.png)
+
+    </p></details>
+1. Update your CSS so that pending letters are gray, correct letters are
+blue and incorrect letters are red.
+
+    You should see:
+
+    ![](./img/highlightingtest.png)
+1. Change your initial state to read from `app/dictionary.js` again but this
+time automatically convert the word array into properly formatted state
+where each letter is replaced with an object that contains the letter and its
+status `{letter: 'x', status: 'pending'}`.
+
+    <details><summary>
+    Hint
+    </summary><p>
+
+    You can use a nested for loop to convert the words array into state.
+
+    ![Part 2 state conversion screenshot](img/part2_convert.png)
+
+    </p></details>
 
 ### Goal
 
-Make sure characters appear in the correct color by changing the characters' initial `status` to `correct` or `incorrect`. Correct letters should be highlighted blue
-and incorrect letters should be highlighted red.
-
-![](./img/highlightingtest.png)
+You should now see a box full of words where every letter is gray.
 
 ## Part 3: Typing
 
 1. Add the following to our Redux state:
     - `currentIndex` (initially `[0,0]`): an array of 2 numbers that point to our current location in the array in the format `[word #, char #]` - remember that since strings are Arrays in JavaScript we can use Array notation to access characters.
     - `userInput` (initially `''`): a string that controls the contents of the `TextBox` element
-1. Create a `TextBox` component that contains an `<input type="text />` element for input, this should receive its `value` from Redux state `userInput`
+1. Create a `TextBox` component that contains an `<input type="text" />` element for input, this should receive its `value` from Redux state `userInput`.
 1. Update `GameContainer` and pass `this.onInput()` to `TextBox` as a prop, and use the `onKeyPress` event handler for the `<input type="text">` to call `onInput()` with the new letter that was typed in.
-        
+
     [Example usage of onKeyPress to control input](https://codepen.io/horizons/pen/RLydVR?editors=0010)
 
-1. Dispatch the following actions from `GameContainer`'s `onInput()` function:
+1. Inside `onInput()` do:
     1. __IF__ a new non-whitespace character is entered:
         - Dispatch a `CHAR_ADDED` event with the new character (i.e. letter) that was just typed.
-    
+
             <details>
             <summary>Hint</summary>
             <div>
@@ -88,18 +126,43 @@ and incorrect letters should be highlighted red.
 
             </div>
             </details>
-        - When you receive a `CHAR_ADDED` action in your reducer, compare the new letter against our `wordList` at the `currentIndex`.
-          Update the `status` of the corresponding letter in the `wordList` array to indicate `correct` or `incorrect`.
-          
-          Update `currentIndex` to to move to the **next letter.**
-          
-          Update `userInput` by adding the newly typed letter to the end of the string.
+        - When you receive a `CHAR_ADDED` action in your reducer, compare the
+        new letter against our `wordList` at the `currentIndex`.
+        Update the `status` of the corresponding letter in the `wordList`
+        array to indicate `correct` or `incorrect`.
+
+            You can make a copy of the `wordList` state with this function and
+            mutate (i.e. modify) it safely.
+
+            ```javascript
+            function cloneWordList(wordList) {
+                return wordList.map(word =>
+                      word.map(letterObj =>
+                          Object.assign({}, letterObj)));
+            }
+            ```
+
+            <details><summary>
+            Hint
+            </summary><p>
+
+            Once you copy the word list you can find the object that describes
+            the current letter with:
+
+            ```javascript
+            wordList[this.currentIndex[0]][this.currentIndex[1]]
+            ```
+
+            </p></details>
+
+        - Update `currentIndex` to to move to the **next letter.**
+        - Update `userInput` by adding the newly typed letter to the end of the string.
     1. __IF__ a whitespace character is entered:
         - Dispatch a `NEXT_WORD` action.
         - When you receive a `NEXT_WORD` action in your reducer, clear contents of `userInput`.
-        
+
             Update `currentIndex` to move to the **next word.**
-            
+
             <details>
             <summary>Hint</summary>
             <div>
@@ -109,7 +172,7 @@ and incorrect letters should be highlighted red.
 
             </div>
             </details>
-            
+
 
 
 __Note:__ The user __SHOULD NOT__ be able to press the DELETE/BACKSPACE key to undo mistakes in this game
@@ -119,40 +182,63 @@ If you need help styling your application you can use this [sample HTML/CSS for 
 
 ### Goal
 
-When you start typing, you should see letters correctly typed letters highlighted in blue and incorrectly typed letters highlighted in red.
+When you start typing, you should see letters correctly typed letters
+highlighted in blue and incorrectly typed letters highlighted in red.
 
 ![](./img/3typing.png)
 
-
-
-
 ### Part 4: Timing
 
-Let's add timing functionality to this game. We need to add a timer that will begin counting once the user starts typing, and will stop once the game has ended (once the user has typed all words in the box).
--reducer when char added action is triggered should update cahr status, update index, update score
-1. Create a `InfoBar` component to display the timer. Add `currentTime` to your initial state in your reducer and give it the initial value `-1`, Have `InfoBar` receive a prop `currentTime` and display it bellow the `TextBox`. If the `currentTime` is -1, lets just display a `-` in place of the number of seconds to indicate the game has yet to start.
-1. Update `mapDispatchToProps()` and create three actions `START_GAME`, `INCREMENT_TIMER`, and `END_GAME`.
+Let's add timing functionality to this game. We need to add a timer that will
+begin counting once the user starts typing, and will stop once the game has
+ended (once the user has typed all words in the box).
+
+1. Add `timeLeft` to your initial state in your reducer and give it the initial value `60`.
+1. Create a `InfoBar` component to display the timer. Have `InfoBar` receive a prop `timeLeft` and display it bellow the `TextBox`.
+1. Update `mapDispatchToProps()` and create three actions `START_GAME`, `DECREMENT_TIMER`, and `END_GAME`.
 1. Update the `onInput()` function in `GameContainer` with:
     1. Dispatch a `START_GAME` action when the game beings.
-    We can tell when a user has first began typing by checking our `currentIndex` prop in our `GameContainer`. We already have a function `onInput(input)` that will get called for every typing event in our TextBox, so all we need to do is check to see if our  `currentIndex` is `[0,0]` and then we will know that this is the first call to `onInput` and so our game has begun.
-    1. Use `setInterval` inside `onInput()` to dispatch an `INCREMENT_TIMER` action every 1000ms. Additionally, the `setInterval` should dispatch an `END_GAME` action once all the words have been typed.
-    1. Save the id that `setInterval()` returns under variable `interval` so you
+
+        <details><summary>
+        Hint
+        </summary><p>
+
+        The game begins when the user types in to the textbox for the first time.
+        At the beginning of the game `currentIndex` will be `[0, 0]`.
+
+        </p></details>
+
+    1. Use `setInterval` inside `onInput()` to dispatch an `DECREMENT_TIMER` action every 1000ms.
+
+        The `setInterval` should dispatch an `END_GAME` action
+        once all the words have been typed.
+
+        Save the id that `setInterval()` returns `this.interval` so you
         can clear it later when the game ends
         (i.e. the timer has run out).
 
         <details>
         <summary>Hint</summary>
-    
+
         ```javascript
-        let interval = setInterval(() => {
-            //dispatch INCREMENT_TIMER action
-            if (user has completed typing all the words) {
+        this.interval = setInterval(() => {
+            //dispatch DECREMENT_TIMER action
+            if (time has run out) {
                 //dispatch END_GAME action
-                clearInterval(interval);
+                clearInterval(this.interval);
             }
         }, 1000);
         ```
         </details>
+    1. Handle the `DECREMENT_TIMER`, `START_GAME` and `END_GAME` actions in
+    your reducer.
+
+        `DECREMENT_TIMER` should decrease `timeLeft` by 1.
+
+        `START_GAME` should put new set of random words in `wordList`,
+        reset `currentIndex`, `userInput`.
+
+        `END_GAME` should reset `currentIndex` and `userInput`.
 
 ## Goal
 
@@ -161,33 +247,44 @@ When you start typing, you should see the timer change for every second passed.
 ![](./img/4timing.png)
 
 ## Part 5: Scoring
+
 1. Update `InfoBar` component to display the total score (initially 0)
 1. Add the following to our state:
     - `totalScore`: # of matching letters - # of mismatching letters
-1. Calculate `totalScore`. We already  compare `wordList` and `input` in our `onInput` function in our `GameContainer`.  We are going to want to dispatch an action(s) to either increment or decrement `totalScore` in our state.  We will leave it to you to decide the necessary actions to make these changes.
-1. When the game is over, you should either alert the user or display a message saying
+1. Update your reducer to recalculate `totalScore` as the game is played.
 
+    When we receive a `CHAR_ADDED` event, we already know if the typed letter
+    was correct or incorrect. Update `totalScore` accordingly.
+
+## Goal
+
+You should see a score that updates as the game is played.
 
 ![](./img/scoring6.png)
 
-
 ## Part 6: Game Over
 
-When the `setInterval` dispatches an `END_GAME` action end the game and display a Game over page. `Game over! Final Time: [time in seconds] Score: [total score]`
+When the `setInterval` dispatches an `END_GAME` display a dialog informing
+the user of their score at the end of the game.
 
-<!-- 1. When `END_GAME` is dispatched update `totalScore` by adding `streakCount` and `totalScore` -->
-1. Create a `GameOver` container which contains `FinalScore`, `PlayGameButton`, and `ViewLeaderboardButton` components
-1. Create a route for this page of your App
-1. Display `totalScore` and `currentTime` in the `FinalScore` component
-1. Clicking the `PlayGameButton` should dispatch a `RESTART_GAME` action, which resets the values in state (i.e. set `currentIndex` to `[0,0]`, `totalScore` to `0`, etc...) and navigates you back to the default route where you should see the `GameContainer`
-1. Clicking the `ViewLeaderboardButton` navigates you to the route you create in the next part for the Leaderboard
+1. Add a new key `gameOver` to your initial state and set it to `false` by default.
+1. Create a `GameOver` container which displays the current score and
+has a button that says `Play Game` button.
+1. In your `GameContainer` only `GameOver` if `gameOver` is true in your
+Redux state.
+1. Clicking the `Play Game` button should dispatch a `RESTART_GAME` action,
+which resets the values in state (i.e. set `gameOver` to false, `currentIndex` to `[0,0]`,
+`totalScore` to `0`, etc.)
+1. Update your `END_GAME` action to set `gameOver` to be `true`.
 
 ### Goal
+
 Your finished __Game Over!__ page should look something like the following.
 
 ![](./img/3_timeup.png)
 
 ## BONUS: Part 7: Leaderboard
+
 If your `totalScore` was in the Top 10, the `END_GAME` action asks you for your 3-character initials and adds you to the Leaderboard. __Note__ you can use `localStorage` to keep track of top 10 user scores (by putting them in an Object like below). Since `localStorage` only works with Strings, you will have to use `JSON.parse` and `JSON.stringify` to store Objects.
 
 ```js
