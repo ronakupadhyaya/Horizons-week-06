@@ -1,5 +1,6 @@
 import React from 'react';
-import { /* Route, */ Link } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
+import { parse } from 'qs';
 
 const ppl = [
   { "fName": "Nihar", "lName": "Patil", "number": "(921)-664-2091", "email": "nihar@joinhorizons.com" },
@@ -10,13 +11,14 @@ const ppl = [
   { "fName": "Graham", "lName": "Master", "number": "(612)-284-3678", "email": "senseibaybay@aol.com" },
   { "fName": "Graham", "lName": "Cracker", "number": "(616)-824-0567", "email": "cinnamonbear@yahoo.com" },
   { "fName": "Darwish", "lName": "Gani", "number": "(774)-123-6477", "email": "darwish@joinhorizons.com" },
-  { "fName": "Darwish", "lName": "Gandhi", "number": "(124)-233-6755", "email": "saltypeace@india.gov" }
-
+  { "fName": "Darwish", "lName": "Gandhi", "number": "(124)-233-6755", "email": "saltypeace@india.gov" },
+  { "fName": "Debi", "lName": "Ha", "number": "(310)-590-5299", "email": "whatup@korea.gov" },
+  { "fName": "JiMin", "lName": "Ha", "number": "(310)-721-9277", "email": "intestines@korea.gov" }
 ];
 
 const pplToFullLink = person => ({
     to: `/directory/${person.fName}/${person.lName}`,
-    text: `${person.fName} ${person.lName}`,
+    text: `${person.fName}. ${person.lName}`,
     key: person.number
 });
 
@@ -25,27 +27,62 @@ class Directory extends React.Component {
     return (
       <div>
         <h1>Horizons Directory</h1>
-
-
-
-
+        <Form />
+        <Switch>
+          <Route path='/directory' component={LinkList}/>
+          <Route path='/directory/:fName/:lName' component={Person}/>
+        </Switch>
       </div>
     );
   }
 };
 
-class LinkList extends React.Component {
-  render() {
+const Form = () => {
+  return(
+    <form>
+      <input type='text' name='fName' placeholder='First name'/>
+      <input type='text' name='lName' placeholder='Last name'/>
+      <input type='text' name='area' placeholder='Area'/>
+      <input type='submit' value='Search'/>
+    </form>
+  )
+}
+
+const LinkList = ({ location }) => {
+  const query = parse(location.search.substr(1));
+  let links = ppl.map(pplToFullLink);
+  Object.keys(query).forEach((key) => {
+      console.log(links);
+      switch(key){
+        case 'fName':
+          if(query.fName){
+            links = ppl.filter(p => p.fName === query.fName).map(pplToFullLink)
+          }
+          return links;
+        case 'lName':
+          if(query.lName){
+            links = ppl.filter(p => p.lName === query.lName).map(pplToFullLink)
+          }
+          return links;
+        case 'area':
+          if(query.area){
+            links = ppl.filter(p => p.number.slice(1,4) === query.area).map(pplToFullLink)
+          }
+          return links;
+        default:
+          return links;
+      }
+    }
+  )
     return (
         <ul>
-          {this.props.links.map(link => (
+          {links.map(link => (
             <li key={link.key}>
               <Link to={link.to}>{link.text}</Link>
             </li>
           ))}
         </ul>
-    );
-  }
+    )
 };
 
 class Person extends React.Component {
