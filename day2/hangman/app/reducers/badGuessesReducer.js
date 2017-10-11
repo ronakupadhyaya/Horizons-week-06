@@ -6,3 +6,16 @@
 // const badGuessesReducer =
 
 // export default badGuessesReducer;
+
+const badGuessesReducer = (state = 0, action) => {
+    switch (action.type) {
+        case 'BAD_GUESS':
+            let newState = 0;
+            newState = state + 1;
+            return newState;
+        default:
+            return state;
+    }
+};
+
+export default badGuessesReducer;
