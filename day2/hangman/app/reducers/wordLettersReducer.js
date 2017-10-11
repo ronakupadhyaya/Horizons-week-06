@@ -31,4 +31,5 @@ const wordLettersReducer = (state = initialState, action) => {
     }
 };
 
+
 export default wordLettersReducer;
