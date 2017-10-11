@@ -5,23 +5,29 @@ import WordBox from './WordBox';
 // import TextBox from './TextBox';
 
 class GameContainer extends React.Component {
-
-    // onInput(val) {
-    //     const last = val.slice(-1);
-    //     newLetter(last);
-    // }
+    startTick() {
+        setInterval(() => {
+            this.props.tick();
+        }, 1000);
+    }
 
     render() {
+        let input;
+
         return (
             <div>
                 I am the game container!
                 {<WordBox wordList={this.props.wordList} />}
-
+                <span className="incorrect">{this.props.timeLeft}</span>
+                <br></br>
                 <input type="text"
                     placeholder="Guess a letter"
                     value={''}
-                    ref={node => {this.props.userInput = node;}}
-                    onChange={() => console.log('wtf', this.props.userInput)}
+                    ref={node => {input = node;}}
+                    onChange={() => {
+                        this.props.newLetter(input.value);
+                        !this.props.started ? this.startTick() : console.log('hi');
+                    }}
                 />
 
             </div>
@@ -31,16 +37,19 @@ class GameContainer extends React.Component {
 
 GameContainer.propTypes = {
     wordList: PropTypes.array,
-    userInput: PropTypes.string,
     currentIndex: PropTypes.array,
-    newLetter: PropTypes.func
+    newLetter: PropTypes.func,
+    timeLeft: PropTypes.number,
+    tick: PropTypes.func,
+    started: PropTypes.bool
 };
 
 const mapStateToProps = (state) => {
     return {
         wordList: state.game.wordList,
-        userInput: state.game.userInput,
-        currentIndex: state.game.currentIndex
+        currentIndex: state.game.currentIndex,
+        timeLeft: state.game.timeLeft,
+        started: state.game.started
     };
 };
 
@@ -48,6 +57,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         newLetter: (input) => {
             dispatch({type: 'NEW_LETTER', letter: input});
+        },
+        tick: () => {
+            dispatch({type: 'TICK'});
         }
     };
 };

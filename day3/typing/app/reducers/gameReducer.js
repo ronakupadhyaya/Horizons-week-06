@@ -23,7 +23,8 @@ const initialSample  = sampled.map((word) => {
 const initialState = {
     wordList: initialSample,
     currentIndex: [0, 0],
-    userInput: ''
+    timeLeft: 60,
+    started: false
 };
 
 function gameReducer(state = initialState, action) {
@@ -33,17 +34,26 @@ function gameReducer(state = initialState, action) {
             /* const newState = Object.assign({}, state, {wordList: newSample}); */
             /* return newState; */
         case ('NEW_LETTER'):
-            const newState = Object.assign({}, state);
+            const newState = {...state};
             const cur = newState.currentIndex;
             const curLetter = newState.wordList[cur[0]][cur[1]];
+            if (cur[0] === 0 && cur[1] === 0) {
+                newState.started = true;
+            }
             if (action.letter === ' ') {
-                newState.userInput = '';
-            } else if (action.letter === curLetter) {
+                newState.currentIndex = [newState.currentIndex[0] + 1, 0];
+            } else if (action.letter === curLetter.letter) {
+                newState.currentIndex = [newState.currentIndex[0], newState.currentIndex[1] + 1];
                 curLetter.status = 'correct';
             } else {
+                newState.currentIndex = [newState.currentIndex[0], newState.currentIndex[1] + 1];
                 curLetter.status = 'incorrect';
             }
             return newState;
+        case ('TICK'):
+            const newState1 = {...state};
+            newState1.timeLeft = newState1.timeLeft - 1;
+            return newState1;
         default:
             return state;
     }
