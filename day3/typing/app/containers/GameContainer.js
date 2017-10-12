@@ -15,10 +15,12 @@ class GameContainer extends React.Component {
         let input;
 
         return (
+            this.props.gameOver ?
             <div>
                 I am the game container!
                 {<WordBox wordList={this.props.wordList} />}
-                <span className="incorrect">{this.props.timeLeft}</span>
+                <span className="incorrect">Time: {this.props.timeLeft}</span>
+                <span style={{marginLeft: '50vw'}} className="incorrect">Score: {this.props.score}</span>
                 <br></br>
                 <input type="text"
                     placeholder="Guess a letter"
@@ -29,8 +31,15 @@ class GameContainer extends React.Component {
                         !this.props.started ? this.startTick() : console.log('hi');
                     }}
                 />
-
             </div>
+            :
+            <div>
+                <h1>Time's up!</h1>
+                <h2>Your Score: {this.props.score}</h2>
+                <button onClick={() => this.props.newGame}>Play Game</button>
+                <button>View Leaderboard</button>
+            </div>
+
         );
     }
 }
@@ -40,8 +49,11 @@ GameContainer.propTypes = {
     currentIndex: PropTypes.array,
     newLetter: PropTypes.func,
     timeLeft: PropTypes.number,
+    score: PropTypes.number,
     tick: PropTypes.func,
-    started: PropTypes.bool
+    started: PropTypes.bool,
+    gameOver: PropTypes.bool,
+    newGame: PropTypes.func
 };
 
 const mapStateToProps = (state) => {
@@ -49,7 +61,9 @@ const mapStateToProps = (state) => {
         wordList: state.game.wordList,
         currentIndex: state.game.currentIndex,
         timeLeft: state.game.timeLeft,
-        started: state.game.started
+        score: state.game.score,
+        started: state.game.started,
+        gameOver: state.game.gameOver
     };
 };
 
@@ -60,7 +74,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         tick: () => {
             dispatch({type: 'TICK'});
-        }
+        },
+        newGame: () => {
+            dispatch({type: 'NEW_GAME'});
+        },
     };
 };
 
