@@ -1,10 +1,12 @@
 import * as types from './types';
 
 // NEW_CHAR action creator for when user inputs a new character
-const newChar = (char) => (
+const newChar = (char, currPos, words) => (
   {
     type: types.NEW_CHAR,
     char,
+    currPos,
+    words,
   }
 );
 
@@ -12,6 +14,13 @@ const newChar = (char) => (
 const startGame = () => (
   {
     type: types.START_GAME,
+  }
+);
+
+// END_GAME action creator to end the game
+const endGame = () => (
+  {
+    type: types.END_GAME,
   }
 );
 
@@ -23,15 +32,18 @@ const decrementTimer = () => (
 );
 
 // NEXT_WORD action creator for when user inputs space to move to next word
-const nextWord = () => (
+const nextWord = (currPos, words) => (
   {
     type: types.NEXT_WORD,
+    currPos,
+    words,
   }
 );
 
 export default {
   newChar,
   startGame,
+  endGame,
   decrementTimer,
   nextWord,
 };
