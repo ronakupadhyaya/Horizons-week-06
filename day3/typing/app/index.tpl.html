@@ -8,7 +8,94 @@
     <meta name="description" content="React/Redux Typing Game">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        /* YOUR CSS STYLES HERE */
+        body {
+          background-color: black;
+          color: gray;
+          text-align: center;
+        }
+        #game-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .word-box {
+            border: 3px solid black;
+            border-radius: 4px;
+            font-size: 26px;
+            padding: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .pending {
+            color: grey;
+        }
+
+        .correct {
+            color: black;
+        }
+
+        .incorrect {
+            color: red;
+            text-decoration: line-through;
+        }
+
+        .footer {
+          padding-top: 15px;
+          padding-bottom: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+        }
+
+        input {
+          flex: 3;
+          margin-left: 10px;
+          background-color: gray;
+          height: 40px;
+          font-size: 35px;
+          text-align: center;
+          color: white;
+          letter-spacing: 3px;
+        }
+
+        #timer, #score{
+          flex: 1;
+          margin: 0;
+          font-size: 25px;
+          border: 2px solid gray;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+        }
+
+        #timer {
+          margin-left: 10px;
+        }
+
+        #score{
+          margin-right: 10px;
+        }
+
+        .negative {
+          color: red;
+        }
+
+        .positive {
+          color: green;
+        }
+
+        #reset-button{
+          flex: 1;
+          background-color: gray;
+          margin-right: 10px;
+          color: white;
+          height: 46px;
+          font-size: 30px;
+          text-align: center;
+        }
     </style>
 </head>
 
