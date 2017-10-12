@@ -27,14 +27,9 @@ function gameReducer(state = init, action) {
         case 'ADD_CHAR':
             const cloneWordList = [...state.wordList];
             const current = cloneWordList[state.currentIndex.wordIndex][state.currentIndex.letterIndex];
-            console.log(current);
             current.status = current.letter === action.letter ? 'correct' : 'incorrect';
-            console.log(current);
-            /* if (cloneWordList[state.currentIndex.wordIndex][state.currentIndex.letterIndex] === action.letter) { */
-            /*     cloneWordList[state.currentIndex.wordIndex][state.currentIndex.letterIndex] */
-            /* } */
             return {
-                wordList: state.wordList,
+                wordList: cloneWordList,
                 currentIndex: {
                     wordIndex: state.currentIndex.wordIndex,
                     letterIndex: state.currentIndex.letterIndex + 1
