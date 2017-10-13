@@ -8,7 +8,54 @@
     <meta name="description" content="React/Redux Typing Game">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        /* YOUR CSS STYLES HERE */
+        .word-box {
+            padding: 10px;
+            border: solid black 2px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .game-container {
+            width: 750px;
+            margin-left: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .box-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input {
+            width: 90%;
+            margin: 15px;
+            text-align: center;
+        }
+
+        .correct {
+            color: #21e329;
+        }
+
+        .incorrect {
+            color: red;
+        }
+
+        .pending {
+            color: grey;
+        }
+
+        .info-bar {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .info-bar span {
+            color: red;
+        }
     </style>
 </head>
 
