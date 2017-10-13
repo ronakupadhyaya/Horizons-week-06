@@ -19,7 +19,9 @@ const init  = {
         wordIndex: 0,
         letterIndex: 0
     },
-    userInput: ''
+    userInput: '',
+    timeLeft: 60,
+    score: 0,
 };
 
 function gameReducer(state = init, action) {
@@ -43,8 +45,11 @@ function gameReducer(state = init, action) {
                     wordIndex: state.currentIndex.wordIndex + 1,
                     letterIndex: 0
                 },
-                userInput: ''
+                userInput: '',
             };
+        /* case 'START_GAME': */
+        /*     const newWordList = _.sample(dictionary, 100); */
+        /*     return Object.assign({}, init, {wordList: newWordList}); */
         default:
             return state;
     }

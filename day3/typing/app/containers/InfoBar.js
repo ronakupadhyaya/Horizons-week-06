@@ -19,12 +19,13 @@ InfoBar.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        timeLeft: state.
+        // YOUR MAP STATE  TO PROPS HERE
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        // YOUR MAP DISPATCH TO PROPS HERE
     };
 };
 
