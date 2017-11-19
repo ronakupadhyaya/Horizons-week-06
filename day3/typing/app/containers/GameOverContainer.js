@@ -10,7 +10,8 @@ class GameOverContainer extends React.Component {
     render() {
         let score = this.props.score;
         return (
-            <div>
+            <div id="game-over-container">
+                <h1>Time's Up!</h1>
                 <span> Score: {score} </span>
                 <button type="button" onClick={this.props.onClick}>Restart Game!</button>
             </div>

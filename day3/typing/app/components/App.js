@@ -6,7 +6,7 @@ import GameContainer from '../containers/GameContainer';
 // import { connect } from 'react-redux';
 
 const App = () => {
-    return (<div>
+    return (<div id="app-container">
         {Routes}
         <h1>Typing Game</h1>
         <GameContainer />
@@ -34,4 +34,3 @@ const App = () => {
 // )(App);
 
 export default App;
-

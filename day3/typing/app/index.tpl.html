@@ -13,10 +13,19 @@
           color: gray;
           text-align: center;
         }
+        #app-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        #root-container {
+          width: 100%;
+        }
         #game-container {
           display: flex;
           flex-direction: column;
           align-items: center;
+          width: 100%;
         }
         .word-box {
             border: 3px solid black;
@@ -95,6 +104,17 @@
           height: 46px;
           font-size: 30px;
           text-align: center;
+        }
+
+        #game-over-container{
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 60%;
+          border: 2px solid gray;
+          margin-top: 50px;
+
         }
     </style>
 </head>
